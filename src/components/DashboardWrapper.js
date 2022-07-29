@@ -23,8 +23,8 @@ import PeopleIcon from "@mui/icons-material/People";
 
 const drawerWidth = 240;
 
-const DashboardWrapper = (props) => {
-  const { window } = props;
+const DashboardWrapper = ({ children, ...rest }) => {
+  const { window } = rest;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -139,7 +139,7 @@ const DashboardWrapper = (props) => {
         }}
       >
         <Toolbar />
-        <Typography paragraph>content should be here</Typography>
+        {children}
       </Box>
     </Box>
   );
