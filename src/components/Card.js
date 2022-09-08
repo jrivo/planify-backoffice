@@ -5,14 +5,14 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 
-const ActionAreaCard = () => {
+const ActionAreaCard = (props) => {
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardActionArea>
+    <Card sx={{ maxWidth: 345 }} {...props}>
+      <CardActionArea {...props}>
         <CardMedia
           component="img"
           height="140"
-          image="/static/images/cards/contemplative-reptile.jpg"
+          image="https://www.planetware.com/photos-large/F/france-paris-notre-dame-cathedral.jpg"
           alt="green iguana"
         />
         <CardContent>

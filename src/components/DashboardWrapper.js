@@ -20,10 +20,12 @@ import PlaceIcon from "@mui/icons-material/Place";
 import HomeIcon from "@mui/icons-material/Home";
 import RowingIcon from "@mui/icons-material/Rowing";
 import PeopleIcon from "@mui/icons-material/People";
-
+import { useNavigate } from "react-router-dom";
+import Avatar from "./Avatar";
 const drawerWidth = 240;
 
 const DashboardWrapper = ({ children, ...rest }) => {
+  const navigate = useNavigate();
   const { window } = rest;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -36,24 +38,32 @@ const DashboardWrapper = ({ children, ...rest }) => {
       <Toolbar />
       <Divider />
       <List>
-        {["Home", "Destinations", "Activities", "Users"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index === 0 ? (
-                  <HomeIcon />
-                ) : index === 1 ? (
-                  <PlaceIcon />
-                ) : index === 2 ? (
-                  <RowingIcon />
-                ) : (
-                  index === 3 && <PeopleIcon />
-                )}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        {["Overview", "Destinations", "Activities", "Users"].map(
+          (text, index) => (
+            <ListItem key={text} disablePadding>
+              <ListItemButton
+                onClick={() => {
+                  //redirect to the page
+                  const page = index === 0 ? "/" : "/" + text.toLowerCase();
+                  navigate(page);
+                }}
+              >
+                <ListItemIcon>
+                  {index === 0 ? (
+                    <HomeIcon />
+                  ) : index === 1 ? (
+                    <PlaceIcon />
+                  ) : index === 2 ? (
+                    <RowingIcon />
+                  ) : (
+                    index === 3 && <PeopleIcon />
+                  )}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          )
+        )}
       </List>
     </div>
   );
@@ -78,18 +88,31 @@ const DashboardWrapper = ({ children, ...rest }) => {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
+            sx={{ mr: 2, display: { sm: "none" }, color: "black" }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography
+          <Box
+            sx={{
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
+            <Box style={{ cursor: "pointer" }}>
+              <Avatar name="john doe" sx={{ cursor: "pointer" }} />
+            </Box>
+          </Box>
+
+          {/* <Typography
             variant="h6"
             noWrap
             component="div"
             sx={{ color: "#000" }}
           >
             toolbar
-          </Typography>
+          </Typography> */}
         </Toolbar>
       </AppBar>
       <Box
@@ -136,6 +159,8 @@ const DashboardWrapper = ({ children, ...rest }) => {
           flexGrow: 1,
           p: 3,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
+          backgroundColor: "#F9FAFC",
+          minHeight: "100vh",
         }}
       >
         <Toolbar />
