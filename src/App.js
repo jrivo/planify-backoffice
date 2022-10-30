@@ -5,6 +5,7 @@ import Destinations from "./pages/Destinations";
 import Destination from "./pages/Destination";
 import Activities from "./pages/Activities";
 import Login from "./pages/Login";
+import Activity from "./pages/Activity";
 
 function App() {
   return (
@@ -42,6 +43,15 @@ function App() {
             </DashboardWrapper>
           }
         />
+        <Route
+          path="/activities/:userId"
+          element={
+            <DashboardWrapper>
+              <Activity />
+            </DashboardWrapper>
+          }
+        />
+
         <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
