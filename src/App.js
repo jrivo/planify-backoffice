@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import Destinations from "./pages/Destinations";
 import Destination from "./pages/Destination";
+import Activities from "./pages/Activities";
 import Login from "./pages/Login";
 
 function App() {
@@ -30,6 +31,14 @@ function App() {
           element={
             <DashboardWrapper>
               <Destination />
+            </DashboardWrapper>
+          }
+        />
+        <Route
+          path="/activities"
+          element={
+            <DashboardWrapper>
+              <Activities />
             </DashboardWrapper>
           }
         />

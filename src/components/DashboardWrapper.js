@@ -79,10 +79,14 @@ const DashboardWrapper = ({ children, ...rest }) => {
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
+          // background color transparent
+          // backgroundColor: "#fff",
+          backgroundColor: "#F9FAFC",
+          boxShadow: "none",
         }}
         // elevation={0}
       >
-        <Toolbar sx={{ backgroundColor: "#FFF", border: "none" }}>
+        <Toolbar sx={{ border: "none", boxShadow: "none" }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
