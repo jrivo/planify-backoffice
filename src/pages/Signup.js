@@ -7,12 +7,14 @@ import {
   Link,
   TextField,
   Typography,
+  Checkbox,
 } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
+import { HowToVoteRounded } from "@mui/icons-material";
 
-const Login = () => {
+const Signup = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [birthDate, setBirthDate] = useState("");
@@ -23,7 +25,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const primaryColor = process.env.REACT_APP_PRIMARY_COLOR;
   const primaryLighterColor = process.env.REACT_APP_PRIMARY_LIGHTER_COLOR;
-
+  console.log("primaryColor is ", primaryColor);
   return (
     <>
       <Box
@@ -36,6 +38,7 @@ const Login = () => {
         }}
       >
         <Container maxWidth="sm">
+          {/* get image from the public folder */}
           <Box
             sx={{
               display: "flex",
@@ -61,14 +64,58 @@ const Login = () => {
                 color="textPrimary"
                 variant="h4"
                 sx={{
+                  // textAlign: "center",
+                  // fontWeight: "bold",
                   fontSize: "25px",
                 }}
               >
-                Sign in to your account
+                Fill in the form to create your account
+                {process.env.REACT_APP_TRY}
               </Typography>
             </Box>
             <Grid container columnSpacing={3}>
-              <Grid item md={12} xs={12}>
+              <Grid item md={6} xs={12}>
+                <TextField
+                  fullWidth
+                  label="Last name"
+                  margin="normal"
+                  name="lastName"
+                  onChange={(event) => {
+                    setLastName(event.target.value);
+                  }}
+                  value={lastName}
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid item md={6} xs={12}>
+                <TextField
+                  fullWidth
+                  label="first name"
+                  margin="normal"
+                  name="firstName"
+                  onChange={(event) => {
+                    setFirstName(event.target.value);
+                  }}
+                  value={firstName}
+                  variant="outlined"
+                />
+              </Grid>
+
+              <Grid item md={6} xs={12}>
+                <TextField
+                  fullWidth
+                  label="Birth date"
+                  margin="normal"
+                  name="birthDate"
+                  onChange={(event) => {
+                    setBirthDate(event.target.value);
+                  }}
+                  value={birthDate}
+                  variant="outlined"
+                />
+              </Grid>
+
+              <Grid item md={6} xs={12}>
                 <TextField
                   fullWidth
                   label="Email address"
@@ -82,7 +129,7 @@ const Login = () => {
                   variant="outlined"
                 />
               </Grid>
-              <Grid item md={12} xs={12}>
+              <Grid item md={6} xs={12}>
                 <TextField
                   fullWidth
                   label="Password"
@@ -93,6 +140,21 @@ const Login = () => {
                   }}
                   type="password"
                   value={password}
+                  variant="outlined"
+                  autoComplete="off"
+                />
+              </Grid>
+              <Grid item md={6} xs={12}>
+                <TextField
+                  fullWidth
+                  label="Confirm password"
+                  margin="normal"
+                  name="confirmPassword"
+                  onChange={(event) => {
+                    setConfirmPassword(event.target.value);
+                  }}
+                  type="password"
+                  value={confirmPassword}
                   variant="outlined"
                   autoComplete="off"
                 />
@@ -117,7 +179,7 @@ const Login = () => {
                 },
               }}
             >
-              Sign in
+              Sign up now
             </Button>
 
             <Typography
@@ -125,16 +187,16 @@ const Login = () => {
               variant="body2"
               style={{ marginTop: "20px" }}
             >
-              Don't have an account?{" "}
+              Already have an account?{" "}
               <Link
-                href="/signup"
+                href="/login"
                 variant="subtitle2"
                 underline="hover"
                 sx={{
                   cursor: "pointer",
                 }}
               >
-                Sign up
+                Sign in
               </Link>
             </Typography>
           </form>
@@ -158,4 +220,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

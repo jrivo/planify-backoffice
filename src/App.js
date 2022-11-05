@@ -5,6 +5,7 @@ import Destinations from "./pages/Destinations";
 import Destination from "./pages/Destination";
 import Activities from "./pages/Activities";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import Activity from "./pages/Activity";
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
         />
 
         <Route path="/login" element={<Login />} />
+        <Route path="signup" element={<Signup />} />
       </Routes>
     </Router>
   );
