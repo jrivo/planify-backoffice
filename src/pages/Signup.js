@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react";
 import {
   Box,
-  Button,
   Container,
   Grid,
   Link,
   TextField,
   Typography,
-  Checkbox,
 } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
-import { HowToVoteRounded } from "@mui/icons-material";
+import Button from "../components/general/Button";
 
 const Signup = () => {
   const [firstName, setFirstName] = useState("");
@@ -35,25 +32,26 @@ const Signup = () => {
           display: "flex",
           flexGrow: 1,
           minHeight: "100%",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100vh",
         }}
       >
-        <Container maxWidth="sm">
-          {/* get image from the public folder */}
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <img
-              src="/planify-logo-transparent-no-text.png"
-              alt="Planify logo"
-              width="300px"
-            />
-          </Box>
+        <Box
+          sx={{
+            position: "absolute",
+            top: 20,
+            left: 20,
+          }}
+        >
+          <img
+            src="/planify-logo-transparent-no-text.png"
+            alt="Planify logo"
+            width="100px"
+          />
+        </Box>
 
+        <Container maxWidth="sm">
           <form
             onSubmit={() => {
               console.log("give us nothing");
@@ -64,9 +62,7 @@ const Signup = () => {
                 color="textPrimary"
                 variant="h4"
                 sx={{
-                  // textAlign: "center",
-                  // fontWeight: "bold",
-                  fontSize: "25px",
+                  fontSize: "20px",
                 }}
               >
                 Fill in the form to create your account
@@ -161,24 +157,7 @@ const Signup = () => {
               </Grid>
             </Grid>
 
-            <Button
-              color="primary"
-              fullWidth
-              size="large"
-              type="submit"
-              sx={{
-                backgroundColor: primaryColor,
-                marginTop: "20px",
-                color: "#fff",
-                borderRadius: "5px",
-                boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-                "&:hover": {
-                  // clighthen the color
-                  backgroundColor: primaryLighterColor,
-                  boxShadow: "none",
-                },
-              }}
-            >
+            <Button color="primary" fullWidth size="large" type="submit">
               Sign up now
             </Button>
 

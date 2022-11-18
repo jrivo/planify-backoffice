@@ -38,32 +38,28 @@ const DashboardWrapper = ({ children, ...rest }) => {
       <Toolbar />
       <Divider />
       <List>
-        {["Overview", "Destinations", "Activities", "Users"].map(
-          (text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton
-                onClick={() => {
-                  //redirect to the page
-                  const page = index === 0 ? "/" : "/" + text.toLowerCase();
-                  navigate(page);
-                }}
-              >
-                <ListItemIcon>
-                  {index === 0 ? (
-                    <HomeIcon />
-                  ) : index === 1 ? (
-                    <PlaceIcon />
-                  ) : index === 2 ? (
-                    <RowingIcon />
-                  ) : (
-                    index === 3 && <PeopleIcon />
-                  )}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          )
-        )}
+        {["Acivities", "Destinations", "Account"].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton
+              onClick={() => {
+                //redirect to the page
+                const page = index === 0 ? "/" : "/" + text.toLowerCase();
+                navigate(page);
+              }}
+            >
+              <ListItemIcon>
+                {index === 0 ? (
+                  <RowingIcon />
+                ) : index === 1 ? (
+                  <PlaceIcon />
+                ) : (
+                  index === 2 && <PeopleIcon />
+                )}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
       </List>
     </div>
   );

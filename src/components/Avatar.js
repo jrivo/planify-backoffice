@@ -29,12 +29,8 @@ const stringAvatar = (name) => {
   };
 };
 
-const BackgroundLetterAvatars = ({ name }) => {
-  return (
-    <Stack direction="row" spacing={2}>
-      <Avatar {...stringAvatar(name)} />
-    </Stack>
-  );
+const BackgroundLetterAvatars = ({ name, ...rest }) => {
+  return <Avatar {...stringAvatar(name)} {...rest} />;
 };
 
 export default BackgroundLetterAvatars;

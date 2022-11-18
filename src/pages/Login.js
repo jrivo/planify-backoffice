@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import {
   Box,
-  Button,
   Container,
   Grid,
   Link,
@@ -11,6 +10,7 @@ import {
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
+import Button from "../components/general/Button";
 
 const Login = () => {
   const [firstName, setFirstName] = useState("");
@@ -33,24 +33,26 @@ const Login = () => {
           display: "flex",
           flexGrow: 1,
           minHeight: "100%",
+          justifyItems: "center",
+          justifyContent: "center",
+          height: "100vh",
         }}
       >
-        <Container maxWidth="sm">
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <img
-              src="/planify-logo-transparent-no-text.png"
-              alt="Planify logo"
-              width="300px"
-            />
-          </Box>
+        <Box
+          sx={{
+            position: "absolute",
+            top: 20,
+            left: 20,
+          }}
+        >
+          <img
+            src="/planify-logo-transparent-no-text.png"
+            alt="Planify logo"
+            width="100px"
+          />
+        </Box>
 
+        <Container maxWidth="sm">
           <form
             onSubmit={() => {
               console.log("give us nothing");
@@ -61,7 +63,7 @@ const Login = () => {
                 color="textPrimary"
                 variant="h4"
                 sx={{
-                  fontSize: "25px",
+                  fontSize: "20px",
                 }}
               >
                 Sign in to your account
@@ -99,24 +101,7 @@ const Login = () => {
               </Grid>
             </Grid>
 
-            <Button
-              color="primary"
-              fullWidth
-              size="large"
-              type="submit"
-              sx={{
-                backgroundColor: primaryColor,
-                marginTop: "20px",
-                color: "#fff",
-                borderRadius: "5px",
-                boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-                "&:hover": {
-                  // clighthen the color
-                  backgroundColor: primaryLighterColor,
-                  boxShadow: "none",
-                },
-              }}
-            >
+            <Button color="primary" fullWidth size="large" type="submit">
               Sign in
             </Button>
 

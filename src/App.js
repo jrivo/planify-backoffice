@@ -7,7 +7,7 @@ import Activities from "./pages/Activities";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Activity from "./pages/Activity";
-
+import Account from "./pages/Account";
 function App() {
   return (
     <Router>
@@ -16,7 +16,7 @@ function App() {
           path="/"
           element={
             <DashboardWrapper>
-              <Home />
+              <Activities />
             </DashboardWrapper>
           }
         />
@@ -37,18 +37,19 @@ function App() {
           }
         />
         <Route
-          path="/activities"
-          element={
-            <DashboardWrapper>
-              <Activities />
-            </DashboardWrapper>
-          }
-        />
-        <Route
           path="/activities/:userId"
           element={
             <DashboardWrapper>
               <Activity />
+            </DashboardWrapper>
+          }
+        />
+
+        <Route
+          path="/account"
+          element={
+            <DashboardWrapper>
+              <Account />
             </DashboardWrapper>
           }
         />
