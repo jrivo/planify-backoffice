@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
   Box,
-  Button,
   Card,
   CardContent,
   CardHeader,
@@ -9,6 +8,7 @@ import {
   Grid,
   TextField,
 } from "@mui/material";
+import Button from "./general/Button";
 
 export default function AccountProfileDetails(props) {
   const [data, setData] = useState();
@@ -99,9 +99,8 @@ export default function AccountProfileDetails(props) {
             onClick={() => {
               console.log("yes give us nothing sis");
             }}
-            style={{ backgroundColor: "#26A2A2" }}
           >
-            Modifier
+            Update profile
           </Button>
         </Box>
       </Card>

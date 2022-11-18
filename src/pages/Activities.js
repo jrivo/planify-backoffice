@@ -1,6 +1,7 @@
 import { Typography, Box, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ActivityCard from "../components/ActivityCard";
+import Button from "../components/general/Button";
 
 // list of activities
 
@@ -50,12 +51,21 @@ const Activities = () => {
         marginLeft: "30px",
       }}
     >
-      <Typography
-        variant="h2"
-        sx={{ fontSize: "28px", fontWeight: "bold", marginBottom: "30px" }}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          width: "100%",
+          marginBottom: "50px",
+        }}
       >
-        Activities
-      </Typography>
+        <Typography variant="h2" sx={{ fontSize: "28px", fontWeight: "bold" }}>
+          Activities
+        </Typography>
+
+        <Button>New activity</Button>
+      </Box>
 
       <Box
         sx={{

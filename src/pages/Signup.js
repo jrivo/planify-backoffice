@@ -157,7 +157,15 @@ const Signup = () => {
               </Grid>
             </Grid>
 
-            <Button color="primary" fullWidth size="large" type="submit">
+            <Button
+              color="primary"
+              fullWidth
+              size="large"
+              type="submit"
+              style={{
+                marginTop: "20px",
+              }}
+            >
               Sign up now
             </Button>
 

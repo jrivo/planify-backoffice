@@ -2,7 +2,6 @@ import * as React from "react";
 import {
   Avatar,
   Box,
-  Button,
   Card,
   CardActions,
   CardContent,
@@ -10,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import Button from "./general/Button";
 
 export default function AccountProfile(props) {
   const [avatar, setAvatar] = React.useState("");
@@ -60,7 +60,6 @@ export default function AccountProfile(props) {
             color="primary"
             fullWidth
             component="span"
-            style={{ backgroundColor: "#26A2A2" }}
           >
             Charger une photo
           </Button>
