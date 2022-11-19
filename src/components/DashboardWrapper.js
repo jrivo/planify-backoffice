@@ -33,10 +33,33 @@ const DashboardWrapper = ({ children, ...rest }) => {
     setMobileOpen(!mobileOpen);
   };
 
+  const iconStyles = {
+    color: process.env.REACT_APP_PRIMARY_COLOR,
+  };
+
   const drawer = (
     <div>
-      <Toolbar />
-      <Divider />
+      {/* <Toolbar /> */}
+
+      {/* <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100%",
+        }}
+      >
+        <img
+          src="/planify-logo-transparent-no-text.png"
+          alt="Planify logo"
+          width="100px"
+        />
+      </Box> */}
+      <Divider
+        style={{
+          marginBottom: "100px",
+        }}
+      />
       <List>
         {["Acivities", "Destinations", "Account"].map((text, index) => (
           <ListItem key={text} disablePadding>
@@ -49,11 +72,11 @@ const DashboardWrapper = ({ children, ...rest }) => {
             >
               <ListItemIcon>
                 {index === 0 ? (
-                  <RowingIcon />
+                  <RowingIcon style={iconStyles} />
                 ) : index === 1 ? (
-                  <PlaceIcon />
+                  <PlaceIcon style={iconStyles} />
                 ) : (
-                  index === 2 && <PeopleIcon />
+                  index === 2 && <PeopleIcon style={iconStyles} />
                 )}
               </ListItemIcon>
               <ListItemText primary={text} />

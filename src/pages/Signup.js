@@ -37,7 +37,7 @@ const Signup = () => {
           height: "100vh",
         }}
       >
-        <Box
+        {/* <Box
           sx={{
             position: "absolute",
             top: 20,
@@ -49,7 +49,7 @@ const Signup = () => {
             alt="Planify logo"
             width="100px"
           />
-        </Box>
+        </Box> */}
 
         <Container maxWidth="sm">
           <form

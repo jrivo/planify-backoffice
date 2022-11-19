@@ -11,19 +11,40 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import Button from "../components/general/Button";
+import { HandymanOutlined } from "@mui/icons-material";
 
 const Login = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [birthDate, setBirthDate] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
-  const primaryColor = process.env.REACT_APP_PRIMARY_COLOR;
-  const primaryLighterColor = process.env.REACT_APP_PRIMARY_LIGHTER_COLOR;
 
+  const handleSubmit = async (e) => {
+    console.log("email", email);
+    console.log("password", password);
+
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError("");
+
+    console.log(process.env.REACT_APP_SERVER_URL + "login");
+    try {
+      const response = await fetch(process.env.REACT_APP_SERVER_URL + "login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <Box
@@ -38,11 +59,11 @@ const Login = () => {
           height: "100vh",
         }}
       >
-        <Box
+        {/* <Box
           sx={{
             position: "absolute",
             top: 20,
-            left: 20,
+            left: 50,
           }}
         >
           <img
@@ -50,14 +71,10 @@ const Login = () => {
             alt="Planify logo"
             width="100px"
           />
-        </Box>
+        </Box> */}
 
         <Container maxWidth="sm">
-          <form
-            onSubmit={() => {
-              console.log("give us nothing");
-            }}
-          >
+          <form onSubmit={handleSubmit}>
             <Box sx={{ my: 3 }}>
               <Typography
                 color="textPrimary"

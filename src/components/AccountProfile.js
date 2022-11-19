@@ -13,7 +13,6 @@ import Button from "./general/Button";
 
 export default function AccountProfile(props) {
   const [avatar, setAvatar] = React.useState("");
-
   const Input = styled("input")({
     display: "none",
   });
