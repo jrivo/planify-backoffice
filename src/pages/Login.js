@@ -7,27 +7,22 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import Button from "../components/general/Button";
-import { HandymanOutlined } from "@mui/icons-material";
-
+import { useNavigate } from "react-router-dom";
 const Login = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
-    console.log("email", email);
-    console.log("password", password);
-
     e.preventDefault();
     setIsSubmitting(true);
     setError("");
 
-    console.log(process.env.REACT_APP_SERVER_URL + "login");
     try {
       const response = await fetch(process.env.REACT_APP_SERVER_URL + "login", {
         method: "POST",
@@ -41,6 +36,14 @@ const Login = () => {
       });
       const data = await response.json();
       console.log(data);
+      if (data.statusCode === 401) {
+        setError("Invalid email or password");
+        return;
+      }
+      navigate("/");
+
+      localStorage.setItem("token", data.access_token);
+      localStorage.setItem("email", JSON.stringify(data.email));
     } catch (error) {
       console.log(error);
     }
@@ -147,23 +150,22 @@ const Login = () => {
                 Sign up
               </Link>
             </Typography>
+
+            {error && (
+              <Stack sx={{ width: "100% ", marginTop: "20px" }} spacing={2}>
+                <Alert
+                  severity="error"
+                  onClose={() => {
+                    setError(false);
+                  }}
+                >
+                  {error}
+                </Alert>
+              </Stack>
+            )}
           </form>
         </Container>
       </Box>
-
-      <Stack
-        sx={{ width: "100%", position: "absolute", bottom: "10px" }}
-        spacing={2}
-      >
-        <Alert
-          severity="error"
-          onClose={() => {
-            setError(false);
-          }}
-        >
-          An error occured
-        </Alert>
-      </Stack>
     </>
   );
 };
