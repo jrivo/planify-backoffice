@@ -9,19 +9,34 @@ import {
   TextField,
 } from "@mui/material";
 import Button from "./general/Button";
+import AddressInput from "./general/AddressInput";
 
-export default function AccountProfileDetails(props) {
-  const [data, setData] = useState();
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+const DestinationForm = ({ style, ...rest }) => {
+  const [name, setName] = useState("");
+  const [placeType, setPlaceType] = useState("");
   const [email, setEmail] = useState("");
-  const [birthDate, setBirthDate] = useState("");
-  const [ProfileType, setProfileType] = useState("");
+  const [phone, setPhone] = useState("");
+  const [website, setWebsite] = useState("");
+  const [description, setDescription] = useState("");
 
+  function handleAddressChange(address) {
+    console.log(address);
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("submited the form ");
+  };
   return (
-    <form autoComplete="off" noValidate {...props}>
+    <form
+      autoComplete="off"
+      noValidate
+      style={style}
+      {...rest}
+      onSubmit={handleSubmit}
+    >
       <Card>
-        <CardHeader title="Profile" />
+        <CardHeader title="Create you destination" />
 
         <Divider />
         <CardContent>
@@ -30,21 +45,21 @@ export default function AccountProfileDetails(props) {
               <Grid item md={6} xs={12}>
                 <TextField
                   fullWidth
-                  label="First name"
-                  name="firstName"
+                  label="Destination Name"
+                  name="name"
                   InputLabelProps={{ shrink: true }}
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   variant="outlined"
                 />
               </Grid>
               <Grid item md={6} xs={12}>
                 <TextField
                   fullWidth
-                  label="Last name"
-                  name="lastName"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
+                  label="Place type"
+                  name="placeType"
+                  value={placeType}
+                  onChange={(e) => setPlaceType(e.target.value)}
                   InputLabelProps={{ shrink: true }}
                   variant="outlined"
                 />
@@ -64,20 +79,37 @@ export default function AccountProfileDetails(props) {
                 <TextField
                   fullWidth
                   label="Date of birth"
-                  name="birthDate"
-                  value={birthDate}
-                  onChange={(e) => setBirthDate(e.target.value)}
+                  name="phone"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
                   variant="outlined"
                   InputLabelProps={{ shrink: true }}
                 />
               </Grid>
+              <Grid item md={6} xs={12}>
+                <TextField
+                  fullWidth
+                  label="Website"
+                  name="website"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                  variant="outlined"
+                  InputLabelProps={{ shrink: true }}
+                />
+              </Grid>
+              <Grid item md={6} xs={12}>
+                <AddressInput onChange={handleAddressChange} />
+              </Grid>
               <Grid item md={12} xs={12}>
                 <TextField
                   fullWidth
-                  label="Profile type"
-                  name="ProfileType"
-                  value={ProfileType}
-                  onChange={(e) => setProfileType(e.target.value)}
+                  label="Description"
+                  name="description"
+                  multiline
+                  rows={3}
+                  // maxRows={4}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
                   variant="outlined"
                   InputLabelProps={{ shrink: true }}
                 />
@@ -93,17 +125,13 @@ export default function AccountProfileDetails(props) {
             p: 2,
           }}
         >
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={() => {
-              console.log("yes give us nothing sis");
-            }}
-          >
-            Update profile
+          <Button color="primary" variant="contained" type="submit">
+            Create Destination
           </Button>
         </Box>
       </Card>
     </form>
   );
-}
+};
+
+export default DestinationForm;

@@ -31,7 +31,7 @@ const DashboardWrapper = ({ children, ...rest }) => {
   };
 
   const iconStyles = {
-    color: process.env.REACT_APP_PRIMARY_COLOR,
+    // color: process.env.REACT_APP_PRIMARY_COLOR,
   };
 
   const drawer = (

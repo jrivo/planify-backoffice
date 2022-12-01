@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Activity from "./pages/Activity";
 import Account from "./pages/Account";
+import CreateDestination from "./pages/CreateDestination";
 function App() {
   return (
     <Router>
@@ -28,6 +29,23 @@ function App() {
             </DashboardWrapper>
           }
         />
+        <Route
+          path="/destinations/:destinationId"
+          element={
+            <DashboardWrapper>
+              <Destination />
+            </DashboardWrapper>
+          }
+        />
+        <Route
+          path="/destinations/create"
+          element={
+            <DashboardWrapper>
+              <CreateDestination />
+            </DashboardWrapper>
+          }
+        />
+
         <Route
           path="/destinations/:userId"
           element={

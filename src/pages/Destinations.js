@@ -109,7 +109,9 @@ const Destinations = () => {
           Destinations
         </Typography>
 
-        <Button>New destination</Button>
+        <Button onClick={() => navigate("/destinations/create")}>
+          New destination
+        </Button>
       </Box>
 
       <Box
