@@ -141,16 +141,14 @@ const Destinations = () => {
                     console.log("clicked");
                     navigate("//" + index);
                   }}
-                  // date={destination.date}
                   title={destination.name}
                   image={
                     destination.medias !== undefined &&
                     destination.medias.length > 0
                       ? destination.medias[0].url
-                      : "https://blog.redbubble.com/wp-content/uploads/2017/10/placeholder_image_square.jpg"
+                      : process.env.REACT_APP_IMAGE_PLACEHOLDER
                   }
                   subtitle1={destination.address?.city}
-                  // price={destination.price}
                 />
               </Grid>
             ))}

@@ -1,27 +1,24 @@
 import * as React from "react";
-import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import PlaceIcon from "@mui/icons-material/Place";
-import HomeIcon from "@mui/icons-material/Home";
 import RowingIcon from "@mui/icons-material/Rowing";
 import PeopleIcon from "@mui/icons-material/People";
 import { useNavigate } from "react-router-dom";
 import Avatar from "./Avatar";
+import AccountMenu from "./AccountMenu";
+
 const drawerWidth = 240;
 
 const DashboardWrapper = ({ children, ...rest }) => {
@@ -39,22 +36,6 @@ const DashboardWrapper = ({ children, ...rest }) => {
 
   const drawer = (
     <div>
-      {/* <Toolbar /> */}
-
-      {/* <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          width: "100%",
-        }}
-      >
-        <img
-          src="/planify-logo-transparent-no-text.png"
-          alt="Planify logo"
-          width="100px"
-        />
-      </Box> */}
       <Divider
         style={{
           marginBottom: "100px",
@@ -98,12 +79,9 @@ const DashboardWrapper = ({ children, ...rest }) => {
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
-          // background color transparent
-          // backgroundColor: "#fff",
           backgroundColor: "#F9FAFC",
           boxShadow: "none",
         }}
-        // elevation={0}
       >
         <Toolbar sx={{ border: "none", boxShadow: "none" }}>
           <IconButton
@@ -124,18 +102,9 @@ const DashboardWrapper = ({ children, ...rest }) => {
             }}
           >
             <Box style={{ cursor: "pointer" }}>
-              <Avatar name="john doe" sx={{ cursor: "pointer" }} />
+              <AccountMenu />
             </Box>
           </Box>
-
-          {/* <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ color: "#000" }}
-          >
-            toolbar
-          </Typography> */}
         </Toolbar>
       </AppBar>
       <Box
@@ -191,14 +160,6 @@ const DashboardWrapper = ({ children, ...rest }) => {
       </Box>
     </Box>
   );
-};
-
-DashboardWrapper.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window: PropTypes.func,
 };
 
 export default DashboardWrapper;
