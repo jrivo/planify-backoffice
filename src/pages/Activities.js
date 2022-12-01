@@ -1,6 +1,6 @@
 import { Typography, Box, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import ActivityCard from "../components/ActivityCard";
+import ActivityCard from "../components/Card";
 import Button from "../components/general/Button";
 
 // list of activities
@@ -95,11 +95,11 @@ const Activities = () => {
                     console.log("clicked");
                     navigate("/Activities/" + index);
                   }}
-                  date={activity.date}
+                  subtitle1={activity.date}
                   title={activity.title}
                   image={activity.image}
-                  address={activity.address}
-                  price={activity.price}
+                  subtitle2={activity.address}
+                  footerText={activity.price}
                 />
               </Grid>
             ))}

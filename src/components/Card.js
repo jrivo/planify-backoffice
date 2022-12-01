@@ -5,23 +5,54 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 
-const ActionAreaCard = (props) => {
+const ActionAreaCard = ({
+  title,
+  subtitle1,
+  image,
+  subtitle2,
+  footerText,
+  ...rest
+}) => {
   return (
-    <Card sx={{ maxWidth: 345 }} {...props}>
-      <CardActionArea {...props}>
+    <Card sx={{ maxWidth: 345, minWidth: 250 }} {...rest}>
+      <CardActionArea {...rest}>
         <CardMedia
           component="img"
           height="140"
-          image="https://www.planetware.com/photos-large/F/france-paris-notre-dame-cathedral.jpg"
+          image={image}
           alt="green iguana"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            Lizard
+            {title}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{
+              // fontWeight: "bold",
+              marginBottom: "5px",
+            }}
+          >
+            {subtitle1}
+          </Typography>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{
+              marginBottom: "5px",
+            }}
+          >
+            {subtitle2}
+          </Typography>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{
+              fontWeight: "bold",
+            }}
+          >
+            {footerText}
           </Typography>
         </CardContent>
       </CardActionArea>

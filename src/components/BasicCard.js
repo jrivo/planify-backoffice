@@ -5,7 +5,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 
-const ActionAreaCard = ({ title, date, image, address, price, ...rest }) => {
+const BasicCard = ({ title, description, ...rest }) => {
   return (
     <Card sx={{ maxWidth: 345, minWidth: 250 }} {...rest}>
       <CardActionArea {...rest}>
@@ -23,29 +23,10 @@ const ActionAreaCard = ({ title, date, image, address, price, ...rest }) => {
             variant="body2"
             color="text.secondary"
             sx={{
-              // fontWeight: "bold",
               marginBottom: "5px",
             }}
           >
-            {date}
-          </Typography>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{
-              marginBottom: "5px",
-            }}
-          >
-            {address}
-          </Typography>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{
-              fontWeight: "bold",
-            }}
-          >
-            {price}
+            {description}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -53,4 +34,4 @@ const ActionAreaCard = ({ title, date, image, address, price, ...rest }) => {
   );
 };
 
-export default ActionAreaCard;
+export default BasicCard;
