@@ -77,11 +77,11 @@ const saveDestination = async (place) => {
     const response = await fetch(process.env.REACT_APP_SERVER_URL + "places", {
       method: "POST",
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        // Accept: "application/json",
+        // "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.token,
       },
-      body: JSON.stringify(place),
+      body: place,
     });
     const data = await response.json();
     return data;

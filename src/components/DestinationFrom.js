@@ -4,6 +4,7 @@ import {
   Card,
   CardContent,
   CardHeader,
+  CircularProgress,
   Divider,
   FormControl,
   Grid,
@@ -14,8 +15,8 @@ import {
 } from "@mui/material";
 import Button from "./general/Button";
 import AddressInput from "./general/AddressInput";
+import UploadInput from "./general/UploadInput";
 import { getPlaceTypes, saveDestination } from "../utils.js/apicalls";
-import { Save } from "@mui/icons-material";
 
 const DestinationForm = ({ style, ...rest }) => {
   const [name, setName] = useState("");
@@ -34,10 +35,10 @@ const DestinationForm = ({ style, ...rest }) => {
   const [country, setCountry] = useState("");
   const [placeId, setPlaceId] = useState("");
   const [loading, setLoading] = useState(false);
+  const [images, setImages] = useState([]);
 
   const loadData = async () => {
     const placeTypes = await getPlaceTypes();
-    console.log(placeTypes);
     setPlaceTypeList(placeTypes);
   };
 
@@ -45,8 +46,7 @@ const DestinationForm = ({ style, ...rest }) => {
     loadData();
   }, []);
 
-  function handleAddressChange(address) {
-    console.log(address);
+  const handleAddressChange = (address) => {
     setCity(address.city);
     setCountry(address.country);
     setPostalCode(address.postalCode);
@@ -54,27 +54,38 @@ const DestinationForm = ({ style, ...rest }) => {
     setStreet(address.streetName);
     setStreetNumber(address.streetNumber);
     setPlaceId(address.placeId);
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await saveDestination({
-      name,
-      placeTypeId,
-      email,
-      phone,
-      website,
-      description,
-      street,
-      streetNumber,
-      city,
-      postalCode,
-      region,
-      country,
-      // placeId,
-    });
-    console.log(response);
+    const formData = new FormData();
+    for (let i = 0; i < images.length; i++) {
+      formData.append("images", images[i]);
+      console.log("added image");
+    }
+    formData.append("name", name);
+    formData.append("placeType", placeType);
+    formData.append("placeTypeId", placeTypeId);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("website", website);
+    formData.append("description", description);
+    formData.append("street", street);
+    formData.append("streetNumber", streetNumber);
+    formData.append("city", city);
+    formData.append("postalCode", postalCode);
+    formData.append("region", region);
+    formData.append("country", country);
+    const response = await saveDestination(formData);
+    setLoading(false);
   };
+
+  const handleImageChange = async (e) => {
+    const images = e.target.files;
+    console.log("images: ", images);
+    setImages(images);
+  };
+
   return (
     <form
       autoComplete="off"
@@ -93,7 +104,19 @@ const DestinationForm = ({ style, ...rest }) => {
               <Grid item md={6} xs={12}>
                 <TextField
                   fullWidth
-                  label="Destination Name"
+                  label={
+                    <span>
+                      Destination Name
+                      <span
+                        style={{
+                          color: "red",
+                          fontSize: "18px",
+                        }}
+                      >
+                        *
+                      </span>
+                    </span>
+                  }
                   name="name"
                   InputLabelProps={{ shrink: true }}
                   value={name}
@@ -103,7 +126,17 @@ const DestinationForm = ({ style, ...rest }) => {
               </Grid>
               <Grid item md={6} xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel id="placeType">Place type</InputLabel>
+                  <InputLabel id="placeType">
+                    Place type
+                    <span
+                      style={{
+                        color: "red",
+                        fontSize: "18px",
+                      }}
+                    >
+                      *
+                    </span>
+                  </InputLabel>
                   <Select
                     fullWidth
                     label="Place type"
@@ -138,7 +171,7 @@ const DestinationForm = ({ style, ...rest }) => {
               <Grid item md={6} xs={12}>
                 <TextField
                   fullWidth
-                  label="Date of birth"
+                  label="Phone"
                   name="phone"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
@@ -158,8 +191,9 @@ const DestinationForm = ({ style, ...rest }) => {
                 />
               </Grid>
               <Grid item md={6} xs={12}>
-                <AddressInput onChange={handleAddressChange} />
+                <AddressInput onChange={handleAddressChange} required={true} />
               </Grid>
+
               <Grid item md={12} xs={12}>
                 <TextField
                   fullWidth
@@ -173,6 +207,28 @@ const DestinationForm = ({ style, ...rest }) => {
                   InputLabelProps={{ shrink: true }}
                 />
               </Grid>
+
+              <Grid item md={12} xs={12}>
+                <UploadInput onChange={handleImageChange}>
+                  Upload images
+                </UploadInput>
+                {/* display file names */}
+                {images.length > 0 && (
+                  <ul>
+                    {Array.from(images).map((image) => (
+                      <li
+                        style={{
+                          listStyleType: "none",
+                          marginRight: "10px",
+                        }}
+                        key={image.name}
+                      >
+                        {image.name}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </Grid>
             </>
           </Grid>
         </CardContent>
@@ -184,8 +240,19 @@ const DestinationForm = ({ style, ...rest }) => {
             p: 2,
           }}
         >
-          <Button color="primary" variant="contained" type="submit">
-            Create Destination
+          <Button
+            color="primary"
+            variant="contained"
+            type="submit"
+            sx={{
+              width: "200px",
+            }}
+          >
+            {loading ? (
+              <CircularProgress size={24} sx={{ color: "#FFF" }} />
+            ) : (
+              "Create Destination"
+            )}
           </Button>
         </Box>
       </Card>

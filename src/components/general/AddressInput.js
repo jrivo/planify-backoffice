@@ -3,7 +3,7 @@ import { useState } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import { GoogleAutoComplete, GetPostalCode } from "../../utils.js/thirdParty";
 
-const AddressInput = ({ onChange }) => {
+const AddressInput = ({ onChange, required }) => {
   const [addresses, setAddresses] = useState([]); // these are the options for the autocomplete
   const [fullAddress, setFullAddress] = useState("");
 
@@ -73,13 +73,28 @@ const AddressInput = ({ onChange }) => {
           disableAnimation={true}
           {...params}
           shrink={false}
-          label="Address"
+          label={
+            required ? (
+              <span>
+                Address
+                <span
+                  style={{
+                    color: "red",
+                    fontSize: "18px",
+                  }}
+                >
+                  *
+                </span>
+              </span>
+            ) : (
+              "Address"
+            )
+          }
           name="Address"
           onChange={(value) => {
             handleChangeAddress(value);
           }}
           variant="outlined"
-          placeholder="Address"
         />
       )}
     />
