@@ -118,11 +118,12 @@ const Activities = () => {
                 sx={{
                   minWidth: 260,
                 }}
+                key={activity.id}
               >
                 <ActivityCard
                   onClick={() => {
                     console.log("clicked");
-                    navigate("/Activities/" + index);
+                    navigate("/Activities/" + activity.id);
                   }}
                   subtitle1={activity.date}
                   title={activity.name}

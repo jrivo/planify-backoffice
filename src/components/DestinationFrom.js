@@ -114,7 +114,10 @@ const DestinationForm = ({ style, ...rest }) => {
                     variant="outlined"
                   >
                     {placeTypeList.map((placeType) => (
-                      <MenuItem key={placeType.id} value={placeType.id}>
+                      <MenuItem
+                        key={placeType.id}
+                        value={placeType.id.toString()}
+                      >
                         {placeType.name}
                       </MenuItem>
                     ))}

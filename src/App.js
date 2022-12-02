@@ -47,7 +47,7 @@ function App() {
         />
 
         <Route
-          path="/destinations/:userId"
+          path="/destinations/:id"
           element={
             <DashboardWrapper>
               <Destination />
@@ -55,7 +55,7 @@ function App() {
           }
         />
         <Route
-          path="/activities/:userId"
+          path="/activities/:id"
           element={
             <DashboardWrapper>
               <Activity />

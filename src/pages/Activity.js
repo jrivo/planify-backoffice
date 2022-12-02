@@ -7,6 +7,7 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { getActivity } from "../utils.js/apicalls";
 
 const Activity = ({ destination, onClick }) => {
   const matches = useMediaQuery("(min-width:1200px)");
@@ -24,11 +25,20 @@ const Activity = ({ destination, onClick }) => {
   const [price, setPrice] = useState("");
   const [placeType, setPlaceType] = useState("");
 
+  const loadData = async () => {
+    const activity = await getActivity(params.id);
+    setTitle(activity.name);
+    setDescription(activity.description);
+    // setDate(activity.date);
+    console.log(activity);
+  };
+
   useEffect(() => {
-    setTitle("Aquarium party");
-    setDescription(
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed volutpat eget ipsum et porta. Ut lobortis rhoncus ultrices. Nunc nulla risus, lacinia pretium auctor at, maximus vitae lorem. Maecenas nunc enim, imperdiet sit amet erat in, euismod luctus orci. Cras sodales tempor nunc. Aenean vitae viverra risus. Vivamus tempor congue vestibulum  Donec non varius tortor, id lobortis enim. Aenean sed urna quis nibh iaculis fringilla vel sit amet massa. Cras mollis eros lectus, vel dictum arcu dapibus in. Sed a nulla et augue feugiat luctus at vel nunc. Nulla nec nulla ultricies, porta orci ac, facilisis risus. Suspendisse sit amet dui euismod, egestas odio ut, venenatis libero. Fusce elementum laoreet justo non consequat. Nullam consectetur rutrum egestas."
-    );
+    loadData();
+    // setTitle("Aquarium party");
+    // setDescription(
+    //   "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed volutpat eget ipsum et porta. Ut lobortis rhoncus ultrices. Nunc nulla risus, lacinia pretium auctor at, maximus vitae lorem. Maecenas nunc enim, imperdiet sit amet erat in, euismod luctus orci. Cras sodales tempor nunc. Aenean vitae viverra risus. Vivamus tempor congue vestibulum  Donec non varius tortor, id lobortis enim. Aenean sed urna quis nibh iaculis fringilla vel sit amet massa. Cras mollis eros lectus, vel dictum arcu dapibus in. Sed a nulla et augue feugiat luctus at vel nunc. Nulla nec nulla ultricies, porta orci ac, facilisis risus. Suspendisse sit amet dui euismod, egestas odio ut, venenatis libero. Fusce elementum laoreet justo non consequat. Nullam consectetur rutrum egestas."
+    // );
     setDate("Sun, Nov 13 2022");
     setShortDate("nov. 13");
     setTime("2:30 PM");
@@ -39,7 +49,7 @@ const Activity = ({ destination, onClick }) => {
     setPlaceType("Restaurants . Bars . cafés");
     setAddress("10 rue de la paix, 75000 Paris");
   }, []);
-  console.log(params);
+  console.log("params are", params);
   return (
     <Box
       sx={{
