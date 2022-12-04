@@ -107,11 +107,32 @@ const saveDestination = async (place) => {
   }
 };
 
+const updateDestination = async (id, place) => {
+  console.log(place);
+  try {
+    const response = await fetch(
+      process.env.REACT_APP_SERVER_URL + "places/" + id,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: "Bearer " + localStorage.token,
+        },
+        body: place,
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log("error: ", error);
+  }
+};
+
 export {
   getDestinations,
   getDestination,
   getActivities,
   getPlaceTypes,
   saveDestination,
+  updateDestination,
   getActivity,
 };

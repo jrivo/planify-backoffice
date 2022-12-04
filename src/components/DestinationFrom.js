@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  Alert,
   Box,
   Card,
   CardContent,
@@ -16,9 +17,17 @@ import {
 import Button from "./general/Button";
 import AddressInput from "./general/AddressInput";
 import UploadInput from "./general/UploadInput";
-import { getPlaceTypes, saveDestination } from "../utils.js/apicalls";
+import {
+  getDestination,
+  getPlaceTypes,
+  saveDestination,
+  updateDestination,
+} from "../utils.js/apicalls";
+import { useNavigate, useParams } from "react-router-dom";
 
 const DestinationForm = ({ style, ...rest }) => {
+  const params = useParams();
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [placeType, setPlaceType] = useState("");
   const [placeTypeList, setPlaceTypeList] = useState([]);
@@ -35,12 +44,41 @@ const DestinationForm = ({ style, ...rest }) => {
   const [country, setCountry] = useState("");
   const [placeId, setPlaceId] = useState("");
   const [loading, setLoading] = useState(false);
+  const [defaultAddressValue, setDefaultAddressValue] = useState("");
   const [images, setImages] = useState([]);
+  const [errors, setErrors] = useState([]);
 
-  const loadData = async () => {
-    const placeTypes = await getPlaceTypes();
-    setPlaceTypeList(placeTypes);
-  };
+  console.log("params", params);
+  const loadData = params.id
+    ? async () => {
+        console.log("updating a destination");
+        console.log("params id", params.id);
+        const destination = await getDestination(params.id);
+        console.log("destination", destination);
+        const placeTypes = await getPlaceTypes();
+        setPlaceTypeList(placeTypes);
+        setName(destination.name);
+        setPlaceTypeId(destination.placeTypeId.toString());
+        setEmail(destination.email);
+        setPhone(destination.phone);
+        setWebsite(destination.website);
+        setDescription(destination.description);
+        setStreet(destination.street);
+        setStreetNumber(destination.streetNumber);
+        setCity(destination.city);
+        setPostalCode(destination.postalCode);
+        setRegion(destination.region);
+        setCountry(destination.country);
+
+        // setPlaceId(destination.placeId);
+        // setImages(destination.images);
+      }
+    : async () => {
+        console.log("creating a destination");
+
+        const placeTypes = await getPlaceTypes();
+        setPlaceTypeList(placeTypes);
+      };
 
   useEffect(() => {
     loadData();
@@ -63,10 +101,13 @@ const DestinationForm = ({ style, ...rest }) => {
       formData.append("images", images[i]);
       console.log("added image");
     }
+
+    console.log("palce type id", placeTypeId);
     formData.append("name", name);
     formData.append("placeType", placeType);
-    formData.append("placeTypeId", placeTypeId);
-    formData.append("email", email);
+    formData.append("placeTypeId", parseInt(placeTypeId));
+    if (email) formData.append("email", email);
+    // formData.append("email", email);
     formData.append("phone", phone);
     formData.append("website", website);
     formData.append("description", description);
@@ -76,7 +117,17 @@ const DestinationForm = ({ style, ...rest }) => {
     formData.append("postalCode", postalCode);
     formData.append("region", region);
     formData.append("country", country);
-    const response = await saveDestination(formData);
+    const submit = params.id
+      ? (data) => updateDestination(params.id, data)
+      : saveDestination;
+    const response = await submit(formData);
+    if (response.statusCode === 400) {
+      setErrors(response.message);
+    } else {
+      navigate("/destiantions");
+    }
+
+    console.log("response", response);
     setLoading(false);
   };
 
@@ -127,7 +178,7 @@ const DestinationForm = ({ style, ...rest }) => {
               <Grid item md={6} xs={12}>
                 <FormControl fullWidth>
                   <InputLabel id="placeType">
-                    Place type
+                    Destination type
                     <span
                       style={{
                         color: "red",
@@ -191,7 +242,22 @@ const DestinationForm = ({ style, ...rest }) => {
                 />
               </Grid>
               <Grid item md={6} xs={12}>
-                <AddressInput onChange={handleAddressChange} required={true} />
+                <AddressInput
+                  onChange={handleAddressChange}
+                  required={true}
+                  defaultValue={
+                    // params.id
+                    // ? streetNumber +
+                    //   " " +
+                    //   street +
+                    //   ", " +
+                    //   city +
+                    //   ", " +
+                    //   country
+                    // :
+                    ""
+                  }
+                />
               </Grid>
 
               <Grid item md={12} xs={12}>
@@ -231,6 +297,15 @@ const DestinationForm = ({ style, ...rest }) => {
               </Grid>
             </>
           </Grid>
+          {errors && (
+            <Box mt={3}>
+              {errors.map((error) => (
+                <Alert severity="error" key={error} sx={{ marginTop: "5px" }}>
+                  {error}
+                </Alert>
+              ))}
+            </Box>
+          )}
         </CardContent>
         <Divider />
         <Box
@@ -250,6 +325,8 @@ const DestinationForm = ({ style, ...rest }) => {
           >
             {loading ? (
               <CircularProgress size={24} sx={{ color: "#FFF" }} />
+            ) : params.id ? (
+              "Update destiantion"
             ) : (
               "Create Destination"
             )}

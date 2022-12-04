@@ -1,11 +1,13 @@
 import { Box, TextField } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import { GoogleAutoComplete, GetPostalCode } from "../../utils.js/thirdParty";
 
-const AddressInput = ({ onChange, required }) => {
+const AddressInput = ({ onChange, required, defaultValue }) => {
   const [addresses, setAddresses] = useState([]); // these are the options for the autocomplete
-  const [fullAddress, setFullAddress] = useState("");
+  const [fullAddress, setFullAddress] = useState(
+    defaultValue ? defaultValue : ""
+  ); // this is the full address that is displayed in the text field
 
   const handleChangeAddress = async (searchValue) => {
     const results = await GoogleAutoComplete(searchValue.target.value);

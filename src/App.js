@@ -9,6 +9,7 @@ import Signup from "./pages/Signup";
 import Activity from "./pages/Activity";
 import Account from "./pages/Account";
 import CreateDestination from "./pages/CreateDestination";
+import UpdateDestination from "./pages/UpdateDestination";
 function App() {
   return (
     <Router>
@@ -51,6 +52,15 @@ function App() {
           element={
             <DashboardWrapper>
               <Destination />
+            </DashboardWrapper>
+          }
+        />
+
+        <Route
+          path="/destinations/:id/update"
+          element={
+            <DashboardWrapper>
+              <UpdateDestination />
             </DashboardWrapper>
           }
         />
