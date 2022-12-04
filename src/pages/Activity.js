@@ -8,6 +8,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { getActivity, getDestination } from "../utils.js/apicalls";
+import TotalAvatars from "../components/general/TotalAvatars";
 
 const getFormattedDate = (date, format) => {
   const d = new Date(date);
@@ -170,6 +171,46 @@ const Activity = ({ destination, onClick }) => {
                 {creator}
               </span>
             </Typography>
+
+            <Typography
+              variant="body2"
+              style={{
+                fontSize: "18px",
+                fontWeight: "600",
+                marginTop: "20px",
+              }}
+            >
+              Participants
+            </Typography>
+            <TotalAvatars
+              data={[
+                {
+                  id: 1,
+                  name: "Remy Sharp",
+                  alt: "Remy Sharp",
+                  src: "https://material-ui.com/static/images/avatar/1.jpg",
+                },
+                {
+                  id: 2,
+                  name: "Travis Howard",
+                  alt: "Travis Howard",
+                  // src: "https://material-ui.com/static/images/avatar/2.jpg",
+                },
+                {
+                  id: 3,
+                  name: "Cindy Baker",
+                  alt: "Cindy Baker",
+                  src: "https://material-ui.com/static/images/avatar/3.jpg",
+                },
+                {
+                  id: 4,
+                  name: "Agnes Walker",
+                  alt: "Agnes Walker",
+                  src: "https://material-ui.com/static/images/avatar/4.jpg",
+                },
+              ]}
+              total={20}
+            />
           </Box>
           <Typography
             variant="h5"
@@ -181,6 +222,7 @@ const Activity = ({ destination, onClick }) => {
           >
             When and where
           </Typography>
+
           <Box
             sx={{
               display: "flex",
