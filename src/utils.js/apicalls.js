@@ -14,6 +14,25 @@ const getDestinations = async () => {
   }
 };
 
+const getDestination = async (id) => {
+  try {
+    const response = await fetch(
+      process.env.REACT_APP_SERVER_URL + "places/" + id,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.token,
+        },
+      }
+    );
+    const destination = await response.json();
+    return destination;
+  } catch (error) {
+    console.log("error: ", error);
+  }
+};
+
 const getActivities = async () => {
   try {
     const response = await fetch(
@@ -77,8 +96,6 @@ const saveDestination = async (place) => {
     const response = await fetch(process.env.REACT_APP_SERVER_URL + "places", {
       method: "POST",
       headers: {
-        // Accept: "application/json",
-        // "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.token,
       },
       body: place,
@@ -92,6 +109,7 @@ const saveDestination = async (place) => {
 
 export {
   getDestinations,
+  getDestination,
   getActivities,
   getPlaceTypes,
   saveDestination,
