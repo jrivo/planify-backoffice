@@ -31,7 +31,7 @@ function App() {
           }
         />
         <Route
-          path="/destinations/:destinationId"
+          path="/destinations/:id"
           element={
             <DashboardWrapper>
               <Destination />

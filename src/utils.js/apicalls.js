@@ -33,6 +33,25 @@ const getDestination = async (id) => {
   }
 };
 
+const deleteDestination = async (id) => {
+  try {
+    const response = await fetch(
+      process.env.REACT_APP_SERVER_URL + "places/" + id,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.token,
+        },
+      }
+    );
+    const destination = await response.json();
+    return destination;
+  } catch (error) {
+    console.log("error: ", error);
+  }
+};
+
 const getActivities = async () => {
   try {
     const response = await fetch(
@@ -130,6 +149,7 @@ const updateDestination = async (id, place) => {
 export {
   getDestinations,
   getDestination,
+  deleteDestination,
   getActivities,
   getPlaceTypes,
   saveDestination,
