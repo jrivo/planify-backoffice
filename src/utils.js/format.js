@@ -37,4 +37,12 @@ const formatPhone = (phone) => {
   }
 };
 
-export { getFormattedDate, getFormattedTime, formatPhone };
+// when the text is too long, it will be cut off and add "..." at the end
+const shortenText = (text, length) => {
+  if (text.length > length) {
+    return text.substring(0, length) + "...";
+  }
+  return text;
+};
+
+export { getFormattedDate, getFormattedTime, formatPhone, shortenText };

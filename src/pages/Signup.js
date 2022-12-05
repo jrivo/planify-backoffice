@@ -37,21 +37,38 @@ const Signup = () => {
           height: "100vh",
         }}
       >
-        {/* <Box
+        <Box
           sx={{
+            backgroundColor: "rgba(0,0,0,0.3)",
+            // backgroundColor: "red",
+            width: "100%",
+            height: "100%",
             position: "absolute",
-            top: 20,
-            left: 20,
+            zIndex: -500,
+          }}
+        ></Box>
+
+        <Box
+          sx={{
+            backgroundImage: "url(/login-background.jpg)",
+            width: "100%",
+            height: "100%",
+            position: "absolute",
+            zIndex: -501,
+          }}
+        ></Box>
+
+        <Container
+          maxWidth="sm"
+          sx={{
+            backgroundColor: "#FFF",
+            border: "none",
+            padding: "20px  50px 44px 50px",
+            borderRadius: "10px",
+            // boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.5)",
+            // paddingBottom: "24px",
           }}
         >
-          <img
-            src="/planify-logo-transparent-no-text.png"
-            alt="Planify logo"
-            width="100px"
-          />
-        </Box> */}
-
-        <Container maxWidth="sm">
           <form
             onSubmit={() => {
               console.log("give us nothing");
@@ -190,19 +207,18 @@ const Signup = () => {
         </Container>
       </Box>
 
-      <Stack
-        sx={{ width: "100%", position: "absolute", bottom: "10px" }}
-        spacing={2}
-      >
-        <Alert
-          severity="error"
-          onClose={() => {
-            setError(false);
-          }}
-        >
-          An error occured
-        </Alert>
-      </Stack>
+      {error && (
+        <Stack sx={{ width: "100% ", marginTop: "20px" }} spacing={2}>
+          <Alert
+            severity="error"
+            onClose={() => {
+              setError(false);
+            }}
+          >
+            {error}
+          </Alert>
+        </Stack>
+      )}
     </>
   );
 };

@@ -62,21 +62,39 @@ const Login = () => {
           height: "100vh",
         }}
       >
-        {/* <Box
+        {/* background Image  with overalay*/}
+
+        <Box
           sx={{
+            backgroundColor: "rgba(0,0,0,0.3)",
+            // backgroundColor: "red",
+            width: "100%",
+            height: "100%",
             position: "absolute",
-            top: 20,
-            left: 50,
+            zIndex: -500,
+          }}
+        ></Box>
+
+        <Box
+          sx={{
+            backgroundImage: "url(/login-background.jpg)",
+            width: "100%",
+            height: "100%",
+            position: "absolute",
+            zIndex: -501,
+          }}
+        ></Box>
+        <Container
+          maxWidth="sm"
+          sx={{
+            backgroundColor: "#FFF",
+            border: "none",
+            padding: "20px  50px 44px 50px",
+            borderRadius: "10px",
+            // boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.5)",
+            // paddingBottom: "24px",
           }}
         >
-          <img
-            src="/planify-logo-transparent-no-text.png"
-            alt="Planify logo"
-            width="100px"
-          />
-        </Box> */}
-
-        <Container maxWidth="sm">
           <form onSubmit={handleSubmit}>
             <Box sx={{ my: 3 }}>
               <Typography

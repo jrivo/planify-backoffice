@@ -1,5 +1,10 @@
 import DashboardWrapper from "./components/DashboardWrapper";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Home from "./pages/Home";
 import Destinations from "./pages/Destinations";
 import Destination from "./pages/Destination";
@@ -12,6 +17,15 @@ import CreateDestination from "./pages/CreateDestination";
 import UpdateDestination from "./pages/UpdateDestination";
 import CreateAcivity from "./pages/CreateActivity";
 import UpdateActivity from "./pages/UpdateActivity";
+
+const ProtectedRoute = ({ children }) => {
+  return localStorage.getItem("token") ? (
+    <>{children}</>
+  ) : (
+    <Navigate to="/login" />
+  );
+};
+
 function App() {
   return (
     <Router>
@@ -19,95 +33,117 @@ function App() {
         <Route
           path="/"
           element={
-            <DashboardWrapper>
-              <Activities />
-            </DashboardWrapper>
+            <ProtectedRoute>
+              <DashboardWrapper>
+                <Activities />
+              </DashboardWrapper>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/activities"
           element={
-            <DashboardWrapper>
-              <Activities />
-            </DashboardWrapper>
+            <ProtectedRoute>
+              <DashboardWrapper>
+                <Activities />
+              </DashboardWrapper>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/destinations"
           element={
-            <DashboardWrapper>
-              <Destinations />
-            </DashboardWrapper>
+            <ProtectedRoute>
+              <DashboardWrapper>
+                <Destinations />
+              </DashboardWrapper>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/destinations/:id"
           element={
-            <DashboardWrapper>
-              <Destination />
-            </DashboardWrapper>
+            <ProtectedRoute>
+              <DashboardWrapper>
+                <Destination />
+              </DashboardWrapper>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/destinations/create"
           element={
-            <DashboardWrapper>
-              <CreateDestination />
-            </DashboardWrapper>
+            <ProtectedRoute>
+              <DashboardWrapper>
+                <CreateDestination />
+              </DashboardWrapper>
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/destinations/:id"
           element={
-            <DashboardWrapper>
-              <Destination />
-            </DashboardWrapper>
+            <ProtectedRoute>
+              <DashboardWrapper>
+                <Destination />
+              </DashboardWrapper>
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/destinations/:id/update"
           element={
-            <DashboardWrapper>
-              <UpdateDestination />
-            </DashboardWrapper>
+            <ProtectedRoute>
+              <DashboardWrapper>
+                <UpdateDestination />
+              </DashboardWrapper>
+            </ProtectedRoute>
           }
           f
         />
         <Route
           path="/activities/:id"
           element={
-            <DashboardWrapper>
-              <Activity />
-            </DashboardWrapper>
+            <ProtectedRoute>
+              <DashboardWrapper>
+                <Activity />
+              </DashboardWrapper>
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/activities/create"
           element={
-            <DashboardWrapper>
-              <CreateAcivity />
-            </DashboardWrapper>
+            <ProtectedRoute>
+              <DashboardWrapper>
+                <CreateAcivity />
+              </DashboardWrapper>
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/activities/:id/update"
           element={
-            <DashboardWrapper>
-              <UpdateActivity />
-            </DashboardWrapper>
+            <ProtectedRoute>
+              <DashboardWrapper>
+                <UpdateActivity />
+              </DashboardWrapper>
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/account"
           element={
-            <DashboardWrapper>
-              <Account />
-            </DashboardWrapper>
+            <ProtectedRoute>
+              <DashboardWrapper>
+                <Account />
+              </DashboardWrapper>
+            </ProtectedRoute>
           }
         />
 

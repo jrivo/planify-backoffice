@@ -5,7 +5,7 @@ import ActivityCard from "../components/Card";
 import Button from "../components/general/Button";
 import { getActivities } from "../utils.js/apicalls";
 import { useLocation } from "react-router-dom";
-import { getFormattedDate } from "../utils.js/format";
+import { getFormattedDate, shortenText } from "../utils.js/format";
 
 const Activities = () => {
   const location = useLocation();
@@ -90,7 +90,7 @@ const Activities = () => {
                     navigate("/Activities/" + activity.id);
                   }}
                   subtitle1={getFormattedDate(activity.date)}
-                  title={activity.name}
+                  title={shortenText(activity.name, 24)}
                   image={
                     activity.medias && activity.medias.length > 0
                       ? activity.medias[0].url
