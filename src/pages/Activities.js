@@ -57,7 +57,9 @@ const Activities = () => {
           Activities
         </Typography>
 
-        <Button>New activity</Button>
+        <Button onClick={() => navigate("/activities/create")}>
+          New activity
+        </Button>
       </Box>
 
       <Box
@@ -87,10 +89,10 @@ const Activities = () => {
                 <ActivityCard
                   onClick={() => {
                     console.log("clicked");
-                    navigate("/Activities/" + activity.id);
+                    navigate("/activities/" + activity.id);
                   }}
                   subtitle1={getFormattedDate(activity.date)}
-                  title={shortenText(activity.name, 24)}
+                  title={shortenText(activity.name, 18)}
                   image={
                     activity.medias && activity.medias.length > 0
                       ? activity.medias[0].url

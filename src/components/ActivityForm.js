@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import Button from "./general/Button";
 import UploadInput from "./general/UploadInput";
-import { saveActivity } from "../utils.js/apicalls";
+import { saveActivity, getDestinations } from "../utils.js/apicalls";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 
 const ActivityForm = ({ route, style, ...rest }) => {
@@ -30,9 +30,25 @@ const ActivityForm = ({ route, style, ...rest }) => {
   const [images, setImages] = useState([]);
   const [errors, setErrors] = useState([]);
   const location = useLocation();
+  const [destiantionId, setDestinationId] = useState("");
+  const [destinations, setDestinations] = useState([]);
+
+  const loadDestinations = async () => {
+    const destinations = await getDestinations();
+    setDestinations(
+      destinations.map((destination) => {
+        return {
+          id: destination.id,
+          name: destination.name,
+        };
+      })
+    );
+    if (location.state && location.state.destinationId)
+      setDestinationId(location.state.destinationId);
+  };
 
   useEffect(() => {
-    console.log("params", params);
+    loadDestinations();
   }, []);
 
   const handleSubmit = async (e) => {
@@ -48,7 +64,7 @@ const ActivityForm = ({ route, style, ...rest }) => {
       formData.append("images", images[i]);
     }
 
-    const response = await saveActivity(location.state.destinationId, formData);
+    const response = await saveActivity(destiantionId, formData);
     console.log("response", response);
     setLoading(false);
   };
@@ -74,7 +90,7 @@ const ActivityForm = ({ route, style, ...rest }) => {
         <CardContent>
           <Grid container spacing={3}>
             <>
-              <Grid item md={4} xs={12}>
+              <Grid item md={6} xs={12}>
                 <TextField
                   fullWidth
                   label={
@@ -98,7 +114,7 @@ const ActivityForm = ({ route, style, ...rest }) => {
                 />
               </Grid>
 
-              <Grid item md={4} xs={12}>
+              <Grid item md={6} xs={12}>
                 <TextField
                   fullWidth
                   label="Price"
@@ -109,7 +125,7 @@ const ActivityForm = ({ route, style, ...rest }) => {
                   variant="outlined"
                 />
               </Grid>
-              <Grid item md={4} xs={12}>
+              <Grid item md={6} xs={12}>
                 <TextField
                   fullWidth
                   label="Date"
@@ -119,6 +135,45 @@ const ActivityForm = ({ route, style, ...rest }) => {
                   variant="outlined"
                   InputLabelProps={{ shrink: true }}
                 />
+              </Grid>
+
+              <Grid item md={6} xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel id="placeType">
+                    Destination
+                    <span
+                      style={{
+                        color: "red",
+                        fontSize: "18px",
+                      }}
+                    >
+                      *
+                    </span>
+                  </InputLabel>
+                  <Select
+                    fullWidth
+                    label="Place type"
+                    name="placeType"
+                    value={destiantionId}
+                    onChange={(e) => setDestinationId(e.target.value)}
+                    InputLabelProps={{ shrink: true }}
+                    variant="outlined"
+                    disabled={
+                      location.state && location.state.destinationId
+                        ? true
+                        : false
+                    }
+                  >
+                    {destinations.map((destination) => (
+                      <MenuItem
+                        key={destination.id}
+                        value={destination.id.toString()}
+                      >
+                        {destination.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </Grid>
 
               <Grid item md={12} xs={12}>

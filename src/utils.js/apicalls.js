@@ -1,6 +1,10 @@
-const getDestinations = async () => {
+const getDestinations = async (userType, id) => {
+  const url =
+    userType === "merchant"
+      ? process.env.REACT_APP_SERVER_URL + "places/merchant/" + id
+      : process.env.REACT_APP_SERVER_URL + "places";
   try {
-    const response = await fetch(process.env.REACT_APP_SERVER_URL + "places", {
+    const response = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -8,6 +12,7 @@ const getDestinations = async () => {
       },
     });
     const destinations = await response.json();
+    console.log(destinations);
     return destinations;
   } catch (error) {
     console.log("error: ", error);
@@ -46,6 +51,7 @@ const deleteDestination = async (id) => {
       }
     );
     const destination = await response.json();
+    console.log(destination);
     return destination;
   } catch (error) {
     console.log("error: ", error);

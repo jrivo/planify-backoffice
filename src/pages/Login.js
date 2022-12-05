@@ -44,6 +44,7 @@ const Login = () => {
 
       localStorage.setItem("token", data.access_token);
       localStorage.setItem("email", JSON.stringify(data.email));
+      localStorage.setItem("id", JSON.stringify(data.id));
     } catch (error) {
       console.log(error);
     }

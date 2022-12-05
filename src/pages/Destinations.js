@@ -13,6 +13,8 @@ const Destinations = () => {
   const loadDestinations = async () => {
     setLoading(true);
     const destinations = await getDestinations();
+    // "merchant",
+    // localStorage.getItem("id")
     setDestinations(destinations);
     setLoading(false);
   };

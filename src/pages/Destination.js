@@ -17,6 +17,7 @@ import {
   getFormattedTime,
   formatPhone,
 } from "../utils.js/format";
+import Table from "../components/general/Table";
 
 const Activity = ({ destination, onClick }) => {
   const navigate = useNavigate();
@@ -300,7 +301,7 @@ const Activity = ({ destination, onClick }) => {
               fontSize: "25px",
               fontWeight: "700",
               marginBottom: "10px",
-              marginTop: "30px",
+              marginTop: "20px",
             }}
           >
             More information
@@ -314,6 +315,20 @@ const Activity = ({ destination, onClick }) => {
             <span style={{ fontWeight: "bold" }}>Phone: </span>
             <span>{formatPhone(phone)}</span>
           </Typography>
+
+          <Typography
+            variant="h5"
+            style={{
+              fontSize: "25px",
+              fontWeight: "700",
+              marginBottom: "30px",
+              marginTop: "20px",
+            }}
+          >
+            Activities
+          </Typography>
+
+          <Table />
         </Box>
       </Box>
     </Box>
