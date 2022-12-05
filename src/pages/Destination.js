@@ -158,6 +158,11 @@ const Activity = ({ destination, onClick }) => {
                   marginRight: "20px",
                   fontSize: "13px",
                 }}
+                onClick={() => {
+                  navigate("/activities/create", {
+                    state: { destinationId: params.id },
+                  });
+                }}
               >
                 Add Activity
               </Button>
