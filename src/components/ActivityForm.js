@@ -16,13 +16,7 @@ import {
 } from "@mui/material";
 import Button from "./general/Button";
 import UploadInput from "./general/UploadInput";
-import {
-  getDestination,
-  getPlaceTypes,
-  saveActivity,
-  saveDestination,
-  updateDestination,
-} from "../utils.js/apicalls";
+import { saveActivity } from "../utils.js/apicalls";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 
 const ActivityForm = ({ route, style, ...rest }) => {
@@ -36,8 +30,6 @@ const ActivityForm = ({ route, style, ...rest }) => {
   const [images, setImages] = useState([]);
   const [errors, setErrors] = useState([]);
   const location = useLocation();
-
-  console.log("location", location);
 
   useEffect(() => {
     console.log("params", params);
