@@ -18,8 +18,9 @@ import PeopleIcon from "@mui/icons-material/People";
 import { useNavigate } from "react-router-dom";
 import Avatar from "./Avatar";
 import AccountMenu from "./AccountMenu";
+import { Typography } from "@mui/material";
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 const DashboardWrapper = ({ children, ...rest }) => {
   const navigate = useNavigate();
@@ -32,10 +33,29 @@ const DashboardWrapper = ({ children, ...rest }) => {
 
   const iconStyles = {
     // color: process.env.REACT_APP_PRIMARY_COLOR,
+    color: "#fff",
   };
 
   const drawer = (
-    <div>
+    <div
+      style={{
+        width: drawerWidth,
+        height: "100%",
+        backgroundColor: "#1A1C1E",
+        paddingTop: "20px",
+        // backgroundColor: "red",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "flex-start",
+      }}
+    >
+      <Typography
+        variant="h6"
+        style={{ color: "#fff", fontSize: "36px", marginTop: "30px" }}
+      >
+        Planify
+      </Typography>
       <Divider
         style={{
           marginBottom: "100px",
@@ -43,7 +63,13 @@ const DashboardWrapper = ({ children, ...rest }) => {
       />
       <List>
         {["Acivities", "Destinations", "Account"].map((text, index) => (
-          <ListItem key={text} disablePadding>
+          <ListItem
+            key={text}
+            disablePadding
+            sx={{
+              color: "#FFF",
+            }}
+          >
             <ListItemButton
               onClick={() => {
                 //redirect to the page
