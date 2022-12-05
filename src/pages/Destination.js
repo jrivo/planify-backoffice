@@ -190,8 +190,6 @@ const Activity = ({ destination, onClick }) => {
                 }}
                 onClick={() => {
                   setAlertOpen(true);
-                  // deleteDestination(params.id);
-                  // navigate("/destinations");
                 }}
               >
                 Delete

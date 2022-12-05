@@ -90,6 +90,25 @@ const getActivity = async (id) => {
   }
 };
 
+const deleteActivity = async (id) => {
+  try {
+    const response = await fetch(
+      process.env.REACT_APP_SERVER_URL + "activities/" + id,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.token,
+        },
+      }
+    );
+    const activity = await response.json();
+    return activity;
+  } catch (error) {
+    console.log("error: ", error);
+  }
+};
+
 const saveActivity = async (destinationId, data) => {
   console.log("this is the date", data);
   try {
@@ -175,6 +194,7 @@ export {
   deleteDestination,
   getActivities,
   saveActivity,
+  deleteActivity,
   getPlaceTypes,
   saveDestination,
   updateDestination,

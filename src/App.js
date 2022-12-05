@@ -11,12 +11,21 @@ import Account from "./pages/Account";
 import CreateDestination from "./pages/CreateDestination";
 import UpdateDestination from "./pages/UpdateDestination";
 import CreateAcivity from "./pages/CreateActivity";
+import UpdateActivity from "./pages/UpdateActivity";
 function App() {
   return (
     <Router>
       <Routes>
         <Route
           path="/"
+          element={
+            <DashboardWrapper>
+              <Activities />
+            </DashboardWrapper>
+          }
+        />
+        <Route
+          path="/activities"
           element={
             <DashboardWrapper>
               <Activities />
@@ -80,6 +89,15 @@ function App() {
           element={
             <DashboardWrapper>
               <CreateAcivity />
+            </DashboardWrapper>
+          }
+        />
+
+        <Route
+          path="/activities/:id/update"
+          element={
+            <DashboardWrapper>
+              <UpdateActivity />
             </DashboardWrapper>
           }
         />

@@ -1,14 +1,15 @@
 import { Box, Typography } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import StarRating from "../components/StarRating";
 import { useState, useEffect } from "react";
 import { PriceChange } from "@mui/icons-material";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import useMediaQuery from "@mui/material/useMediaQuery";
-
+import Button from "../components/general/Button";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { getActivity, getDestination } from "../utils.js/apicalls";
+import { getActivity, deleteActivity } from "../utils.js/apicalls";
 import TotalAvatars from "../components/general/TotalAvatars";
+import AlertDialog from "../components/general/AlertDialog";
 
 const getFormattedDate = (date, format) => {
   const d = new Date(date);
@@ -38,6 +39,7 @@ const getFormattedTime = (date) => {
 const Activity = ({ destination, onClick }) => {
   const matches = useMediaQuery("(min-width:1200px)");
   const params = useParams();
+  const navigate = useNavigate();
   const [descriptionOpen, setDescriptionOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -51,6 +53,7 @@ const Activity = ({ destination, onClick }) => {
   const [price, setPrice] = useState("");
   const [placeType, setPlaceType] = useState("");
   const [image, setImage] = useState("");
+  const [alertOpen, setAlertOpen] = useState(false);
 
   const loadData = async () => {
     const activity = await getActivity(params.id);
@@ -128,14 +131,14 @@ const Activity = ({ destination, onClick }) => {
           <Typography
             variant="body2"
             sx={{
-              fontWeight: "bold",
+              // fontWeight: "bold",
               fontSize: "25px",
               position: matches && "absolute",
-              top: "40px",
-              right: "10%",
+              top: "140px",
+              right: "1%",
             }}
           >
-            {price}
+            Price: <span sx={{ fontWeight: "400" }}>{price} </span>
           </Typography>
           <Typography
             variant="body2"
@@ -146,17 +149,62 @@ const Activity = ({ destination, onClick }) => {
           >
             {shortDate}
           </Typography>
-          <Typography
-            variant="h3"
+
+          <Box
             sx={{
-              fontWeight: "800",
-              fontSize: "54px",
-              lineHeight: "54px",
-              marginBottom: "20px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
             }}
           >
-            {title}
-          </Typography>
+            <Typography
+              variant="h3"
+              sx={{
+                fontWeight: "800",
+                fontSize: "54px",
+                lineHeight: "54px",
+                marginBottom: "20px",
+              }}
+            >
+              {title}
+            </Typography>
+            <Box>
+              <Button
+                sx={{
+                  marginRight: "20px",
+                  fontSize: "13px",
+                }}
+                onClick={() => navigate("update")}
+              >
+                Edit
+              </Button>
+              <Button
+                sx={{
+                  fontSize: "13px",
+                  backgroundColor: "red",
+                  color: "#FFF",
+                  "&:hover": {
+                    backgroundColor: "red",
+                    boxShadow: "none",
+                  },
+                }}
+                onClick={() => {
+                  setAlertOpen(true);
+                }}
+              >
+                Delete
+              </Button>
+              <AlertDialog
+                message="Do you really want to delete this activity?"
+                open={alertOpen}
+                setOpen={setAlertOpen}
+                action={() => {
+                  deleteActivity(params.id);
+                  navigate("/activities");
+                }}
+              />
+            </Box>
+          </Box>
           <Box sx={{ marginBottom: "10px" }}>
             <Typography
               variant="body2"
@@ -178,6 +226,7 @@ const Activity = ({ destination, onClick }) => {
                 fontSize: "18px",
                 fontWeight: "600",
                 marginTop: "20px",
+                marginBottom: "20px",
               }}
             >
               Participants
