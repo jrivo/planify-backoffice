@@ -11,19 +11,37 @@ const ActionAreaCard = ({
   image,
   subtitle2,
   footerText,
+  style,
+  sx,
   ...rest
 }) => {
   return (
-    <Card sx={{ maxWidth: 345, minWidth: 250 }} {...rest}>
+    <Card
+      sx={{
+        maxWidth: 345,
+        minWidth: 250,
+        borderRadius: "15px",
+        ...style,
+        ...sx,
+      }}
+      {...rest}
+    >
       <CardActionArea {...rest}>
         <CardMedia
           component="img"
-          height="140"
+          height="170"
           image={image}
           alt="green iguana"
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography
+            gutterBottom
+            variant="h5"
+            component="div"
+            sx={{
+              fontSize: "18px",
+            }}
+          >
             {title}
           </Typography>
           <Typography

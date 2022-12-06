@@ -100,6 +100,9 @@ const Activities = () => {
                   }
                   subtitle2={activity.address?.city}
                   footerText={activity.price ? activity.price + " €" : "Free"}
+                  sx={{
+                    margin: "6px",
+                  }}
                 />
               </Grid>
             ))}

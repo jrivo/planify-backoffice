@@ -8,23 +8,13 @@ import {
 const markers = [
   {
     id: 1,
-    name: "Chicago, Illinois",
-    position: { lat: 41.881832, lng: -87.623177 },
+    name: "notre dame",
+    position: { lat: 48.8534, lng: 2.3488 },
   },
   {
     id: 2,
-    name: "Denver, Colorado",
-    position: { lat: 39.739235, lng: -104.99025 },
-  },
-  {
-    id: 3,
-    name: "Los Angeles, California",
-    position: { lat: 34.052235, lng: -118.243683 },
-  },
-  {
-    id: 4,
-    name: "New York, New York",
-    position: { lat: 40.712776, lng: -74.005974 },
+    name: "eiffel tower",
+    position: { lat: 48.8584, lng: 2.2945 },
   },
 ];
 
@@ -52,7 +42,6 @@ function Map() {
       west: parseFloat(center.lng) - 0.1,
     };
 
-    // markers.forEach(({ position }) => bounds.extend(position));
     map.fitBounds(bounds);
   };
 
@@ -70,7 +59,17 @@ function Map() {
         >
           {activeMarker === id ? (
             <InfoWindow onCloseClick={() => setActiveMarker(null)}>
-              <div>{name}</div>
+              <div>
+                <div>{name}</div>
+                <div
+                  style={{
+                    color: `#f00`,
+                    backgroundColor: `blue`,
+                  }}
+                >
+                  these are details about this place
+                </div>
+              </div>
             </InfoWindow>
           ) : null}
         </Marker>

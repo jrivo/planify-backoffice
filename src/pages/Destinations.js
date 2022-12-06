@@ -98,6 +98,9 @@ const Destinations = () => {
                       : process.env.REACT_APP_IMAGE_PLACEHOLDER
                   }
                   subtitle1={destination.address?.city}
+                  sx={{
+                    margin: "6px",
+                  }}
                 />
               </Grid>
             ))}
