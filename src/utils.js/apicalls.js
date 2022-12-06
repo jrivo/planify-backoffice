@@ -32,6 +32,7 @@ const getDestination = async (id) => {
       }
     );
     const destination = await response.json();
+    console.log("this is the destination", destination);
     return destination;
   } catch (error) {
     console.log("error: ", error);

@@ -17,6 +17,7 @@ import CreateDestination from "./pages/CreateDestination";
 import UpdateDestination from "./pages/UpdateDestination";
 import CreateAcivity from "./pages/CreateActivity";
 import UpdateActivity from "./pages/UpdateActivity";
+import Overview from "./pages/Overview";
 
 const ProtectedRoute = ({ children }) => {
   return localStorage.getItem("token") ? (
@@ -30,6 +31,16 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route
+          path="/overview"
+          element={
+            <ProtectedRoute>
+              <DashboardWrapper>
+                <Overview />
+              </DashboardWrapper>
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/"
           element={

@@ -5,6 +5,7 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Button from "../components/general/Button";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import ReactCardSlider from "react-card-slider-component";
 import {
   deleteDestination,
   getActivity,
@@ -18,8 +19,9 @@ import {
   formatPhone,
 } from "../utils.js/format";
 import Table from "../components/general/Table";
+import Slider from "../components/general/Slider/Slider";
 
-const Activity = ({ destination, onClick }) => {
+const Destination = ({ destination, onClick }) => {
   const navigate = useNavigate();
   const matches = useMediaQuery("(min-width:1200px)");
   const params = useParams();
@@ -35,6 +37,19 @@ const Activity = ({ destination, onClick }) => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [alertOpen, setAlertOpen] = useState(false);
+  const [rows, setRows] = useState([]);
+  const [activities, setActivities] = useState([]);
+
+  const columns = [
+    { field: "name", headerName: "Name", width: "200px" },
+    { field: "Date", headerName: "Date", width: "200px" },
+    {
+      field: "price",
+      headerName: "Price",
+      type: "number",
+      width: "200px",
+    },
+  ];
 
   const loadData = async () => {
     const placeTypes = await getPlaceTypes();
@@ -56,6 +71,18 @@ const Activity = ({ destination, onClick }) => {
       destination.medias !== undefined && destination.medias.length > 0
         ? destination.medias[0].url
         : "https://blog.redbubble.com/wp-content/uploads/2017/10/placeholder_image_square.jpg"
+    );
+    setActivities(
+      destination.activities.map((activity) => {
+        return {
+          image:
+            activity.medias && activity.medias.length > 0
+              ? activity.medias[0].url
+              : process.env.REACT_APP_IMAGE_PLACEHOLDER,
+          title: activity.name,
+          description: activity.price,
+        };
+      })
     );
   };
 
@@ -327,11 +354,19 @@ const Activity = ({ destination, onClick }) => {
           >
             Activities
           </Typography>
-
-          <Table />
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center ",
+            }}
+          >
+            <ReactCardSlider slides={activities} />
+            {/* <Slider slides={activities} /> */}
+          </Box>
         </Box>
       </Box>
     </Box>
   );
 };
-export default Activity;
+export default Destination;

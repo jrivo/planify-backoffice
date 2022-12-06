@@ -66,6 +66,7 @@ const ActivityForm = ({ route, style, ...rest }) => {
 
     const response = await saveActivity(destiantionId, formData);
     console.log("response", response);
+    navigate("/destinations/" + destiantionId);
     setLoading(false);
   };
 
