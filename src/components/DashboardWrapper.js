@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import Avatar from "./Avatar";
 import AccountMenu from "./AccountMenu";
 import { Typography } from "@mui/material";
+import SearchBar from "./general/SearchBar";
 
 const drawerWidth = 300;
 
@@ -27,6 +28,7 @@ const DashboardWrapper = ({ children, ...rest }) => {
   const navigate = useNavigate();
   const { window } = rest;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [search, setSearch] = React.useState("");
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -130,10 +132,22 @@ const DashboardWrapper = ({ children, ...rest }) => {
               width: "100%",
               height: "100%",
               display: "flex",
-              justifyContent: "flex-end",
+              justifyContent: "center",
+              marginTop: "15px",
+              paddingBottom: "15px",
+              // marginLeft: "180px",
+              alignItems: "center",
+              position: "relative",
             }}
           >
-            <Box style={{ cursor: "pointer" }}>
+            <SearchBar
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              search
+            />
+            <Box
+              style={{ cursor: "pointer", position: "absolute", right: "0px" }}
+            >
               <AccountMenu />
             </Box>
           </Box>
