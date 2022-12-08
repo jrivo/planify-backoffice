@@ -24,7 +24,7 @@ const center = {
   lng: 2.3522,
 };
 
-function Map() {
+function Map({ style }) {
   const [activeMarker, setActiveMarker] = useState(null);
 
   const handleActiveMarker = (marker) => {
@@ -36,45 +36,51 @@ function Map() {
 
   const handleOnLoad = (map) => {
     const bounds = {
-      north: parseFloat(center.lat) + 0.1,
-      south: parseFloat(center.lat) - 0.1,
-      east: parseFloat(center.lng) + 0.1,
-      west: parseFloat(center.lng) - 0.1,
+      north: parseFloat(center.lat) + 0.05,
+      south: parseFloat(center.lat) - 0.05,
+      east: parseFloat(center.lng) + 0.05,
+      west: parseFloat(center.lng) - 0.05,
     };
 
     map.fitBounds(bounds);
   };
 
   return (
-    <GoogleMap
-      onLoad={handleOnLoad}
-      onClick={() => setActiveMarker(null)}
-      mapContainerStyle={{ width: "50vw", height: "50vh" }}
+    <div
+      sx={{
+        ...style,
+      }}
     >
-      {markers.map(({ id, name, position }) => (
-        <Marker
-          key={id}
-          position={position}
-          onClick={() => handleActiveMarker(id)}
-        >
-          {activeMarker === id ? (
-            <InfoWindow onCloseClick={() => setActiveMarker(null)}>
-              <div>
-                <div>{name}</div>
-                <div
-                  style={{
-                    color: `#f00`,
-                    backgroundColor: `blue`,
-                  }}
-                >
-                  these are details about this place
+      <GoogleMap
+        onLoad={handleOnLoad}
+        onClick={() => setActiveMarker(null)}
+        mapContainerStyle={{ width: "50vw", height: "95%" }}
+      >
+        {markers.map(({ id, name, position }) => (
+          <Marker
+            key={id}
+            position={position}
+            onClick={() => handleActiveMarker(id)}
+          >
+            {activeMarker === id ? (
+              <InfoWindow onCloseClick={() => setActiveMarker(null)}>
+                <div>
+                  <div>{name}</div>
+                  <div
+                    style={{
+                      color: `#f00`,
+                      backgroundColor: `blue`,
+                    }}
+                  >
+                    these are details about this place
+                  </div>
                 </div>
-              </div>
-            </InfoWindow>
-          ) : null}
-        </Marker>
-      ))}
-    </GoogleMap>
+              </InfoWindow>
+            ) : null}
+          </Marker>
+        ))}
+      </GoogleMap>
+    </div>
   );
 }
 
