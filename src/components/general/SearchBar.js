@@ -1,6 +1,7 @@
 import { MenuItem, Select, TextField } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Button from "./Button";
+import SearchIcon from "@mui/icons-material/Search";
 
 const SearchBar = ({ value, onChange, placeholder }) => {
   return (
@@ -49,22 +50,41 @@ const SearchBar = ({ value, onChange, placeholder }) => {
         </MenuItem>
       </Select>
 
-      <input
-        value={value}
-        onChange={onChange}
+      <div
         style={{
-          border: "1px solid #eee",
-          borderLeft: "none",
-          borderRadius: "0 5px 5px 0",
-          padding: "10px",
-          paddingLeft: "15px",
-          width: "400px",
-          height: "38px",
-          outline: "none",
-          backgroundColor: "#FFF",
+          display: "inline-block",
+          position: "relative",
         }}
-        placeholder={placeholder ? placeholder : "Search"}
-      />
+      >
+        <SearchIcon
+          style={{
+            position: "absolute",
+            top: "10px",
+            // top: "50%",
+            // transform: "translateY(-50%)",
+            left: "10px",
+            color: "#555",
+            fontSize: "20px",
+          }}
+        />
+        <input
+          value={value}
+          onChange={onChange}
+          style={{
+            border: "1px solid #eee",
+            borderLeft: "none",
+            borderRadius: "0 5px 5px 0",
+            padding: "10px",
+            paddingLeft: "36px",
+            width: "400px",
+            height: "38px",
+            outline: "none",
+            backgroundColor: "#FFF",
+          }}
+          placeholder={placeholder ? placeholder : "Search"}
+        />
+      </div>
+
       <Button
         style={{
           marginLeft: "20px",

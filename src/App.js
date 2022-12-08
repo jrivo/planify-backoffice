@@ -18,6 +18,7 @@ import UpdateDestination from "./pages/UpdateDestination";
 import CreateAcivity from "./pages/CreateActivity";
 import UpdateActivity from "./pages/UpdateActivity";
 import Overview from "./pages/Overview";
+import Users from "./pages/Users";
 
 const ProtectedRoute = ({ children }) => {
   return localStorage.getItem("token") ? (
@@ -153,6 +154,17 @@ function App() {
             <ProtectedRoute>
               <DashboardWrapper>
                 <Account />
+              </DashboardWrapper>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/users"
+          element={
+            <ProtectedRoute>
+              <DashboardWrapper>
+                <Users />
               </DashboardWrapper>
             </ProtectedRoute>
           }

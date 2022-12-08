@@ -21,6 +21,7 @@ import Avatar from "./Avatar";
 import AccountMenu from "./AccountMenu";
 import { Typography } from "@mui/material";
 import SearchBar from "./general/SearchBar";
+import PersonIcon from "@mui/icons-material/Person";
 
 const drawerWidth = 300;
 
@@ -65,7 +66,7 @@ const DashboardWrapper = ({ children, ...rest }) => {
         }}
       />
       <List>
-        {["Overview", "Activities", "Destinations", "Account"].map(
+        {["Overview", "Activities", "Destinations", "Account", "Users"].map(
           (text, index) => (
             <ListItem
               key={text}
@@ -89,8 +90,10 @@ const DashboardWrapper = ({ children, ...rest }) => {
                     <RowingIcon style={iconStyles} />
                   ) : index === 2 ? (
                     <PlaceIcon style={iconStyles} />
+                  ) : index === 3 ? (
+                    <PersonIcon style={iconStyles} />
                   ) : (
-                    index === 3 && <PeopleIcon style={iconStyles} />
+                    index === 4 && <PeopleIcon style={iconStyles} />
                   )}
                 </ListItemIcon>
                 <ListItemText primary={text} />
