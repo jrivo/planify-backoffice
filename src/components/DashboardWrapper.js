@@ -8,6 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -62,34 +63,39 @@ const DashboardWrapper = ({ children, ...rest }) => {
         }}
       />
       <List>
-        {["Acivities", "Destinations", "Account"].map((text, index) => (
-          <ListItem
-            key={text}
-            disablePadding
-            sx={{
-              color: "#FFF",
-            }}
-          >
-            <ListItemButton
-              onClick={() => {
-                //redirect to the page
-                const page = index === 0 ? "/" : "/" + text.toLowerCase();
-                navigate(page);
+        {["Overview", "Activities", "Destinations", "Account"].map(
+          (text, index) => (
+            <ListItem
+              key={text}
+              disablePadding
+              sx={{
+                color: "#FFF",
               }}
             >
-              <ListItemIcon>
-                {index === 0 ? (
-                  <RowingIcon style={iconStyles} />
-                ) : index === 1 ? (
-                  <PlaceIcon style={iconStyles} />
-                ) : (
-                  index === 2 && <PeopleIcon style={iconStyles} />
-                )}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+              <ListItemButton
+                onClick={() => {
+                  //redirect to the page
+                  // const page = index === 0 ? "/" : "/" + text.toLowerCase();
+                  const page = "/" + text.toLowerCase();
+                  navigate(page);
+                }}
+              >
+                <ListItemIcon>
+                  {index === 0 ? (
+                    <DashboardIcon style={iconStyles} />
+                  ) : index === 1 ? (
+                    <RowingIcon style={iconStyles} />
+                  ) : index === 2 ? (
+                    <PlaceIcon style={iconStyles} />
+                  ) : (
+                    index === 3 && <PeopleIcon style={iconStyles} />
+                  )}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          )
+        )}
       </List>
     </div>
   );

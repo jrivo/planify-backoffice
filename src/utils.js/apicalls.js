@@ -139,6 +139,25 @@ const saveActivity = async (destinationId, data) => {
   }
 };
 
+const updateActivity = async (activityId, data) => {
+  try {
+    const response = await fetch(
+      process.env.REACT_APP_SERVER_URL + "activities/" + activityId,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: "Bearer " + localStorage.token,
+        },
+        body: data,
+      }
+    );
+    const activity = await response.json();
+    return activity;
+  } catch (error) {
+    console.log("error: ", error);
+  }
+};
+
 const getPlaceTypes = async () => {
   try {
     const response = await fetch(
@@ -201,6 +220,7 @@ export {
   deleteDestination,
   getActivities,
   saveActivity,
+  updateActivity,
   deleteActivity,
   getPlaceTypes,
   saveDestination,

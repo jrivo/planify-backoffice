@@ -6,6 +6,7 @@ import {
   CardContent,
   CardHeader,
   CircularProgress,
+  createTheme,
   Divider,
   FormControl,
   Grid,
@@ -16,15 +17,30 @@ import {
 } from "@mui/material";
 import Button from "./general/Button";
 import UploadInput from "./general/UploadInput";
-import { saveActivity, getDestinations } from "../utils.js/apicalls";
+import {
+  saveActivity,
+  getDestinations,
+  getActivity,
+  updateActivity,
+} from "../utils.js/apicalls";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
+
+import Stack from "@mui/material/Stack";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 
 const ActivityForm = ({ route, style, ...rest }) => {
   const params = useParams();
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(
+    new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
+  );
   const [price, setPrice] = useState("");
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState([]);
@@ -47,14 +63,24 @@ const ActivityForm = ({ route, style, ...rest }) => {
       setDestinationId(location.state.destinationId);
   };
 
+  const loadActivity = async () => {
+    const activity = await getActivity(params.id);
+    setName(activity.name);
+    setDescription(activity.description);
+    setDate(activity.date);
+    setPrice(activity.price);
+    setDestinationId(activity.placeId);
+    console.log("got the activity haha woooooooooooo ", activity);
+  };
+
   useEffect(() => {
     loadDestinations();
+    loadActivity();
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-
     if (name) formData.append("name", name);
     if (description) formData.append("description", description);
     if (date) formData.append("date", date);
@@ -64,9 +90,19 @@ const ActivityForm = ({ route, style, ...rest }) => {
       formData.append("images", images[i]);
     }
 
-    const response = await saveActivity(destiantionId, formData);
-    console.log("response", response);
-    navigate("/destinations/" + destiantionId);
+    let response = null;
+    let redirectRoute = "/";
+    if (params.id) {
+      response = await updateActivity(params.id, formData);
+      redirectRoute = "/activities/" + params.id;
+    } else {
+      response = await saveActivity(destiantionId, formData);
+      redirectRoute = "/activities/";
+    }
+
+    console.log("response: ", response);
+    if (response.error) setErrors(response.message);
+    else navigate(redirectRoute);
     setLoading(false);
   };
 
@@ -85,7 +121,9 @@ const ActivityForm = ({ route, style, ...rest }) => {
       onSubmit={handleSubmit}
     >
       <Card>
-        <CardHeader title="Create a new activity" />
+        <CardHeader
+          title={params.id ? "Edit your Activity" : "Create a new activity"}
+        />
 
         <Divider />
         <CardContent>
@@ -127,17 +165,28 @@ const ActivityForm = ({ route, style, ...rest }) => {
                 />
               </Grid>
               <Grid item md={6} xs={12}>
-                <TextField
-                  fullWidth
-                  label="Date"
-                  name="date"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  variant="outlined"
-                  InputLabelProps={{ shrink: true }}
-                />
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  {/* <Stack spacing={3}> */}
+                  <DateTimePicker
+                    style={{ width: "100%" }}
+                    label="Date"
+                    name="date"
+                    value={date}
+                    onChange={(value) => {
+                      console.log(value);
+                      setDate(value);
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        sx={{
+                          width: "100%",
+                        }}
+                        {...params}
+                      />
+                    )}
+                  />
+                </LocalizationProvider>
               </Grid>
-
               <Grid item md={6} xs={12}>
                 <FormControl fullWidth>
                   <InputLabel id="placeType">
@@ -248,6 +297,7 @@ const ActivityForm = ({ route, style, ...rest }) => {
               "Create activity"
             )}
           </Button>
+          {/* {date} */}
         </Box>
       </Card>
     </form>
