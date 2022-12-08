@@ -14,6 +14,7 @@ const CustomButton = ({ style, sx, children, ...rest }) => {
           backgroundColor: primaryLighterColor,
           boxShadow: "none",
         },
+        fontWeight: "300",
         ...style,
         ...sx,
       }}

@@ -18,7 +18,7 @@ const ActionAreaCard = ({
   return (
     <Card
       sx={{
-        maxWidth: 345,
+        maxWidth: 100,
         minWidth: 250,
         borderRadius: "15px",
         ...style,
@@ -29,7 +29,7 @@ const ActionAreaCard = ({
       <CardActionArea {...rest}>
         <CardMedia
           component="img"
-          height="170"
+          height="130"
           image={image}
           alt="green iguana"
         />
@@ -39,7 +39,8 @@ const ActionAreaCard = ({
             variant="h5"
             component="div"
             sx={{
-              fontSize: "18px",
+              fontSize: "15px",
+              marginBottom: "0px",
             }}
           >
             {title}
@@ -49,7 +50,7 @@ const ActionAreaCard = ({
             color="text.secondary"
             sx={{
               // fontWeight: "bold",
-              marginBottom: "5px",
+              marginBottom: "0px",
             }}
           >
             {subtitle1}

@@ -6,6 +6,8 @@ import Button from "../components/general/Button";
 import { getActivities } from "../utils.js/apicalls";
 import { useLocation } from "react-router-dom";
 import { getFormattedDate, shortenText } from "../utils.js/format";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 
 const Activities = () => {
   const location = useLocation();
@@ -16,7 +18,7 @@ const Activities = () => {
   const loadActivitivities = async () => {
     setLoading(true);
     const activities = await getActivities();
-    setActivities(activities);
+    setActivities(activities.slice(0, 6));
     setLoading(false);
   };
 
@@ -40,8 +42,11 @@ const Activities = () => {
   return (
     <Box
       sx={{
-        margin: "20px",
+        padding: "20px",
         marginLeft: "30px",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
       <Box
@@ -53,7 +58,13 @@ const Activities = () => {
           marginBottom: "50px",
         }}
       >
-        <Typography variant="h2" sx={{ fontSize: "28px", fontWeight: "bold" }}>
+        <Typography
+          variant="h2"
+          sx={{
+            fontSize: "28px",
+            fontWeight: "300",
+          }}
+        >
           Activities
         </Typography>
 
@@ -67,6 +78,9 @@ const Activities = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: activities?.length >= 3 ? "center" : "flex-start",
+          height: "100%",
+          display: "flex",
+          justifyContent: "center",
         }}
       >
         <Box
@@ -107,6 +121,18 @@ const Activities = () => {
               </Grid>
             ))}
           </Grid>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: "40px",
+            }}
+          >
+            <Stack spacing={2}>
+              <Pagination count={10} />
+            </Stack>
+          </Box>
         </Box>
       </Box>
     </Box>

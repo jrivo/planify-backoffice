@@ -104,7 +104,7 @@ const DashboardWrapper = ({ children, ...rest }) => {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box className="maions-parent" sx={{ display: "flex", minHeight: "95vh" }}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -179,12 +179,14 @@ const DashboardWrapper = ({ children, ...rest }) => {
       </Box>
       <Box
         component="main"
+        className="main"
         sx={{
           flexGrow: 1,
           p: 3,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           backgroundColor: "#F9FAFC",
-          minHeight: "100vh",
+          minHeight: "100%",
+          // maxHeight: "100vh",
         }}
       >
         <Toolbar />

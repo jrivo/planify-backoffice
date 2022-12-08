@@ -5,6 +5,9 @@ import Card from "../components/Card";
 import Button from "../components/general/Button";
 import { getDestinations } from "../utils.js/apicalls";
 
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
+
 const Destinations = () => {
   const navigate = useNavigate();
   const [destinations, setDestinations] = useState([]);
@@ -15,7 +18,9 @@ const Destinations = () => {
     const destinations = await getDestinations();
     // "merchant",
     // localStorage.getItem("id")
-    setDestinations(destinations);
+
+    // remove the slice when pagination is implemented
+    setDestinations(destinations.slice(0, 6));
     setLoading(false);
   };
 
@@ -39,8 +44,13 @@ const Destinations = () => {
   return (
     <Box
       sx={{
-        margin: "20px",
+        padding: "20px",
+        // paddingTop: "0px",
         marginLeft: "30px",
+        // backgroundColor: "red",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
       <Box
@@ -52,7 +62,7 @@ const Destinations = () => {
           marginBottom: "50px",
         }}
       >
-        <Typography variant="h2" sx={{ fontSize: "28px", fontWeight: "bold" }}>
+        <Typography variant="h2" sx={{ fontSize: "28px", fontWeight: "300" }}>
           Destinations
         </Typography>
 
@@ -66,6 +76,10 @@ const Destinations = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: destinations?.length >= 3 ? "center" : "flex-start",
+          height: "100%",
+          // backgroundColor: "blue",
+          display: "flex",
+          justifyContent: "center",
         }}
       >
         <Box
@@ -105,6 +119,18 @@ const Destinations = () => {
               </Grid>
             ))}
           </Grid>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: "40px",
+            }}
+          >
+            <Stack spacing={2}>
+              <Pagination count={10} />
+            </Stack>
+          </Box>
         </Box>
       </Box>
     </Box>

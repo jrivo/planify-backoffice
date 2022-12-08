@@ -18,8 +18,6 @@ import {
   getFormattedTime,
   formatPhone,
 } from "../utils.js/format";
-import Table from "../components/general/Table";
-import Slider from "../components/general/Slider/Slider";
 
 const Destination = ({ destination, onClick }) => {
   const navigate = useNavigate();
