@@ -272,6 +272,41 @@ const getActivitySubscribers = async (id) => {
   }
 };
 
+const getAllUsers = async () => {
+  try {
+    const response = await fetch(process.env.REACT_APP_SERVER_URL + "users", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.token,
+      },
+    });
+    const users = await response.json();
+    return users;
+  } catch (error) {
+    console.log("error: ", error);
+  }
+};
+
+const getUser = async (id) => {
+  try {
+    const response = await fetch(
+      process.env.REACT_APP_SERVER_URL + "users/" + id,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.token,
+        },
+      }
+    );
+    const users = await response.json();
+    return users;
+  } catch (error) {
+    console.log("error: ", error);
+  }
+};
+
 export {
   getDestinations,
   getDestination,
@@ -287,4 +322,6 @@ export {
   getActivitySubscribers,
   getCurrentUser,
   updateUserInfo,
+  getAllUsers,
+  getUser,
 };

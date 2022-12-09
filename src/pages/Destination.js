@@ -11,6 +11,7 @@ import {
   getActivity,
   getDestination,
   getPlaceTypes,
+  getUser,
 } from "../utils.js/apicalls";
 import AlertDialog from "../components/general/AlertDialog";
 import {
@@ -50,6 +51,9 @@ const Destination = ({ destination, onClick }) => {
   const loadData = async () => {
     const placeTypes = await getPlaceTypes();
     const destination = await getDestination(params.id);
+    const user = await getUser(destination.ownerId);
+    setCreator(user.firstName + " " + user.lastName);
+
     console.log("destination", destination);
     setTitle(destination.name);
     setDescription(destination.description);
@@ -90,7 +94,6 @@ const Destination = ({ destination, onClick }) => {
 
   useEffect(() => {
     loadData();
-    setCreator("John Doe");
   }, []);
   return (
     <Box
@@ -211,7 +214,12 @@ const Destination = ({ destination, onClick }) => {
 
             <Typography variant="body2">
               <span style={{ fontWeight: "bold" }}>Created by: </span>
-              <span style={{ color: "#1976d2", cursor: "pointer" }}>
+              <span
+                style={{
+                  color: "#1976d2",
+                  // cursor: "pointer"
+                }}
+              >
                 {creator}
               </span>
             </Typography>
@@ -340,7 +348,7 @@ const Destination = ({ destination, onClick }) => {
             <span>{email}</span>
           </Typography>
           <Typography variant="body2">
-            <span style={{ fontWeight: "bold" }}>Phone: </span>
+            {phone && <span style={{ fontWeight: "bold" }}>Phone: </span>}
             <span>{formatPhone(phone)}</span>
           </Typography>
 

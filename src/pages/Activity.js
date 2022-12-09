@@ -36,6 +36,7 @@ const Activity = ({ destination, onClick }) => {
   const loadData = async () => {
     const activity = await getActivity(params.id);
     const subscribers = await getActivitySubscribers(params.id);
+
     console.log("subscribers", subscribers);
     console.log("activity is", activity);
     setTitle(activity.name);

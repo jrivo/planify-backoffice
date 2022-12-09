@@ -1,8 +1,19 @@
 import { Box, Card, CardContent, Typography } from "@mui/material";
+import { useEffect } from "react";
 import Map from "../components/Map";
 import UsersCard from "../components/UsersCard";
+import { getAllUsers } from "../utils.js/apicalls";
+
+const loadData = async () => {
+  const users = await getAllUsers();
+  console.log(users);
+};
 
 const Users = () => {
+  useEffect(() => {
+    loadData();
+  }, []);
+
   return (
     <Box
       sx={{

@@ -34,6 +34,12 @@ const formatPhone = (phone) => {
       /(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/,
       "+$1 $2 $3 $4 $5"
     );
+  } else if (phone.length === 12) {
+    return phone.replace(
+      // + is already included
+      /(\d{2})(\d{1})(\d{2})(\d{2})(\d{2})(\d{2})/,
+      "$1 $2 $3 $4 $5 $6"
+    );
   }
 };
 
