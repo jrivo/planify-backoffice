@@ -124,7 +124,7 @@ const DestinationForm = ({ style, ...rest }) => {
     if (response.statusCode === 400) {
       setErrors(response.message);
     } else {
-      navigate("/destiantions");
+      navigate("/destinations");
     }
 
     console.log("response", response);

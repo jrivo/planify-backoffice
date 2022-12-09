@@ -36,9 +36,7 @@ const ActivityForm = ({ route, style, ...rest }) => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [date, setDate] = useState(
-    new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
-  );
+  const [date, setDate] = useState("");
   const [price, setPrice] = useState("");
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState([]);
@@ -72,8 +70,10 @@ const ActivityForm = ({ route, style, ...rest }) => {
   };
 
   useEffect(() => {
+    const date = new Date();
+    setDate(date);
     loadDestinations();
-    loadActivity();
+    if (params.id) loadActivity();
   }, []);
 
   const handleSubmit = async (e) => {
@@ -81,7 +81,9 @@ const ActivityForm = ({ route, style, ...rest }) => {
     const formData = new FormData();
     if (name) formData.append("name", name);
     if (description) formData.append("description", description);
-    if (date) formData.append("date", date);
+    console.log("unformatted date", date);
+    console.log("date from form", date.toISOString());
+    if (date) formData.append("date", new Date(date).toISOString());
     if (price) formData.append("price", price);
 
     for (let i = 0; i < images.length; i++) {

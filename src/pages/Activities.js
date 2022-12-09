@@ -18,6 +18,7 @@ const Activities = () => {
   const loadActivitivities = async () => {
     setLoading(true);
     const activities = await getActivities();
+    console.log(activities);
     setActivities(activities.slice(0, 6));
     setLoading(false);
   };

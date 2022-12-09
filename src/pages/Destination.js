@@ -21,9 +21,7 @@ import {
 
 const Destination = ({ destination, onClick }) => {
   const navigate = useNavigate();
-  const matches = useMediaQuery("(min-width:1200px)");
   const params = useParams();
-  const [descriptionOpen, setDescriptionOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [creator, setCreator] = useState("");
@@ -52,14 +50,11 @@ const Destination = ({ destination, onClick }) => {
   const loadData = async () => {
     const placeTypes = await getPlaceTypes();
     const destination = await getDestination(params.id);
+    console.log("destination", destination);
     setTitle(destination.name);
     setDescription(destination.description);
     setPlaceType(
       placeTypes.find((type) => type.id === destination.placeTypeId)
-    );
-    console.log(
-      "test",
-      placeTypes.find((type) => type.id === destination.placeTypeId).name
     );
     setEmail(destination.email);
     setPhone(destination.phone);
@@ -69,6 +64,15 @@ const Destination = ({ destination, onClick }) => {
       destination.medias !== undefined && destination.medias.length > 0
         ? destination.medias[0].url
         : "https://blog.redbubble.com/wp-content/uploads/2017/10/placeholder_image_square.jpg"
+    );
+    setAddress(
+      destination?.address?.streetNumber +
+        " " +
+        destination?.address?.street +
+        ", " +
+        destination?.address?.postalCode +
+        " " +
+        destination?.address?.city
     );
     setActivities(
       destination.activities.map((activity) => {
@@ -87,7 +91,6 @@ const Destination = ({ destination, onClick }) => {
   useEffect(() => {
     loadData();
     setCreator("John Doe");
-    setAddress("10 rue de la paix, 75000 Paris");
   }, []);
   return (
     <Box

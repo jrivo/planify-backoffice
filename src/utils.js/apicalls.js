@@ -140,6 +140,7 @@ const saveActivity = async (destinationId, data) => {
 };
 
 const updateActivity = async (activityId, data) => {
+  console.log("put data", data);
   try {
     const response = await fetch(
       process.env.REACT_APP_SERVER_URL + "activities/" + activityId,
@@ -152,6 +153,7 @@ const updateActivity = async (activityId, data) => {
       }
     );
     const activity = await response.json();
+    console.log("updated activity", activity);
     return activity;
   } catch (error) {
     console.log("error: ", error);
@@ -214,6 +216,22 @@ const updateDestination = async (id, place) => {
   }
 };
 
+const getCurrentUser = async () => {
+  try {
+    const response = await fetch(process.env.REACT_APP_SERVER_URL + "me", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.token,
+      },
+    });
+    const user = await response.json();
+    return user;
+  } catch (error) {
+    console.log("error: ", error);
+  }
+};
+
 export {
   getDestinations,
   getDestination,
@@ -226,4 +244,5 @@ export {
   saveDestination,
   updateDestination,
   getActivity,
+  getCurrentUser,
 };

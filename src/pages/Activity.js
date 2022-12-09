@@ -31,12 +31,21 @@ const Activity = ({ destination, onClick }) => {
 
   const loadData = async () => {
     const activity = await getActivity(params.id);
-
+    console.log("activity is", activity);
     setTitle(activity.name);
     setDescription(activity.description);
     setDate(getFormattedDate(activity.date));
     setShortDate(getFormattedDate(activity.date, "short"));
     setTime(getFormattedTime(activity.date));
+    setAddress(
+      activity?.address?.streetNumber +
+        " " +
+        activity?.address?.street +
+        ", " +
+        activity?.address?.postalCode +
+        " " +
+        activity?.address?.city
+    );
     setPrice(activity.price);
     setImage(
       activity.medias !== undefined && activity.medias.length > 0
