@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  Alert,
   Box,
   Card,
   CardContent,
@@ -9,23 +10,49 @@ import {
   TextField,
 } from "@mui/material";
 import Button from "./general/Button";
+import { updateUserInfo } from "../utils.js/apicalls";
 
-export default function AccountProfileDetails({ data, ...rest }) {
+export default function AccountProfileDetails({
+  data,
+  profileDetailsChanged,
+  setProfileDetailsChanged,
+  ...rest
+}) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [birthDate, setBirthDate] = useState("");
-  const [ProfileType, setProfileType] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     setFirstName(data?.firstName);
     setLastName(data?.lastName);
     setEmail(data?.email);
-    setProfileType(data?.role);
   }, [data]);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("firstName", firstName);
+    formData.append("lastName", lastName);
+    formData.append("email", email);
+    const response = updateUserInfo(data.id, formData);
+
+    // change value of message for one second then set it back to empty string
+    setProfileDetailsChanged(profileDetailsChanged + 1);
+    setMessage(
+      <Alert severity="success" sx={{ marginTop: "20px" }}>
+        profile updated successfully
+      </Alert>
+    );
+    setTimeout(() => {
+      setMessage("");
+    }, 5000);
+  };
+
   return (
-    <form autoComplete="off" noValidate {...rest}>
+    <form autoComplete="off" noValidate {...rest} onSubmit={handleSubmit}>
       <Card>
         <CardHeader title="Profile" />
 
@@ -77,21 +104,11 @@ export default function AccountProfileDetails({ data, ...rest }) {
                   InputLabelProps={{ shrink: true }}
                 />
               </Grid>
-              {/* <Grid item md={12} xs={12}>
-                <TextField
-                  fullWidth
-                  label="Profile type"
-                  name="ProfileType"
-                  value={ProfileType}
-                  onChange={(e) => setProfileType(e.target.value)}
-                  variant="outlined"
-                  InputLabelProps={{ shrink: true }}
-                />
-              </Grid> */}
             </>
           </Grid>
         </CardContent>
         <Divider />
+
         <Box
           sx={{
             display: "flex",
@@ -104,6 +121,7 @@ export default function AccountProfileDetails({ data, ...rest }) {
           </Button>
         </Box>
       </Card>
+      {message}
     </form>
   );
 }

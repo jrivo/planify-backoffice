@@ -6,6 +6,7 @@ import { getCurrentUser } from "../utils.js/apicalls";
 
 const Account = () => {
   const [profileData, setProfileData] = useState({});
+  const [profileDetailsChanged, setProfileDetailsChanged] = useState(0);
   const loadData = async () => {
     const currentUser = await getCurrentUser();
     setProfileData(currentUser);
@@ -14,7 +15,7 @@ const Account = () => {
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [profileDetailsChanged]);
   return (
     <>
       <Box
@@ -33,7 +34,11 @@ const Account = () => {
               <AccountProfile data={profileData} />
             </Grid>
             <Grid item lg={8} md={6} xs={12}>
-              <AccountProfileDetails data={profileData} />
+              <AccountProfileDetails
+                data={profileData}
+                profileDetailsChanged={profileDetailsChanged}
+                setProfileDetailsChanged={setProfileDetailsChanged}
+              />
             </Grid>
           </Grid>
         </Container>
