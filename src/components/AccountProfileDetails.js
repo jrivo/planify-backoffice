@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Card,
@@ -10,16 +10,22 @@ import {
 } from "@mui/material";
 import Button from "./general/Button";
 
-export default function AccountProfileDetails(props) {
-  const [data, setData] = useState();
+export default function AccountProfileDetails({ data, ...rest }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [ProfileType, setProfileType] = useState("");
 
+  useEffect(() => {
+    setFirstName(data?.firstName);
+    setLastName(data?.lastName);
+    setEmail(data?.email);
+    setProfileType(data?.role);
+  }, [data]);
+
   return (
-    <form autoComplete="off" noValidate {...props}>
+    <form autoComplete="off" noValidate {...rest}>
       <Card>
         <CardHeader title="Profile" />
 
@@ -71,7 +77,7 @@ export default function AccountProfileDetails(props) {
                   InputLabelProps={{ shrink: true }}
                 />
               </Grid>
-              <Grid item md={12} xs={12}>
+              {/* <Grid item md={12} xs={12}>
                 <TextField
                   fullWidth
                   label="Profile type"
@@ -81,7 +87,7 @@ export default function AccountProfileDetails(props) {
                   variant="outlined"
                   InputLabelProps={{ shrink: true }}
                 />
-              </Grid>
+              </Grid> */}
             </>
           </Grid>
         </CardContent>
@@ -93,13 +99,7 @@ export default function AccountProfileDetails(props) {
             p: 2,
           }}
         >
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={() => {
-              console.log("yes give us nothing sis");
-            }}
-          >
+          <Button color="primary" variant="contained" type="submit">
             Update profile
           </Button>
         </Box>

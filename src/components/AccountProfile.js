@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, useEffect } from "react";
 import {
   Avatar,
   Box,
@@ -10,15 +10,28 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Button from "./general/Button";
+import { updateUserInfo } from "../utils.js/apicalls";
 
-export default function AccountProfile(props) {
-  const [avatar, setAvatar] = React.useState("");
+export default function AccountProfile({ data, ...rest }) {
   const Input = styled("input")({
     display: "none",
   });
 
+  const handleImageChange = async (e) => {
+    const images = e.target.files;
+    console.log(images);
+    const formData = new FormData();
+    formData.append("images", images[0]);
+    const response = await updateUserInfo(data.id, formData);
+    console.log(response);
+    // wait 1 second before reloading the page
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  };
+
   return (
-    <Card {...props}>
+    <Card {...rest}>
       <CardContent>
         <Box
           sx={{
@@ -28,7 +41,11 @@ export default function AccountProfile(props) {
           }}
         >
           <Avatar
-            src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
+            src={
+              data?.profilePicture?.url
+                ? data.profilePicture.url
+                : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
+            }
             sx={{
               height: 64,
               mb: 2,
@@ -37,11 +54,11 @@ export default function AccountProfile(props) {
           />
 
           <Typography color="textPrimary" gutterBottom variant="h5">
-            John Doe
+            {data?.firstName} {data?.lastName}
           </Typography>
 
           <Typography color="textSecondary" variant="body2">
-            10 rue de la paix
+            {data?.role}
           </Typography>
         </Box>
       </CardContent>
@@ -53,6 +70,7 @@ export default function AccountProfile(props) {
             id="contained-button-file"
             multiple
             type="file"
+            onChange={handleImageChange}
           />
           <Button
             variant="contained"

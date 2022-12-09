@@ -1,8 +1,20 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import AccountProfile from "../components/AccountProfile";
 import AccountProfileDetails from "../components/AccountProfileDetails";
+import { getCurrentUser } from "../utils.js/apicalls";
 
 const Account = () => {
+  const [profileData, setProfileData] = useState({});
+  const loadData = async () => {
+    const currentUser = await getCurrentUser();
+    setProfileData(currentUser);
+    console.log(currentUser);
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
   return (
     <>
       <Box
@@ -18,10 +30,10 @@ const Account = () => {
           </Typography>
           <Grid container spacing={3}>
             <Grid item lg={4} md={6} xs={12}>
-              <AccountProfile />
+              <AccountProfile data={profileData} />
             </Grid>
             <Grid item lg={8} md={6} xs={12}>
-              <AccountProfileDetails />
+              <AccountProfileDetails data={profileData} />
             </Grid>
           </Grid>
         </Container>

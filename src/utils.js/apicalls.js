@@ -232,6 +232,46 @@ const getCurrentUser = async () => {
   }
 };
 
+const updateUserInfo = async (id, data) => {
+  console.log("put data", data);
+  try {
+    const response = await fetch(
+      process.env.REACT_APP_SERVER_URL + "users/" + id,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: "Bearer " + localStorage.token,
+        },
+        body: data,
+      }
+    );
+    const user = await response.json();
+    if (user.error) console.log(user);
+    return user;
+  } catch (error) {
+    console.log("error: ", error);
+  }
+};
+
+const getActivitySubscribers = async (id) => {
+  try {
+    const response = await fetch(
+      process.env.REACT_APP_SERVER_URL + "activities/" + id + "/subscribers",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.token,
+        },
+      }
+    );
+    const subscribers = await response.json();
+    return subscribers;
+  } catch (error) {
+    console.log("error: ", error);
+  }
+};
+
 export {
   getDestinations,
   getDestination,
@@ -244,5 +284,7 @@ export {
   saveDestination,
   updateDestination,
   getActivity,
+  getActivitySubscribers,
   getCurrentUser,
+  updateUserInfo,
 };

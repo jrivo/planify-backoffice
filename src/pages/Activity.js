@@ -7,7 +7,11 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Button from "../components/general/Button";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { getActivity, deleteActivity } from "../utils.js/apicalls";
+import {
+  getActivity,
+  deleteActivity,
+  getActivitySubscribers,
+} from "../utils.js/apicalls";
 import TotalAvatars from "../components/general/TotalAvatars";
 import AlertDialog from "../components/general/AlertDialog";
 import { getFormattedDate, getFormattedTime } from "../utils.js/format";
@@ -31,6 +35,8 @@ const Activity = ({ destination, onClick }) => {
 
   const loadData = async () => {
     const activity = await getActivity(params.id);
+    const subscribers = await getActivitySubscribers(params.id);
+    console.log("subscribers", subscribers);
     console.log("activity is", activity);
     setTitle(activity.name);
     setDescription(activity.description);
