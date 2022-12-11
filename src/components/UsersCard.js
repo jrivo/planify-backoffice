@@ -6,7 +6,7 @@ import { Box, Button, Typography } from "@mui/material";
 import BlockIcon from "@mui/icons-material/Block";
 import MessageIcon from "@mui/icons-material/Message";
 
-const UsersCard = ({ name, company, email, vat, noGutter }) => {
+const UsersCard = ({ name, email, role }) => {
   return (
     <Box
       display="flex"
@@ -33,7 +33,7 @@ const UsersCard = ({ name, company, email, vat, noGutter }) => {
               variant="caption"
               sx={{ marginLeft: "10px", fontWeight: "bold" }}
             >
-              {company}
+              {name}
             </Typography>
           </Typography>
         </Box>
@@ -55,7 +55,7 @@ const UsersCard = ({ name, company, email, vat, noGutter }) => {
               variant="caption"
               sx={{ marginLeft: "10px", fontWeight: "bold" }}
             >
-              {vat}
+              {role}
             </Typography>
           </Typography>
         </Box>
@@ -108,7 +108,7 @@ const UsersCard = ({ name, company, email, vat, noGutter }) => {
             display: "flex",
           }}
         >
-          <Box>
+          {/* <Box>
             <Button
               variant="text"
               sx={{
@@ -122,7 +122,7 @@ const UsersCard = ({ name, company, email, vat, noGutter }) => {
               <MessageIcon sx={{ fontSize: 16 }} />
               <span style={{ marginLeft: "5px" }}>Message</span>
             </Button>
-          </Box>
+          </Box> */}
           <Box>
             <Button
               variant="text"

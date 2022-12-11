@@ -158,6 +158,7 @@ const ActivityForm = ({ route, style, ...rest }) => {
                   fullWidth
                   label="Price"
                   name="price"
+                  type="number"
                   InputLabelProps={{ shrink: true }}
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}

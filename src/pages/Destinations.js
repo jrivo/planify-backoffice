@@ -85,6 +85,8 @@ const Destinations = () => {
         <Box
           style={{
             maxWidth: "900px",
+            width: "100%",
+            minHeight: "574.062px",
           }}
         >
           <Grid container spacing={3}>

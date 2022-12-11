@@ -26,9 +26,29 @@ const Account = () => {
         }}
       >
         <Container maxWidth="lg">
-          <Typography sx={{ mb: 3 }} variant="h4">
+          {/* <Typography sx={{ mb: 3 }} variant="h4">
             Account
-          </Typography>
+          </Typography> */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "100%",
+              marginBottom: "50px",
+              borderRadius: "10px",
+            }}
+          >
+            <Typography
+              variant="h2"
+              sx={{
+                fontSize: "28px",
+                fontWeight: "300",
+              }}
+            >
+              Account
+            </Typography>
+          </Box>
           <Grid container spacing={3}>
             <Grid item lg={4} md={6} xs={12}>
               <AccountProfile data={profileData} />

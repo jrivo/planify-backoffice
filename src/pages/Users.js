@@ -1,15 +1,25 @@
 import { Box, Card, CardContent, Typography } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Map from "../components/Map";
 import UsersCard from "../components/UsersCard";
 import { getAllUsers } from "../utils.js/apicalls";
 
-const loadData = async () => {
-  const users = await getAllUsers();
-  console.log(users);
-};
-
 const Users = () => {
+  const [users, setUsers] = useState([]);
+
+  const loadData = async () => {
+    const users = await getAllUsers();
+    setUsers(
+      users.map((user) => {
+        return {
+          name: user.firstName + " " + user.lastName,
+          email: user.email,
+          role: user.role,
+        };
+      })
+    );
+  };
+
   useEffect(() => {
     loadData();
   }, []);
@@ -56,27 +66,14 @@ const Users = () => {
             <Box
               display="flex"
               flexDirection="column"
-              sx={{ marginTop: "24px" }}
+              sx={{ marginTop: "24px", height: "60vh", overflow: "scroll" }}
             >
-              <UsersCard
-                name="oliver liam"
-                company="viking burrito"
-                email="oliver@burrito.com"
-                vat="FRB1235476"
-              />
-              <UsersCard
-                name="lucas harper"
-                company="stone tech zone"
-                email="lucas@stone-tech.com"
-                vat="FRB1235476"
-              />
-              <UsersCard
-                name="ethan james"
-                company="fiber notion"
-                email="ethan@fiber.com"
-                vat="FRB1235476"
-                noGutter
-              />
+              {users.map((user) => (
+                <UsersCard {...user} />
+              ))}
+              {users.map((user) => (
+                <UsersCard {...user} />
+              ))}
             </Box>
           </Box>
         </CardContent>
