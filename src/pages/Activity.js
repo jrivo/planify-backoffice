@@ -32,6 +32,7 @@ const Activity = ({ destination, onClick }) => {
   const [placeType, setPlaceType] = useState("");
   const [image, setImage] = useState("");
   const [alertOpen, setAlertOpen] = useState(false);
+  const [subscribers, setSubscribers] = useState([]);
 
   const loadData = async () => {
     const activity = await getActivity(params.id);
@@ -39,6 +40,17 @@ const Activity = ({ destination, onClick }) => {
 
     console.log("subscribers", subscribers);
     console.log("activity is", activity);
+
+    setSubscribers(
+      subscribers.map((subscriber) => ({
+        id: subscriber.id,
+        name: subscriber.firstName + " " + subscriber.lastName,
+        alt: subscriber.firstName + " " + subscriber.lastName,
+        src: subscriber?.profilePicture?.url,
+        tooltipText: subscriber.email,
+      }))
+    );
+
     setTitle(activity.name);
     setDescription(activity.description);
     setDate(getFormattedDate(activity.date));
@@ -198,46 +210,20 @@ const Activity = ({ destination, onClick }) => {
               </span>
             </Typography>
 
-            <Typography
-              variant="body2"
-              style={{
-                fontSize: "18px",
-                fontWeight: "600",
-                marginTop: "20px",
-                marginBottom: "20px",
-              }}
-            >
-              Participants
-            </Typography>
-            <TotalAvatars
-              data={[
-                {
-                  id: 1,
-                  name: "Remy Sharp",
-                  alt: "Remy Sharp",
-                  src: "https://material-ui.com/static/images/avatar/1.jpg",
-                },
-                {
-                  id: 2,
-                  name: "Travis Howard",
-                  alt: "Travis Howard",
-                  // src: "https://material-ui.com/static/images/avatar/2.jpg",
-                },
-                {
-                  id: 3,
-                  name: "Cindy Baker",
-                  alt: "Cindy Baker",
-                  src: "https://material-ui.com/static/images/avatar/3.jpg",
-                },
-                {
-                  id: 4,
-                  name: "Agnes Walker",
-                  alt: "Agnes Walker",
-                  src: "https://material-ui.com/static/images/avatar/4.jpg",
-                },
-              ]}
-              total={20}
-            />
+            {subscribers.length > 0 && (
+              <Typography
+                variant="body2"
+                style={{
+                  fontSize: "18px",
+                  fontWeight: "600",
+                  marginTop: "20px",
+                  marginBottom: "20px",
+                }}
+              >
+                Participants
+              </Typography>
+            )}
+            <TotalAvatars data={subscribers} total={subscribers.length} />
           </Box>
           <Typography
             variant="h5"

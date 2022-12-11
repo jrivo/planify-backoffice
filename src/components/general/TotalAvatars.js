@@ -7,7 +7,7 @@ import { Box } from "@mui/material";
 const TotalAvatars = ({ total, data }) => {
   return (
     <Box sx={{ display: "flex" }}>
-      <AvatarGroup total={24}>
+      <AvatarGroup total={total}>
         {data.map((item) => (
           <Avatar key={item.id} {...item} />
         ))}

@@ -2,8 +2,10 @@ import { MenuItem, Select, TextField } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Button from "./Button";
 import SearchIcon from "@mui/icons-material/Search";
+import { useState } from "react";
 
 const SearchBar = ({ value, onChange, placeholder }) => {
+  const [selected, setSelected] = useState("activities");
   return (
     <div
       style={{
@@ -30,7 +32,8 @@ const SearchBar = ({ value, onChange, placeholder }) => {
           color: "#555",
           backgroundColor: "#F9FAFC",
         }}
-        value={"activities"}
+        value={selected}
+        onChange={(e) => setSelected(e.target.value)}
       >
         <MenuItem
           value="activities"

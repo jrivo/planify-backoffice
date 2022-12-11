@@ -28,6 +28,10 @@ const ProtectedRoute = ({ children }) => {
   );
 };
 
+const UnProtectedRoute = ({ children }) => {
+  return localStorage.getItem("token") ? <Navigate to="/" /> : <>{children}</>;
+};
+
 function App() {
   return (
     <Router>
@@ -170,8 +174,22 @@ function App() {
           }
         />
 
-        <Route path="/login" element={<Login />} />
-        <Route path="signup" element={<Signup />} />
+        <Route
+          path="/login"
+          element={
+            <UnProtectedRoute>
+              <Login />
+            </UnProtectedRoute>
+          }
+        />
+        <Route
+          path="signup"
+          element={
+            <UnProtectedRoute>
+              <Signup />
+            </UnProtectedRoute>
+          }
+        />
       </Routes>
     </Router>
   );
