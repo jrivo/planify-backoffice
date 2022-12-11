@@ -47,7 +47,7 @@ function App() {
           element={
             <ProtectedRoute>
               <DashboardWrapper>
-                <Activities />
+                <Overview />
               </DashboardWrapper>
             </ProtectedRoute>
           }

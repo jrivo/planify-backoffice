@@ -66,7 +66,7 @@ const Overview = () => {
       <Box
         sx={{
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "center",
           width: "100%",
           height: "100%",
         }}
@@ -78,6 +78,7 @@ const Overview = () => {
             height: "95%",
             width: "21vw",
             marginRight: "18px",
+            marginLeft: "30px",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
