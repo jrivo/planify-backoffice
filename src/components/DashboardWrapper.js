@@ -69,6 +69,7 @@ const DashboardWrapper = ({ children, ...rest }) => {
         {["Overview", "Activities", "Destinations", "Account", "Users"].map(
           (text, index) => (
             <ListItem
+              target="_blank"
               key={text}
               disablePadding
               sx={{

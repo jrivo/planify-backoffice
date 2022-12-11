@@ -27,12 +27,7 @@ const ActionAreaCard = ({
       {...rest}
     >
       <CardActionArea {...rest}>
-        <CardMedia
-          component="img"
-          height="130"
-          image={image}
-          alt="green iguana"
-        />
+        <CardMedia component="img" height="130" image={image} />
         <CardContent>
           <Typography
             gutterBottom

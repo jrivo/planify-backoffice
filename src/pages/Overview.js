@@ -1,7 +1,38 @@
 import { Box, Card, CardContent, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import Map from "../components/Map";
+import { getDestinations } from "../utils.js/apicalls";
 
 const Overview = () => {
+  const [destinations, setDestinations] = useState([]);
+
+  const loadData = async () => {
+    const data = await getDestinations();
+    setDestinations(
+      data.map((destination) => ({
+        id: destination.id,
+        position: {
+          lat: parseFloat(destination.address?.latitude),
+          lng: parseFloat(destination.address?.longitude),
+        },
+        cardData: {
+          title: destination.name,
+          image:
+            destination.medias !== undefined && destination.medias.length > 0
+              ? destination.medias[0].url
+              : process.env.REACT_APP_IMAGE_PLACEHOLDER,
+
+          subtitle1:
+            destination?.address?.postalCode + " " + destination?.address?.city,
+        },
+      }))
+    );
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
   return (
     <Box
       sx={{
@@ -40,7 +71,7 @@ const Overview = () => {
           height: "100%",
         }}
       >
-        <Map />
+        <Map data={destinations} />
 
         <Card
           sx={{
