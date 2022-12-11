@@ -47,6 +47,9 @@ const DestinationForm = ({ style, ...rest }) => {
   const [defaultAddressValue, setDefaultAddressValue] = useState("");
   const [images, setImages] = useState([]);
   const [errors, setErrors] = useState([]);
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
+  const [googleAddressId, setGoogleAddressId] = useState("");
 
   console.log("params", params);
   const loadData = params.id
@@ -63,15 +66,12 @@ const DestinationForm = ({ style, ...rest }) => {
         setPhone(destination.phone);
         setWebsite(destination.website);
         setDescription(destination.description);
-        setStreet(destination.street);
-        setStreetNumber(destination.streetNumber);
-        setCity(destination.city);
-        setPostalCode(destination.postalCode);
-        setRegion(destination.region);
-        setCountry(destination.country);
-
-        // setPlaceId(destination.placeId);
-        // setImages(destination.images);
+        setStreet(destination?.address?.street);
+        setStreetNumber(destination?.address?.streetNumber);
+        setCity(destination?.address?.city);
+        setPostalCode(destination?.address?.postalCode);
+        setRegion(destination?.address?.region);
+        setCountry(destination?.address?.country);
       }
     : async () => {
         console.log("creating a destination");
@@ -85,13 +85,16 @@ const DestinationForm = ({ style, ...rest }) => {
   }, []);
 
   const handleAddressChange = (address) => {
+    console.log("address", address);
     setCity(address.city);
     setCountry(address.country);
     setPostalCode(address.postalCode);
     setRegion(address.region);
     setStreet(address.streetName);
     setStreetNumber(address.streetNumber);
-    setPlaceId(address.placeId);
+    setLongitude(address.longitude);
+    setLatitude(address.latitude);
+    setGoogleAddressId(address.googleAddressId);
   };
 
   const handleSubmit = async (e) => {
@@ -107,7 +110,6 @@ const DestinationForm = ({ style, ...rest }) => {
     formData.append("placeType", placeType);
     formData.append("placeTypeId", parseInt(placeTypeId));
     if (email) formData.append("email", email);
-    // formData.append("email", email);
     formData.append("phone", phone);
     formData.append("website", website);
     formData.append("description", description);
@@ -117,6 +119,10 @@ const DestinationForm = ({ style, ...rest }) => {
     formData.append("postalCode", postalCode);
     formData.append("region", region);
     formData.append("country", country);
+    formData.append("latitude", latitude);
+    formData.append("longitude", longitude);
+    formData.append("googleAddressId", googleAddressId);
+
     const submit = params.id
       ? (data) => updateDestination(params.id, data)
       : saveDestination;
@@ -146,7 +152,9 @@ const DestinationForm = ({ style, ...rest }) => {
       onSubmit={handleSubmit}
     >
       <Card>
-        <CardHeader title="Create you destination" />
+        <CardHeader
+          title={params.id ? "Update destination" : "Create your destination"}
+        />
 
         <Divider />
         <CardContent>
@@ -213,6 +221,7 @@ const DestinationForm = ({ style, ...rest }) => {
                   fullWidth
                   label="Email"
                   name="email"
+                  type="email"
                   InputLabelProps={{ shrink: true }}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -246,16 +255,15 @@ const DestinationForm = ({ style, ...rest }) => {
                   onChange={handleAddressChange}
                   required={true}
                   defaultValue={
-                    // params.id
-                    // ? streetNumber +
-                    //   " " +
-                    //   street +
-                    //   ", " +
-                    //   city +
-                    //   ", " +
-                    //   country
-                    // :
-                    ""
+                    params.id
+                      ? streetNumber +
+                        " " +
+                        street +
+                        ", " +
+                        city +
+                        ", " +
+                        country
+                      : ""
                   }
                 />
               </Grid>

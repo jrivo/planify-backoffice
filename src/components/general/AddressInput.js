@@ -4,6 +4,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { GoogleAutoComplete, GetPostalCode } from "../../utils.js/thirdParty";
 
 const AddressInput = ({ onChange, required, defaultValue }) => {
+  console.log("defaultValue", defaultValue);
   const [addresses, setAddresses] = useState([]); // these are the options for the autocomplete
   const [fullAddress, setFullAddress] = useState(
     defaultValue ? defaultValue : ""
@@ -16,15 +17,36 @@ const AddressInput = ({ onChange, required, defaultValue }) => {
     }
   };
 
+  useEffect(() => {
+    setFullAddress(defaultValue ? defaultValue : "");
+  }, [defaultValue]);
+
+  const getCoordinates = async (placeId) => {
+    console.log("api key", process.env.GOOGLE_MAPS_KEY);
+    const response = await fetch(
+      `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=geometry&key=${process.env.REACT_APP_GOOGLE_MAPS_KEY}`
+    );
+    const data = await response.json();
+    return data?.result?.geometry?.location;
+  };
+
   const handleChange = async (value) => {
     for (let x = 0; x < addresses.length; x++) {
       if (value === addresses[x].description) {
+        console.log("address value", addresses[x]);
         setFullAddress(addresses[x].description);
 
+        const coordinates = await getCoordinates(addresses[x].place_id);
+        console.log("coordinates", coordinates);
         const result = await GetPostalCode(addresses[x].place_id);
         const addressObject = {};
-        addressObject.placeId = addresses[x].place_id;
-        console.log(result);
+        // latitude
+        // longitude
+        // googleAddressId
+        addressObject.latitude = coordinates?.lat;
+        addressObject.longitude = coordinates?.lng;
+        addressObject.googleAddressId = addresses[x].place_id;
+        console.log("address results", result);
         result.address_components.forEach((component) => {
           if (component.types.includes("postal_code")) {
             addressObject.postalCode = component.long_name;
