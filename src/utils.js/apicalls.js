@@ -307,6 +307,25 @@ const getUser = async (id) => {
   }
 };
 
+const search = async (query, object) => {
+  try {
+    const response = await fetch(
+      process.env.REACT_APP_SERVER_URL + object + "/search/" + query,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.token,
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log("error: ", error);
+  }
+};
+
 export {
   getDestinations,
   getDestination,
@@ -324,4 +343,5 @@ export {
   updateUserInfo,
   getAllUsers,
   getUser,
+  search,
 };

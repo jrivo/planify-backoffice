@@ -29,7 +29,6 @@ const DashboardWrapper = ({ children, ...rest }) => {
   const navigate = useNavigate();
   const { window } = rest;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [search, setSearch] = React.useState("");
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -144,11 +143,7 @@ const DashboardWrapper = ({ children, ...rest }) => {
               position: "relative",
             }}
           >
-            <SearchBar
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              search
-            />
+            <SearchBar />
             <Box
               style={{ cursor: "pointer", position: "absolute", right: "0px" }}
             >

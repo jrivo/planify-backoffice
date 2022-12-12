@@ -5,7 +5,6 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import Home from "./pages/Home";
 import Destinations from "./pages/Destinations";
 import Destination from "./pages/Destination";
 import Activities from "./pages/Activities";
@@ -19,6 +18,7 @@ import CreateAcivity from "./pages/CreateActivity";
 import UpdateActivity from "./pages/UpdateActivity";
 import Overview from "./pages/Overview";
 import Users from "./pages/Users";
+import SearchResults from "./pages/SearchResults";
 
 const ProtectedRoute = ({ children }) => {
   return localStorage.getItem("token") ? (
@@ -147,6 +147,17 @@ function App() {
             <ProtectedRoute>
               <DashboardWrapper>
                 <UpdateActivity />
+              </DashboardWrapper>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/search-results"
+          element={
+            <ProtectedRoute>
+              <DashboardWrapper>
+                <SearchResults />
               </DashboardWrapper>
             </ProtectedRoute>
           }

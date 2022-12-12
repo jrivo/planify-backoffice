@@ -220,7 +220,7 @@ const Activity = ({ destination, onClick }) => {
                   marginBottom: "20px",
                 }}
               >
-                Participants
+                Participants ({subscribers.length})
               </Typography>
             )}
             <TotalAvatars data={subscribers} total={subscribers.length} />

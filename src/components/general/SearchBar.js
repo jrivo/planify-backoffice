@@ -3,17 +3,28 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Button from "./Button";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
+import { HandymanOutlined } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
-const SearchBar = ({ value, onChange, placeholder }) => {
-  const [selected, setSelected] = useState("activities");
+const SearchBar = ({ placeholder }) => {
+  const navigate = useNavigate();
+  const [selected, setSelected] = useState("all");
+  const [value, setValue] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate("/search-results", { state: { query: value, object: selected } });
+  };
+
   return (
-    <div
+    <form
       style={{
         backgroundColor: "#F9FAFC",
         borderRadius: "5px",
         padding: "10px",
         boxShadow: "0 0 5px rgba(0,0,0,0.1)",
       }}
+      onSubmit={handleSubmit}
     >
       <Select
         style={{
@@ -36,6 +47,14 @@ const SearchBar = ({ value, onChange, placeholder }) => {
         onChange={(e) => setSelected(e.target.value)}
       >
         <MenuItem
+          value="all"
+          sx={{
+            color: "#333",
+          }}
+        >
+          All
+        </MenuItem>
+        <MenuItem
           value="activities"
           sx={{
             color: "#333",
@@ -47,7 +66,7 @@ const SearchBar = ({ value, onChange, placeholder }) => {
           sx={{
             color: "#333",
           }}
-          value="destination"
+          value="places"
         >
           Destinations
         </MenuItem>
@@ -63,8 +82,6 @@ const SearchBar = ({ value, onChange, placeholder }) => {
           style={{
             position: "absolute",
             top: "10px",
-            // top: "50%",
-            // transform: "translateY(-50%)",
             left: "10px",
             color: "#555",
             fontSize: "20px",
@@ -72,7 +89,7 @@ const SearchBar = ({ value, onChange, placeholder }) => {
         />
         <input
           value={value}
-          onChange={onChange}
+          onChange={(e) => setValue(e.target.value)}
           style={{
             border: "1px solid #eee",
             borderLeft: "none",
@@ -96,10 +113,11 @@ const SearchBar = ({ value, onChange, placeholder }) => {
           fontSize: "12px",
           padding: "0 17px",
         }}
+        type="submit"
       >
         Search
       </Button>
-    </div>
+    </form>
   );
 };
 
