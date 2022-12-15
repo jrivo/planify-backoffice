@@ -1,12 +1,11 @@
-import PropTypes from "prop-types";
-
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Box, Button, Typography } from "@mui/material";
 import BlockIcon from "@mui/icons-material/Block";
-import MessageIcon from "@mui/icons-material/Message";
+import { useNavigate } from "react-router-dom";
 
-const UsersCard = ({ name, email, role }) => {
+const UsersCard = ({ id, name, email, role }) => {
+  const navigate = useNavigate();
   return (
     <Box
       display="flex"
@@ -97,6 +96,9 @@ const UsersCard = ({ name, email, role }) => {
               justifyContent: "flex-start",
               color: "#000",
               textTransform: "none",
+            }}
+            onClick={() => {
+              navigate(`/users/${id}`);
             }}
           >
             <EditIcon sx={{ fontSize: 16 }} />

@@ -19,6 +19,7 @@ import UpdateActivity from "./pages/UpdateActivity";
 import Overview from "./pages/Overview";
 import Users from "./pages/Users";
 import SearchResults from "./pages/SearchResults";
+import User from "./pages/User";
 
 const ProtectedRoute = ({ children }) => {
   return localStorage.getItem("token") ? (
@@ -180,6 +181,17 @@ function App() {
             <ProtectedRoute>
               <DashboardWrapper>
                 <Users />
+              </DashboardWrapper>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/users/:id"
+          element={
+            <ProtectedRoute>
+              <DashboardWrapper>
+                <User />
               </DashboardWrapper>
             </ProtectedRoute>
           }

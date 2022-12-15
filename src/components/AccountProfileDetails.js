@@ -7,12 +7,15 @@ import {
   CardHeader,
   Divider,
   Grid,
+  MenuItem,
+  Select,
   TextField,
 } from "@mui/material";
 import Button from "./general/Button";
 import { updateUserInfo } from "../utils.js/apicalls";
 
 export default function AccountProfileDetails({
+  id,
   data,
   profileDetailsChanged,
   setProfileDetailsChanged,
@@ -24,11 +27,36 @@ export default function AccountProfileDetails({
   const [birthDate, setBirthDate] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [role, setRole] = useState("");
+  const [roles, setRoles] = useState([
+    {
+      id: 1,
+      name: "Admin",
+      value: "ADMIN",
+    },
+    {
+      id: 2,
+      name: "User",
+      value: "USER",
+    },
+    {
+      id: 3,
+      name: "Moderator",
+      value: "MODERATOR",
+    },
+    {
+      id: 4,
+      name: "Merchant",
+      value: "MERCHANT",
+    },
+  ]);
 
   useEffect(() => {
     setFirstName(data?.firstName);
     setLastName(data?.lastName);
     setEmail(data?.email);
+    console.log("the role haha ", data?.role);
+    setRole(data?.role);
   }, [data]);
 
   const handleSubmit = (e) => {
@@ -37,6 +65,7 @@ export default function AccountProfileDetails({
     formData.append("firstName", firstName);
     formData.append("lastName", lastName);
     formData.append("email", email);
+    formData.append("role", role);
     const response = updateUserInfo(data.id, formData);
 
     // change value of message for one second then set it back to empty string
@@ -103,6 +132,25 @@ export default function AccountProfileDetails({
                   variant="outlined"
                   InputLabelProps={{ shrink: true }}
                 />
+              </Grid>
+              <Grid item md={12} xs={12}>
+                {id && (
+                  <Select
+                    fullWidth
+                    label="Role"
+                    name="role"
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                    InputLabelProps={{ shrink: true }}
+                    variant="outlined"
+                  >
+                    {roles.map((role) => (
+                      <MenuItem key={role.id} value={role.value}>
+                        {role.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
               </Grid>
             </>
           </Grid>

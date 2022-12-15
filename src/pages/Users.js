@@ -12,6 +12,7 @@ const Users = () => {
     setUsers(
       users.map((user) => {
         return {
+          id: user.id,
           name: user.firstName + " " + user.lastName,
           email: user.email,
           role: user.role,
