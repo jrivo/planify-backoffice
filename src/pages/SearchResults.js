@@ -11,6 +11,7 @@ const SearchResults = () => {
   const location = useLocation();
   const [destinations, setDestinations] = useState([]);
   const [activities, setActivities] = useState([]);
+  const [searchComplete, setSearchComplete] = useState(false);
   const [all, setAll] = useState([]);
   console.log("location", location);
 
@@ -52,6 +53,8 @@ const SearchResults = () => {
         }))
       );
     }
+
+    setSearchComplete(true);
   };
 
   useEffect(() => {
@@ -98,43 +101,45 @@ const SearchResults = () => {
           // justifyContent: "center",
         }}
       >
-        {destinations.length === 0 && activities.length === 0 && (
-          <Box
-            sx={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <Typography
-              variant="h2"
+        {searchComplete &&
+          destinations.length === 0 &&
+          activities.length === 0 && (
+            <Box
               sx={{
-                fontSize: "28px",
-                fontWeight: "300",
-                textAlign: "center",
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
               }}
             >
-              No results found
-            </Typography>
-            <Button
-              style={{
-                marginTop: "20px",
-                width: "100px",
-                height: "35px",
-                fontSize: "16px",
-              }}
-              onClick={() => {
-                window.history.back();
-              }}
-            >
-              Go back
-            </Button>
-          </Box>
-        )}
+              <Typography
+                variant="h2"
+                sx={{
+                  fontSize: "28px",
+                  fontWeight: "300",
+                  textAlign: "center",
+                }}
+              >
+                No results found
+              </Typography>
+              <Button
+                style={{
+                  marginTop: "20px",
+                  width: "100px",
+                  height: "35px",
+                  fontSize: "16px",
+                }}
+                onClick={() => {
+                  window.history.back();
+                }}
+              >
+                Go back
+              </Button>
+            </Box>
+          )}
         <Box
           style={{
             maxWidth: "900px",
