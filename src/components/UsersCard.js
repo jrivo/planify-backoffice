@@ -1,21 +1,30 @@
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Box, Button, Typography } from "@mui/material";
+import { Avatar, Box, Button, Typography } from "@mui/material";
 import BlockIcon from "@mui/icons-material/Block";
 import { useNavigate } from "react-router-dom";
 
-const UsersCard = ({ id, name, email, role }) => {
+const UsersCard = ({ imageUrl, id, name, email, role }) => {
   const navigate = useNavigate();
   return (
     <Box
       display="flex"
       justifyContent="space-between"
-      alignItems="flex-start"
+      alignItems="center"
       sx={{
         marginBottom: "30px",
         position: "relative",
       }}
     >
+      <Avatar
+        src={imageUrl}
+        style={{
+          borderRadius: "50%",
+          marginRight: "30px",
+          width: "80px",
+          height: "80px",
+        }}
+      />
       <Box width="100%" display="flex" flexDirection="column">
         <Typography
           sx={{

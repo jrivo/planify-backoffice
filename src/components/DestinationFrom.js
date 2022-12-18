@@ -72,6 +72,9 @@ const DestinationForm = ({ style, ...rest }) => {
         setPostalCode(destination?.address?.postalCode);
         setRegion(destination?.address?.region);
         setCountry(destination?.address?.country);
+        setLatitude(destination?.address?.latitude);
+        setLongitude(destination?.address?.longitude);
+        setGoogleAddressId(destination?.address?.googleAddressId);
       }
     : async () => {
         console.log("creating a destination");

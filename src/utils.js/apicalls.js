@@ -59,10 +59,14 @@ const deleteDestination = async (id) => {
   }
 };
 
-const getActivities = async () => {
+const getActivities = async (params) => {
   try {
     const response = await fetch(
-      process.env.REACT_APP_SERVER_URL + "activities",
+      process.env.REACT_APP_SERVER_URL +
+        "activities?page=" +
+        (params.page ? params.page : 1) +
+        "&limit=" +
+        (params.limit ? params.limit : 6),
       {
         method: "GET",
         headers: {
@@ -307,10 +311,16 @@ const getUser = async (id) => {
   }
 };
 
-const search = async (query, object) => {
+const search = async (route, params) => {
   try {
     const response = await fetch(
-      process.env.REACT_APP_SERVER_URL + object + "/search/" + query,
+      process.env.REACT_APP_SERVER_URL +
+        route +
+        "?page=" +
+        (params.page ? params.page : 1) +
+        "&limit=" +
+        (params.limit ? params.limit : 6) +
+        (params.search ? "&search=" + params.search : ""),
       {
         method: "GET",
         headers: {
@@ -319,8 +329,9 @@ const search = async (query, object) => {
         },
       }
     );
-    const data = await response.json();
-    return data;
+    const activities = await response.json();
+    console.log("search results", activities);
+    return activities;
   } catch (error) {
     console.log("error: ", error);
   }

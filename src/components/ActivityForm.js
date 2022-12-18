@@ -48,7 +48,7 @@ const ActivityForm = ({ route, style, ...rest }) => {
   const loadDestinations = async () => {
     const destinations = await getDestinations();
     setDestinations(
-      destinations.map((destination) => {
+      destinations.places.map((destination) => {
         return {
           id: destination.id,
           name: destination.name,
@@ -82,9 +82,9 @@ const ActivityForm = ({ route, style, ...rest }) => {
     if (name) formData.append("name", name);
     if (description) formData.append("description", description);
     console.log("unformatted date", date);
-    console.log("date from form", date.toISOString());
+    console.log("formatted date", new Date(date).toISOString());
     if (date) formData.append("date", new Date(date).toISOString());
-    if (price) formData.append("price", price);
+    if (price) formData.append("price", price.toString());
 
     for (let i = 0; i < images.length; i++) {
       formData.append("images", images[i]);

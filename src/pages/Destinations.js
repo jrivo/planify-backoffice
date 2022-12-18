@@ -15,12 +15,14 @@ const Destinations = () => {
 
   const loadDestinations = async () => {
     setLoading(true);
-    const destinations = await getDestinations();
+    const destinations = await getDestinations({
+      // params
+    });
     // "merchant",
     // localStorage.getItem("id")
 
     // remove the slice when pagination is implemented
-    setDestinations(destinations.slice(0, 6));
+    setDestinations(destinations.places);
     setLoading(false);
   };
 

@@ -41,11 +41,7 @@ export default function AccountProfile({ data, ...rest }) {
           }}
         >
           <Avatar
-            src={
-              data?.profilePicture?.url
-                ? data.profilePicture.url
-                : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
-            }
+            src={data?.profilePicture?.url && data.profilePicture.url}
             sx={{
               height: 64,
               mb: 2,

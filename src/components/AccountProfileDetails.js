@@ -25,6 +25,7 @@ export default function AccountProfileDetails({
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [birthDate, setBirthDate] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [role, setRole] = useState("");
@@ -55,6 +56,7 @@ export default function AccountProfileDetails({
     setFirstName(data?.firstName);
     setLastName(data?.lastName);
     setEmail(data?.email);
+    setPhone(data?.phone);
     console.log("the role haha ", data?.role);
     setRole(data?.role);
   }, [data]);
@@ -66,7 +68,8 @@ export default function AccountProfileDetails({
     formData.append("lastName", lastName);
     formData.append("email", email);
     formData.append("role", role);
-    const response = updateUserInfo(data.id, formData);
+    formData.append("phone", phone);
+    updateUserInfo(data.id, formData);
 
     // change value of message for one second then set it back to empty string
     setProfileDetailsChanged(profileDetailsChanged + 1);
@@ -125,10 +128,10 @@ export default function AccountProfileDetails({
               <Grid item md={6} xs={12}>
                 <TextField
                   fullWidth
-                  label="Date of birth"
-                  name="birthDate"
-                  value={birthDate}
-                  onChange={(e) => setBirthDate(e.target.value)}
+                  label="Phone"
+                  name="phone"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
                   variant="outlined"
                   InputLabelProps={{ shrink: true }}
                 />

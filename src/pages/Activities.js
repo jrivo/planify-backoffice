@@ -17,9 +17,11 @@ const Activities = () => {
 
   const loadActivitivities = async () => {
     setLoading(true);
-    const activities = await getActivities();
+    const activities = await getActivities({
+      limit: 6,
+    });
     console.log(activities);
-    setActivities(activities.slice(0, 6));
+    setActivities(activities.activities);
     setLoading(false);
   };
 

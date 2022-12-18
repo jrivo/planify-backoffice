@@ -17,19 +17,24 @@ const SearchResults = () => {
 
   const loadData = async () => {
     if (location.state.object === "places" || location.state.object === "all") {
-      const destinationsList = await search(location.state.query, "places");
+      const destinationsList = await search("places", {
+        search: location.state.query,
+      });
 
       setDestinations(
-        destinationsList.map((destination) => ({
-          id: destination.id,
-          title: destination.name,
-          subtitle1:
-            destination.address.postalCode + " " + destination.address.city,
-          image:
-            destination.medias !== undefined && destination.medias.length > 0
-              ? destination.medias[0].url
-              : process.env.REACT_APP_IMAGE_PLACEHOLDER,
-        }))
+        destinationsList
+          ? destinationsList?.places?.map((destination) => ({
+              id: destination.id,
+              title: destination.name,
+              subtitle1:
+                destination.address.postalCode + " " + destination.address.city,
+              image:
+                destination.medias !== undefined &&
+                destination.medias.length > 0
+                  ? destination.medias[0].url
+                  : process.env.REACT_APP_IMAGE_PLACEHOLDER,
+            }))
+          : []
       );
     }
 
@@ -37,20 +42,24 @@ const SearchResults = () => {
       location.state.object === "activities" ||
       location.state.object === "all"
     ) {
-      const activitiesList = await search(location.state.query, "activities");
+      const activitiesList = await search("activities", {
+        search: location.state.query,
+      });
 
       setActivities(
-        activitiesList.map((activity) => ({
-          subtitle1: getFormattedDate(activity.date),
-          title: shortenText(activity.name, 18),
-          image:
-            activity.medias && activity.medias.length > 0
-              ? activity.medias[0].url
-              : process.env.REACT_APP_IMAGE_PLACEHOLDER,
+        activitiesList
+          ? activitiesList?.activities?.map((activity) => ({
+              subtitle1: getFormattedDate(activity.date),
+              title: shortenText(activity.name, 18),
+              image:
+                activity.medias && activity.medias.length > 0
+                  ? activity.medias[0].url
+                  : process.env.REACT_APP_IMAGE_PLACEHOLDER,
 
-          subtitle2: activity.address?.city,
-          footerText: activity.price ? activity.price + " €" : "Free",
-        }))
+              subtitle2: activity.address?.city,
+              footerText: activity.price ? activity.price + " €" : "Free",
+            }))
+          : []
       );
     }
 
