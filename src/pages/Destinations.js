@@ -1,6 +1,6 @@
 import { Typography, Box, Grid, CircularProgress } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Card from "../components/Card";
 import Button from "../components/general/Button";
 import { getDestinations } from "../utils.js/apicalls";
@@ -9,19 +9,21 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
 const Destinations = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const [destinations, setDestinations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [totalPages, setTotalPages] = useState(0);
+  const currentPage = location.search.split("=")[1] || 1;
 
   const loadDestinations = async () => {
     setLoading(true);
     const destinations = await getDestinations({
-      // params
+      limit: 6,
+      merchant: localStorage.getItem("id"),
+      page: currentPage && currentPage,
     });
-    // "merchant",
-    // localStorage.getItem("id")
-
-    // remove the slice when pagination is implemented
+    setTotalPages(destinations.totalPages);
     setDestinations(destinations.places);
     setLoading(false);
   };
@@ -132,7 +134,7 @@ const Destinations = () => {
             }}
           >
             <Stack spacing={2}>
-              <Pagination count={10} />
+              <Pagination count={totalPages} />
             </Stack>
           </Box>
         </Box>

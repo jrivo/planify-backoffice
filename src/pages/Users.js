@@ -9,8 +9,9 @@ const Users = () => {
 
   const loadData = async () => {
     const users = await getAllUsers();
+    console.log("users", users);
     setUsers(
-      users.map((user) => {
+      users.users.map((user) => {
         return {
           id: user.id,
           name: user.firstName + " " + user.lastName,

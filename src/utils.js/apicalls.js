@@ -1,8 +1,13 @@
-const getDestinations = async (userType, id) => {
+const getDestinations = async (params) => {
   const url =
-    userType === "merchant"
-      ? process.env.REACT_APP_SERVER_URL + "places/merchant/" + id
-      : process.env.REACT_APP_SERVER_URL + "places";
+    process.env.REACT_APP_SERVER_URL +
+    "places?page=" +
+    (params.page ? params.page : 1) +
+    "&limit=" +
+    (params.limit ? params.limit : 6) +
+    (params.merchant ? "&merchant=" + params.merchant : "");
+
+  console.log("destination url", url);
   try {
     const response = await fetch(url, {
       method: "GET",
@@ -60,21 +65,23 @@ const deleteDestination = async (id) => {
 };
 
 const getActivities = async (params) => {
+  const url =
+    process.env.REACT_APP_SERVER_URL +
+    "activities?page=" +
+    (params.page ? params.page : 1) +
+    "&limit=" +
+    (params.limit ? params.limit : 6) +
+    (params.merchant ? "&merchant=" + params.merchant : "");
+
+  console.log("activities url", url);
   try {
-    const response = await fetch(
-      process.env.REACT_APP_SERVER_URL +
-        "activities?page=" +
-        (params.page ? params.page : 1) +
-        "&limit=" +
-        (params.limit ? params.limit : 6),
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.token,
-        },
-      }
-    );
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.token,
+      },
+    });
     const activities = await response.json();
     return activities;
   } catch (error) {

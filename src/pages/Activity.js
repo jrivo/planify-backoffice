@@ -29,7 +29,6 @@ const Activity = ({ destination, onClick }) => {
   const [creator, setCreator] = useState("");
   const [address, setAddress] = useState("");
   const [price, setPrice] = useState("");
-  const [placeType, setPlaceType] = useState("");
   const [image, setImage] = useState("");
   const [alertOpen, setAlertOpen] = useState(false);
   const [subscribers, setSubscribers] = useState([]);
@@ -66,6 +65,7 @@ const Activity = ({ destination, onClick }) => {
         activity?.address?.city
     );
     setPrice(activity.price);
+    setCreator(activity.ownerFirstName + " " + activity.ownerLastName);
     setImage(
       activity.medias !== undefined && activity.medias.length > 0
         ? activity.medias[0].url
@@ -75,9 +75,6 @@ const Activity = ({ destination, onClick }) => {
 
   useEffect(() => {
     loadData();
-    setCreator("John Doe");
-    setPlaceType("Restaurants . Bars . cafés");
-    setAddress("10 rue de la paix, 75000 Paris");
   }, []);
   console.log("params are", params);
   return (
@@ -195,14 +192,7 @@ const Activity = ({ destination, onClick }) => {
               />
             </Box>
           </Box>
-          <Box sx={{ marginBottom: "10px" }}>
-            <Typography
-              variant="body2"
-              sx={{ color: "#707070", fontSize: "13px", marginBottom: "20px" }}
-            >
-              Restaurants . Bars . cafés
-            </Typography>
-
+          <Box sx={{ marginBottom: "10px", paddingTop: "20px" }}>
             <Typography variant="body2">
               <span style={{ fontWeight: "bold" }}>Created by: </span>
               <span style={{ color: "#1976d2", cursor: "pointer" }}>

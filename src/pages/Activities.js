@@ -14,14 +14,22 @@ const Activities = () => {
   const navigate = useNavigate();
   const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [totalPages, setTotalPages] = useState(0);
+  const currentPage = location.search.split("=")[1] || 1;
+  console.log("current page", currentPage);
 
   const loadActivitivities = async () => {
     setLoading(true);
     const activities = await getActivities({
       limit: 6,
+      page: currentPage && currentPage,
+      merchant: localStorage.getItem("id"),
     });
-    console.log(activities);
+
+    console.log("activity list", activities);
+
     setActivities(activities.activities);
+    setTotalPages(activities.totalPages);
     setLoading(false);
   };
 
@@ -107,7 +115,6 @@ const Activities = () => {
               >
                 <ActivityCard
                   onClick={() => {
-                    console.log("clicked");
                     navigate("/activities/" + activity.id);
                   }}
                   subtitle1={getFormattedDate(activity.date)}
@@ -135,7 +142,12 @@ const Activities = () => {
             }}
           >
             <Stack spacing={2}>
-              <Pagination count={10} />
+              <Pagination
+                count={totalPages}
+                onChange={(e, page) => {
+                  navigate("/activities?page=" + page);
+                }}
+              />
             </Stack>
           </Box>
         </Box>

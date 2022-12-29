@@ -46,7 +46,10 @@ const ActivityForm = ({ route, style, ...rest }) => {
   const [destinations, setDestinations] = useState([]);
 
   const loadDestinations = async () => {
-    const destinations = await getDestinations();
+    const destinations = await getDestinations({
+      limit: 800000,
+    });
+    console.log("hola these are the destinations", destinations);
     setDestinations(
       destinations.places.map((destination) => {
         return {
@@ -66,7 +69,6 @@ const ActivityForm = ({ route, style, ...rest }) => {
     setDate(activity.date);
     setPrice(activity.price);
     setDestinationId(activity.placeId);
-    console.log("got the activity haha woooooooooooo ", activity);
   };
 
   useEffect(() => {

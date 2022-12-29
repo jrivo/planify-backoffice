@@ -25,9 +25,9 @@ export default function AccountProfile({ data, ...rest }) {
     const response = await updateUserInfo(data.id, formData);
     console.log(response);
     // wait 1 second before reloading the page
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 1000);
   };
 
   return (
