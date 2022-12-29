@@ -23,11 +23,11 @@ const Activities = () => {
     const activities = await getActivities({
       limit: 6,
       page: currentPage && currentPage,
-      merchant: localStorage.getItem("id"),
+      merchant:
+        localStorage.getItem("role").toUpperCase() === '"MERCHANT"'
+          ? localStorage.getItem("id")
+          : undefined,
     });
-
-    console.log("activity list", activities);
-
     setActivities(activities.activities);
     setTotalPages(activities.totalPages);
     setLoading(false);

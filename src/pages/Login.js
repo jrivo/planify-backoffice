@@ -40,11 +40,12 @@ const Login = () => {
         setError("Invalid email or password");
         return;
       }
-      navigate("/");
 
       localStorage.setItem("token", data.access_token);
       localStorage.setItem("email", JSON.stringify(data.email));
       localStorage.setItem("id", JSON.stringify(data.id));
+      localStorage.setItem("role", JSON.stringify(data.role));
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
