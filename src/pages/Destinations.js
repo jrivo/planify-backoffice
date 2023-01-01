@@ -19,15 +19,19 @@ const Destinations = () => {
   console.log("your role: ", localStorage.getItem("role").toUpperCase());
   console.log("MERCHANT");
   const loadDestinations = async () => {
+    console.log("loading destinations");
+    console.log("current page", currentPage);
     setLoading(true);
     const destinations = await getDestinations({
       limit: 6,
+      page: currentPage && currentPage,
       merchant:
         localStorage.getItem("role").toUpperCase() === '"MERCHANT"'
           ? localStorage.getItem("id")
           : undefined,
       page: currentPage && currentPage,
     });
+    console.log("destinations: ", destinations);
     setTotalPages(destinations.totalPages);
     setDestinations(destinations.places);
     setLoading(false);
@@ -35,7 +39,7 @@ const Destinations = () => {
 
   useEffect(() => {
     loadDestinations();
-  }, []);
+  }, [location]);
 
   if (loading)
     return (
@@ -139,7 +143,14 @@ const Destinations = () => {
             }}
           >
             <Stack spacing={2}>
-              <Pagination count={totalPages} />
+              <Pagination
+                count={totalPages}
+                onChange={(e, page) => {
+                  navigate("/destinations?page=" + page);
+                }}
+                // selected={currentPage}
+                page={currentPage}
+              />
             </Stack>
           </Box>
         </Box>

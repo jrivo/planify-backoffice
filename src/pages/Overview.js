@@ -7,9 +7,15 @@ const Overview = () => {
   const [destinations, setDestinations] = useState([]);
 
   const loadData = async () => {
-    const data = await getDestinations();
+    const data = await getDestinations({
+      limit: 6,
+      merchant:
+        localStorage.getItem("role").toUpperCase() === '"MERCHANT"'
+          ? localStorage.getItem("id")
+          : undefined,
+    });
     setDestinations(
-      data.map((destination) => ({
+      data.places.map((destination) => ({
         id: destination.id,
         position: {
           lat: parseFloat(destination.address?.latitude),
