@@ -10,19 +10,38 @@ import {
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import Button from "../components/general/Button";
+import { signup } from "../utils.js/apicalls";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
   const primaryColor = process.env.REACT_APP_PRIMARY_COLOR;
-  const primaryLighterColor = process.env.REACT_APP_PRIMARY_LIGHTER_COLOR;
-  console.log("primaryColor is ", primaryColor);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    const data = await signup({
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      role: "MERCHANT",
+    });
+
+    localStorage.setItem("token", data.access_token);
+    localStorage.setItem("email", data.email);
+    localStorage.setItem("id", data.id);
+    localStorage.setItem("role", data.role);
+    navigate("/");
+  };
+
   return (
     <>
       <Box
@@ -69,11 +88,7 @@ const Signup = () => {
             // paddingBottom: "24px",
           }}
         >
-          <form
-            onSubmit={() => {
-              console.log("give us nothing");
-            }}
-          >
+          <form onSubmit={handleSubmit}>
             <Box sx={{ my: 3 }}>
               <Typography
                 color="textPrimary"
@@ -117,20 +132,6 @@ const Signup = () => {
               <Grid item md={6} xs={12}>
                 <TextField
                   fullWidth
-                  label="Birth date"
-                  margin="normal"
-                  name="birthDate"
-                  onChange={(event) => {
-                    setBirthDate(event.target.value);
-                  }}
-                  value={birthDate}
-                  variant="outlined"
-                />
-              </Grid>
-
-              <Grid item md={6} xs={12}>
-                <TextField
-                  fullWidth
                   label="Email address"
                   margin="normal"
                   name="email"
@@ -157,7 +158,7 @@ const Signup = () => {
                   autoComplete="off"
                 />
               </Grid>
-              <Grid item md={6} xs={12}>
+              {/* <Grid item md={6} xs={12}>
                 <TextField
                   fullWidth
                   label="Confirm password"
@@ -171,7 +172,7 @@ const Signup = () => {
                   variant="outlined"
                   autoComplete="off"
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
 
             <Button

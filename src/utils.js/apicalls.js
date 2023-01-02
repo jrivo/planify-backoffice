@@ -24,6 +24,25 @@ const getDestinations = async (params) => {
   }
 };
 
+const signup = async (body) => {
+  try {
+    const response = await fetch(
+      process.env.REACT_APP_SERVER_URL + "register",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log("error: ", error);
+  }
+};
+
 const getDestination = async (id) => {
   try {
     const response = await fetch(
@@ -369,4 +388,5 @@ export {
   getAllUsers,
   getUser,
   search,
+  signup,
 };

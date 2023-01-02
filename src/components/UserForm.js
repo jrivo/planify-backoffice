@@ -1,4 +1,10 @@
-import { Box, Container, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Container,
+  Grid,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import AccountProfile from "./AccountProfile";
 import AccountProfileDetails from "./AccountProfileDetails";
@@ -7,23 +13,37 @@ import { getCurrentUser, getUser } from "../utils.js/apicalls";
 const UserForm = ({ id }) => {
   const [profileData, setProfileData] = useState({});
   const [profileDetailsChanged, setProfileDetailsChanged] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const loadCurrentUser = async () => {
     const currentUser = await getCurrentUser();
     setProfileData(currentUser);
-    console.log(currentUser);
+    setLoading(false);
   };
 
   const loadUser = async () => {
     const user = await getUser(id);
     setProfileData(user);
-    console.log(user);
+    setLoading(false);
   };
 
   useEffect(() => {
     if (id) loadUser();
     else loadCurrentUser();
   }, [profileDetailsChanged]);
+
+  if (loading)
+    return (
+      <CircularProgress
+        sx={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+        }}
+        size={100}
+      />
+    );
 
   return (
     <>

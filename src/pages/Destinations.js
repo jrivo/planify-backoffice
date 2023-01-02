@@ -80,77 +80,90 @@ const Destinations = () => {
         </Button>
       </Box>
 
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: destinations?.length >= 3 ? "center" : "flex-start",
-          height: "100%",
-          // backgroundColor: "blue",
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
+      {destinations?.length === 0 ? (
         <Box
-          style={{
-            maxWidth: "900px",
-            width: "100%",
-            minHeight: "574.062px",
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
           }}
         >
-          <Grid container spacing={3}>
-            {destinations.map((destination, index) => (
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                md={4}
-                sx={{
-                  minWidth: 260,
-                }}
-                key={destination.id}
-              >
-                <Card
-                  onClick={() => {
-                    console.log("clicked");
-                    navigate("/destinations/" + destination.id);
-                  }}
-                  title={destination.name}
-                  image={
-                    destination.medias !== undefined &&
-                    destination.medias.length > 0
-                      ? destination.medias[0].url
-                      : process.env.REACT_APP_IMAGE_PLACEHOLDER
-                  }
-                  subtitle1={destination.address?.city}
-                  sx={{
-                    margin: "6px",
-                  }}
-                />
-              </Grid>
-            ))}
-          </Grid>
+          You have no destinations.
+        </Box>
+      ) : (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: destinations?.length >= 3 ? "center" : "flex-start",
+            height: "100%",
+            // backgroundColor: "blue",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
           <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              marginTop: "40px",
+            style={{
+              maxWidth: "900px",
+              width: "100%",
+              minHeight: "574.062px",
             }}
           >
-            <Stack spacing={2}>
-              <Pagination
-                count={totalPages}
-                onChange={(e, page) => {
-                  navigate("/destinations?page=" + page);
-                }}
-                // selected={currentPage}
-                page={currentPage}
-              />
-            </Stack>
+            <Grid container spacing={3}>
+              {destinations.map((destination, index) => (
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  md={4}
+                  sx={{
+                    minWidth: 260,
+                  }}
+                  key={destination.id}
+                >
+                  <Card
+                    onClick={() => {
+                      console.log("clicked");
+                      navigate("/destinations/" + destination.id);
+                    }}
+                    title={destination.name}
+                    image={
+                      destination.medias !== undefined &&
+                      destination.medias.length > 0
+                        ? destination.medias[0].url
+                        : process.env.REACT_APP_IMAGE_PLACEHOLDER
+                    }
+                    subtitle1={destination.address?.city}
+                    sx={{
+                      margin: "6px",
+                    }}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: "40px",
+              }}
+            >
+              <Stack spacing={2}>
+                <Pagination
+                  count={totalPages}
+                  onChange={(e, page) => {
+                    navigate("/destinations?page=" + page);
+                  }}
+                  // selected={currentPage}
+                  page={currentPage}
+                />
+              </Stack>
+            </Box>
           </Box>
         </Box>
-      </Box>
+      )}
     </Box>
   );
 };
