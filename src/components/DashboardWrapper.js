@@ -73,7 +73,9 @@ const DashboardWrapper = ({ children, ...rest }) => {
       style={{
         width: drawerWidth,
         height: "100%",
-        backgroundColor: "#1A1C1E",
+        // backgroundColor: "#1A1C1E",
+        backgroundColor: "#2D3E50",
+
         paddingTop: "20px",
         // backgroundColor: "red",
         display: "flex",

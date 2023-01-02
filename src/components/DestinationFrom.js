@@ -237,6 +237,7 @@ const DestinationForm = ({ style, ...rest }) => {
                   label="Phone"
                   name="phone"
                   value={phone}
+                  placeholder="+33 6 00 00 00 00"
                   onChange={(e) => setPhone(e.target.value)}
                   variant="outlined"
                   InputLabelProps={{ shrink: true }}

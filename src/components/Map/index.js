@@ -13,9 +13,144 @@ import { useNavigate } from "react-router-dom";
 
 const style = {
   ".gm-style-iw-d": {
-    backgroundColor: "red",
+    // backgroundColor: "red",
+    borderRadius: "20px",
+    overflow: "hidden",
   },
 };
+
+const mapStyles = [
+  {
+    featureType: "all",
+    elementType: "geometry",
+    stylers: [
+      {
+        color: "#202c3e",
+      },
+    ],
+  },
+  {
+    featureType: "all",
+    elementType: "geometry.fill",
+    stylers: [
+      {
+        visibility: "on",
+      },
+      {
+        color: "#2d3e50",
+      },
+    ],
+  },
+  {
+    featureType: "all",
+    elementType: "geometry.stroke",
+    stylers: [
+      {
+        color: "#1f2835",
+      },
+    ],
+  },
+  {
+    featureType: "all",
+    elementType: "labels.text.fill",
+    stylers: [
+      {
+        color: "#ffffff",
+      },
+
+      {
+        visibility: "on",
+      },
+    ],
+  },
+  {
+    featureType: "all",
+    elementType: "labels.text.stroke",
+    stylers: [
+      {
+        visibility: "on",
+      },
+      {
+        color: "#000000",
+      },
+      {
+        weight: 4,
+      },
+      {
+        gamma: 0.84,
+      },
+
+      {
+        lightness: 16,
+      },
+
+      {
+        saturation: -100,
+      },
+    ],
+  },
+  {
+    featureType: "all",
+    elementType: "labels.icon",
+    stylers: [
+      {
+        visibility: "off",
+      },
+
+      {
+        saturation: -100,
+      },
+
+      {
+        lightness: 100,
+      },
+
+      {
+        gamma: 0.54,
+      },
+
+      {
+        weight: 0.01,
+      },
+
+      {
+        hue: "#ff0000",
+      },
+    ],
+  },
+  {
+    featureType: "administrative",
+    elementType: "geometry",
+    stylers: [
+      {
+        color: "#000000",
+      },
+      {
+        visibility: "on",
+      },
+
+      {
+        weight: 0.01,
+      },
+
+      {
+        hue: "#ff0000",
+
+        saturation: -100,
+
+        lightness: 100,
+
+        gamma: 0.54,
+
+        invert_lightness: true,
+
+        visibility: "off",
+
+        color: "#ff0000",
+      },
+    ],
+  },
+];
 
 const markers = [
   {
@@ -64,6 +199,10 @@ function Map({ data }) {
           onLoad={handleOnLoad}
           onClick={() => setActiveMarker(null)}
           mapContainerStyle={{ width: "50vw", height: "95%" }}
+          // border radius
+          options={{
+            styles: mapStyles,
+          }}
         >
           {data?.map(({ id, position, cardData }) => (
             <Marker
