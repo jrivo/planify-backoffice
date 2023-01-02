@@ -283,15 +283,22 @@ const getActivitySubscribers = async (id) => {
   }
 };
 
-const getAllUsers = async () => {
+const getAllUsers = async (params) => {
   try {
-    const response = await fetch(process.env.REACT_APP_SERVER_URL + "users", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.token,
-      },
-    });
+    const response = await fetch(
+      process.env.REACT_APP_SERVER_URL +
+        "users?page=" +
+        (params.page ? params.page : 1) +
+        "&limit=" +
+        (params.limit ? params.limit : 6),
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.token,
+        },
+      }
+    );
     const users = await response.json();
     return users;
   } catch (error) {

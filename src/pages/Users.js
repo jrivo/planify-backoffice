@@ -1,15 +1,25 @@
-import { Box, Card, CardContent, Typography } from "@mui/material";
+import { Box, Card, CardContent, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import Map from "../components/Map";
 import UsersCard from "../components/UsersCard";
 import { getAllUsers } from "../utils.js/apicalls";
+import Pagination from "@mui/material/Pagination";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Users = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [users, setUsers] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
+  const currentPage = location.search.split("=")[1] || 1;
 
   const loadData = async () => {
-    const users = await getAllUsers();
+    const users = await getAllUsers({
+      limit: 3,
+      page: currentPage && currentPage,
+    });
     console.log("users", users);
+    setTotalPages(users.totalPages);
     setUsers(
       users.users.map((user) => {
         return {
@@ -25,7 +35,7 @@ const Users = () => {
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [location]);
 
   return (
     <Box
@@ -59,28 +69,44 @@ const Users = () => {
         </Typography>
       </Box>
 
-      <Card
+      <Box
         sx={{
           width: "80%",
         }}
       >
-        <CardContent>
-          <Box pt={1} pb={2} px={2}>
-            <Box
-              display="flex"
-              flexDirection="column"
-              sx={{ marginTop: "24px", height: "60vh", overflow: "scroll" }}
-            >
-              {users.map((user) => (
+        <Box pt={1} pb={2} px={2}>
+          <Box
+            display="flex"
+            flexDirection="column"
+            // sx={{ marginTop: "24px", height: "60vh", overflow: "scroll" }}
+          >
+            {users.map((user) => (
+              <Box
+                sx={{
+                  backgroundColor: "white",
+                  padding: "10px",
+                  paddingTop: "32px",
+                  paddingLeft: "40px",
+                  borderRadius: "10px",
+                  marginBottom: "20px",
+                }}
+              >
                 <UsersCard {...user} />
-              ))}
-              {users.map((user) => (
-                <UsersCard {...user} />
-              ))}
-            </Box>
+              </Box>
+            ))}
           </Box>
-        </CardContent>
-      </Card>
+        </Box>
+      </Box>
+      <Stack spacing={2}>
+        <Pagination
+          count={totalPages}
+          onChange={(e, page) => {
+            navigate("/users?page=" + page);
+          }}
+          // selected={currentPage}
+          page={currentPage}
+        />
+      </Stack>
     </Box>
   );
 };

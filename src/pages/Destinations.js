@@ -16,17 +16,13 @@ const Destinations = () => {
   const [totalPages, setTotalPages] = useState(0);
   const currentPage = location.search.split("=")[1] || 1;
 
-  console.log("your role: ", localStorage.getItem("role").toUpperCase());
-  console.log("MERCHANT");
   const loadDestinations = async () => {
-    console.log("loading destinations");
-    console.log("current page", currentPage);
     setLoading(true);
     const destinations = await getDestinations({
       limit: 6,
       page: currentPage && currentPage,
       merchant:
-        localStorage.getItem("role").toUpperCase() === '"MERCHANT"'
+        localStorage.getItem("role").toUpperCase() === "MERCHANT"
           ? localStorage.getItem("id")
           : undefined,
       page: currentPage && currentPage,

@@ -42,9 +42,10 @@ const Login = () => {
       }
 
       localStorage.setItem("token", data.access_token);
-      localStorage.setItem("email", JSON.stringify(data.email));
-      localStorage.setItem("id", JSON.stringify(data.id));
-      localStorage.setItem("role", JSON.stringify(data.role));
+      localStorage.setItem("email", data.email);
+      localStorage.setItem("id", data.id);
+      localStorage.setItem("role", data.role);
+      console.log("role", data.role);
       navigate("/");
     } catch (error) {
       console.log(error);

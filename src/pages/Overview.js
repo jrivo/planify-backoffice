@@ -10,7 +10,7 @@ const Overview = () => {
     const data = await getDestinations({
       limit: 6,
       merchant:
-        localStorage.getItem("role").toUpperCase() === '"MERCHANT"'
+        localStorage.getItem("role").toUpperCase() === "MERCHANT"
           ? localStorage.getItem("id")
           : undefined,
     });

@@ -30,6 +30,12 @@ const DashboardWrapper = ({ children, ...rest }) => {
   const { window } = rest;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
+  const navBarItems = ["Overview", "Activities", "Destinations", "Account"];
+
+  if (localStorage.getItem("role") === "ADMIN") {
+    navBarItems.push("Users");
+  }
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -65,42 +71,40 @@ const DashboardWrapper = ({ children, ...rest }) => {
         }}
       />
       <List>
-        {["Overview", "Activities", "Destinations", "Account", "Users"].map(
-          (text, index) => (
-            <ListItem
-              target="_blank"
-              key={text}
-              disablePadding
-              sx={{
-                color: "#FFF",
+        {navBarItems.map((text, index) => (
+          <ListItem
+            target="_blank"
+            key={text}
+            disablePadding
+            sx={{
+              color: "#FFF",
+            }}
+          >
+            <ListItemButton
+              onClick={() => {
+                //redirect to the page
+                // const page = index === 0 ? "/" : "/" + text.toLowerCase();
+                const page = "/" + text.toLowerCase();
+                navigate(page);
               }}
             >
-              <ListItemButton
-                onClick={() => {
-                  //redirect to the page
-                  // const page = index === 0 ? "/" : "/" + text.toLowerCase();
-                  const page = "/" + text.toLowerCase();
-                  navigate(page);
-                }}
-              >
-                <ListItemIcon>
-                  {index === 0 ? (
-                    <DashboardIcon style={iconStyles} />
-                  ) : index === 1 ? (
-                    <RowingIcon style={iconStyles} />
-                  ) : index === 2 ? (
-                    <PlaceIcon style={iconStyles} />
-                  ) : index === 3 ? (
-                    <PersonIcon style={iconStyles} />
-                  ) : (
-                    index === 4 && <PeopleIcon style={iconStyles} />
-                  )}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          )
-        )}
+              <ListItemIcon>
+                {index === 0 ? (
+                  <DashboardIcon style={iconStyles} />
+                ) : index === 1 ? (
+                  <RowingIcon style={iconStyles} />
+                ) : index === 2 ? (
+                  <PlaceIcon style={iconStyles} />
+                ) : index === 3 ? (
+                  <PersonIcon style={iconStyles} />
+                ) : (
+                  index === 4 && <PeopleIcon style={iconStyles} />
+                )}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
       </List>
     </div>
   );
