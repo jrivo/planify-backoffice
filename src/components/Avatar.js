@@ -29,8 +29,15 @@ const stringAvatar = (name) => {
   };
 };
 
-const BackgroundLetterAvatars = ({ name, ...rest }) => {
-  return <Avatar {...stringAvatar(name)} {...rest} />;
+const BackgroundLetterAvatars = ({ name, image, ...rest }) => {
+  return (
+    <Avatar
+      //image
+      src={image}
+      {...stringAvatar(name)}
+      {...rest}
+    />
+  );
 };
 
 export default BackgroundLetterAvatars;

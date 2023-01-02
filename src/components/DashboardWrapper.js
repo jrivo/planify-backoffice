@@ -22,6 +22,7 @@ import AccountMenu from "./AccountMenu";
 import { Typography } from "@mui/material";
 import SearchBar from "./general/SearchBar";
 import PersonIcon from "@mui/icons-material/Person";
+import { getCurrentUser, getUser } from "../utils.js/apicalls";
 
 const drawerWidth = 300;
 
@@ -29,6 +30,7 @@ const DashboardWrapper = ({ children, ...rest }) => {
   const navigate = useNavigate();
   const { window } = rest;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [profileData, setProfileData] = React.useState({});
 
   const navBarItems = ["Overview", "Activities", "Destinations", "Account"];
 
@@ -44,6 +46,27 @@ const DashboardWrapper = ({ children, ...rest }) => {
     // color: process.env.REACT_APP_PRIMARY_COLOR,
     color: "#fff",
   };
+
+  // React.useEffect(() => {
+  //   const handleResize = () => {
+  //     if (window.innerWidth < 1000) {
+  //       setMobileOpen(false);
+  //     }
+  //   };
+  //   window.addEventListener("resize", handleResize);
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, [window]);
+
+  const loadCurrentUser = async () => {
+    const currentUser = await getCurrentUser();
+    console.log("current user", currentUser);
+
+    setProfileData(currentUser);
+  };
+
+  React.useEffect(() => {
+    loadCurrentUser();
+  }, []);
 
   const drawer = (
     <div
@@ -151,7 +174,7 @@ const DashboardWrapper = ({ children, ...rest }) => {
             <Box
               style={{ cursor: "pointer", position: "absolute", right: "0px" }}
             >
-              <AccountMenu />
+              <AccountMenu data={profileData} />
             </Box>
           </Box>
         </Toolbar>

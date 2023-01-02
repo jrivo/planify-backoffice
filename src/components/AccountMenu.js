@@ -13,7 +13,7 @@ import Logout from "@mui/icons-material/Logout";
 import BackgroundLetterAvatars from "./Avatar";
 import { useNavigate } from "react-router-dom";
 
-const AccountMenu = () => {
+const AccountMenu = ({ data }) => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -35,7 +35,10 @@ const AccountMenu = () => {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <BackgroundLetterAvatars name="John Doe" />
+            <BackgroundLetterAvatars
+              name="John Doe"
+              image={data?.profilePicture?.url}
+            />
           </IconButton>
         </Tooltip>
       </Box>
@@ -79,15 +82,15 @@ const AccountMenu = () => {
             navigate("/account");
           }}
         >
-          <Avatar /> Profile
+          <Avatar src={data?.profilePicture?.url} /> Profile
         </MenuItem>
         <Divider />
-        <MenuItem>
+        {/* <MenuItem>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
           Settings
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem
           onClick={() => {
             localStorage.removeItem("token");
