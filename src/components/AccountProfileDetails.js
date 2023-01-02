@@ -60,7 +60,7 @@ export default function AccountProfileDetails({
     setRole(data?.role);
   }, [data]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("firstName", firstName);
@@ -68,7 +68,7 @@ export default function AccountProfileDetails({
     formData.append("email", email);
     formData.append("role", role);
     formData.append("phoneNumber", phone);
-    updateUserInfo(data.id, formData);
+    await updateUserInfo(data.id, formData);
 
     // change value of message for one second then set it back to empty string
     setProfileDetailsChanged(profileDetailsChanged + 1);
