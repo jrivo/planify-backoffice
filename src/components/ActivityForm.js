@@ -48,6 +48,10 @@ const ActivityForm = ({ route, style, ...rest }) => {
   const loadDestinations = async () => {
     const destinations = await getDestinations({
       limit: 800000,
+      merchant:
+        localStorage.getItem("role").toUpperCase() === "MERCHANT"
+          ? localStorage.getItem("id")
+          : undefined,
     });
     console.log("hola these are the destinations", destinations);
     setDestinations(

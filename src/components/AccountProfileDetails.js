@@ -57,7 +57,6 @@ export default function AccountProfileDetails({
     setLastName(data?.lastName);
     setEmail(data?.email);
     setPhone(data?.phone);
-    console.log("the role haha ", data?.role);
     setRole(data?.role);
   }, [data]);
 
@@ -68,7 +67,7 @@ export default function AccountProfileDetails({
     formData.append("lastName", lastName);
     formData.append("email", email);
     formData.append("role", role);
-    formData.append("phone", phone);
+    formData.append("phoneNumber", phone);
     updateUserInfo(data.id, formData);
 
     // change value of message for one second then set it back to empty string
