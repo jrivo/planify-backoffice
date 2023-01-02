@@ -23,6 +23,7 @@ import { Typography } from "@mui/material";
 import SearchBar from "./general/SearchBar";
 import PersonIcon from "@mui/icons-material/Person";
 import { getCurrentUser, getUser } from "../utils.js/apicalls";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const drawerWidth = 300;
 
@@ -31,6 +32,7 @@ const DashboardWrapper = ({ children, ...rest }) => {
   const { window } = rest;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [profileData, setProfileData] = React.useState({});
+  const isSmallScreen = useMediaQuery("(max-width:1200px)");
 
   const navBarItems = ["Overview", "Activities", "Destinations", "Account"];
 
@@ -172,7 +174,7 @@ const DashboardWrapper = ({ children, ...rest }) => {
               position: "relative",
             }}
           >
-            <SearchBar />
+            {!isSmallScreen && <SearchBar />}
             <Box
               style={{ cursor: "pointer", position: "absolute", right: "0px" }}
             >
