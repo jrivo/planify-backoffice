@@ -12,6 +12,7 @@ import Stack from "@mui/material/Stack";
 import Button from "../components/general/Button";
 import { signup } from "../utils.js/apicalls";
 import { useNavigate } from "react-router-dom";
+import SuccessBox from "../components/general/SuccessBox";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
   const primaryColor = process.env.REACT_APP_PRIMARY_COLOR;
 
@@ -35,11 +37,14 @@ const Signup = () => {
       role: "MERCHANT",
     });
 
-    localStorage.setItem("token", data.access_token);
-    localStorage.setItem("email", data.email);
-    localStorage.setItem("id", data.id);
-    localStorage.setItem("role", data.role);
-    navigate("/");
+    // localStorage.setItem("token", data.access_token);
+    // localStorage.setItem("email", data.email);
+    // localStorage.setItem("id", data.id);
+    // localStorage.setItem("role", data.role);
+
+    setSubmitted(true);
+
+    // navigate("/");
   };
 
   return (
@@ -88,77 +93,83 @@ const Signup = () => {
             // paddingBottom: "24px",
           }}
         >
-          <form onSubmit={handleSubmit}>
-            <Box sx={{ my: 3 }}>
-              <Typography
-                color="textPrimary"
-                variant="h4"
-                sx={{
-                  fontSize: "20px",
-                }}
-              >
-                Fill in the form to create your account
-                {process.env.REACT_APP_TRY}
-              </Typography>
-            </Box>
-            <Grid container columnSpacing={3}>
-              <Grid item md={6} xs={12}>
-                <TextField
-                  fullWidth
-                  label="Last name"
-                  margin="normal"
-                  name="lastName"
-                  onChange={(event) => {
-                    setLastName(event.target.value);
+          {submitted ? (
+            <SuccessBox
+              message="Your account has been created successfully, please verify your email address to login."
+              link={{ path: "/login", label: "Go to login page" }}
+            />
+          ) : (
+            <form onSubmit={handleSubmit}>
+              <Box sx={{ my: 3 }}>
+                <Typography
+                  color="textPrimary"
+                  variant="h4"
+                  sx={{
+                    fontSize: "20px",
                   }}
-                  value={lastName}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item md={6} xs={12}>
-                <TextField
-                  fullWidth
-                  label="first name"
-                  margin="normal"
-                  name="firstName"
-                  onChange={(event) => {
-                    setFirstName(event.target.value);
-                  }}
-                  value={firstName}
-                  variant="outlined"
-                />
-              </Grid>
+                >
+                  Fill in the form to create your account
+                  {process.env.REACT_APP_TRY}
+                </Typography>
+              </Box>
+              <Grid container columnSpacing={3}>
+                <Grid item md={6} xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Last name"
+                    margin="normal"
+                    name="lastName"
+                    onChange={(event) => {
+                      setLastName(event.target.value);
+                    }}
+                    value={lastName}
+                    variant="outlined"
+                  />
+                </Grid>
+                <Grid item md={6} xs={12}>
+                  <TextField
+                    fullWidth
+                    label="first name"
+                    margin="normal"
+                    name="firstName"
+                    onChange={(event) => {
+                      setFirstName(event.target.value);
+                    }}
+                    value={firstName}
+                    variant="outlined"
+                  />
+                </Grid>
 
-              <Grid item md={6} xs={12}>
-                <TextField
-                  fullWidth
-                  label="Email address"
-                  margin="normal"
-                  name="email"
-                  onChange={(event) => {
-                    setEmail(event.target.value);
-                  }}
-                  type="email"
-                  value={email}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item md={6} xs={12}>
-                <TextField
-                  fullWidth
-                  label="Password"
-                  margin="normal"
-                  name="password"
-                  onChange={(event) => {
-                    setPassword(event.target.value);
-                  }}
-                  type="password"
-                  value={password}
-                  variant="outlined"
-                  autoComplete="off"
-                />
-              </Grid>
-              {/* <Grid item md={6} xs={12}>
+                <Grid item md={6} xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Email address"
+                    margin="normal"
+                    name="email"
+                    onChange={(event) => {
+                      setEmail(event.target.value);
+                    }}
+                    type="email"
+                    value={email}
+                    variant="outlined"
+                  />
+                </Grid>
+                <Grid item md={6} xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Password"
+                    margin="normal"
+                    name="password"
+                    onChange={(event) => {
+                      setPassword(event.target.value);
+                    }}
+                    type="password"
+                    value={password}
+                    variant="outlined"
+                    autoComplete="off"
+                  />
+                </Grid>
+                {/* <Grid item md={6} xs={12}>
                 <TextField
                   fullWidth
                   label="Confirm password"
@@ -173,38 +184,39 @@ const Signup = () => {
                   autoComplete="off"
                 />
               </Grid> */}
-            </Grid>
+              </Grid>
 
-            <Button
-              color="primary"
-              fullWidth
-              size="large"
-              type="submit"
-              style={{
-                marginTop: "20px",
-              }}
-            >
-              Sign up now
-            </Button>
-
-            <Typography
-              color="textSecondary"
-              variant="body2"
-              style={{ marginTop: "20px" }}
-            >
-              Already have an account?{" "}
-              <Link
-                href="/login"
-                variant="subtitle2"
-                underline="hover"
-                sx={{
-                  cursor: "pointer",
+              <Button
+                color="primary"
+                fullWidth
+                size="large"
+                type="submit"
+                style={{
+                  marginTop: "20px",
                 }}
               >
-                Sign in
-              </Link>
-            </Typography>
-          </form>
+                Sign up now
+              </Button>
+
+              <Typography
+                color="textSecondary"
+                variant="body2"
+                style={{ marginTop: "20px" }}
+              >
+                Already have an account?{" "}
+                <Link
+                  href="/login"
+                  variant="subtitle2"
+                  underline="hover"
+                  sx={{
+                    cursor: "pointer",
+                  }}
+                >
+                  Sign in
+                </Link>
+              </Typography>
+            </form>
+          )}
         </Container>
       </Box>
 

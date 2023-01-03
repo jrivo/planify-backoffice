@@ -12,6 +12,7 @@ import Stack from "@mui/material/Stack";
 import Button from "../components/general/Button";
 import { useNavigate } from "react-router-dom";
 import { resetPassword } from "../utils.js/apicalls";
+import SuccessBox from "../components/general/SuccessBox";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 const ResetPassword = () => {
@@ -67,43 +68,14 @@ const ResetPassword = () => {
             borderRadius: "10px",
           }}
         >
-          {emailSent ? (
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                height: "281px",
+          {true ? (
+            <SuccessBox
+              message="Email sent successfully"
+              link={{
+                label: "Go to login page",
+                path: "/login",
               }}
-            >
-              <CheckCircleIcon sx={{ fontSize: 100, color: "#4caf50" }} />
-              <Typography
-                variant="h5"
-                sx={{ marginTop: "20px", fontSize: 18, color: "#4c4c4c" }}
-              >
-                Email sent successfully
-              </Typography>
-              <Typography
-                color="textSecondary"
-                variant="body2"
-                style={{
-                  marginTop: "20px",
-                  textAlign: "center",
-                }}
-              >
-                <Link
-                  href="/login"
-                  variant="subtitle2"
-                  underline="hover"
-                  sx={{
-                    cursor: "pointer",
-                  }}
-                >
-                  Go to login page
-                </Link>
-              </Typography>
-            </Box>
+            />
           ) : (
             <form onSubmit={handleSubmit}>
               <Box sx={{ my: 3 }}>
