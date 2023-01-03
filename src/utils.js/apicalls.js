@@ -370,6 +370,25 @@ const search = async (route, params) => {
   }
 };
 
+const resetPassword = async (data) => {
+  try {
+    const response = await fetch(
+      process.env.REACT_APP_SERVER_URL + "forgot-password",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    const user = await response.text();
+    return user;
+  } catch (error) {
+    console.log("error: ", error);
+  }
+};
+
 export {
   getDestinations,
   getDestination,
@@ -389,4 +408,5 @@ export {
   getUser,
   search,
   signup,
+  resetPassword,
 };

@@ -139,6 +139,24 @@ const Login = () => {
                   variant="outlined"
                   autoComplete="off"
                 />
+
+                <Typography
+                  color="textSecondary"
+                  variant="body2"
+                  style={{ marginTop: "20px" }}
+                >
+                  {/* Don't have an account?{" "} */}
+                  <Link
+                    href="/reset-password"
+                    variant="subtitle2"
+                    underline="hover"
+                    sx={{
+                      cursor: "pointer",
+                    }}
+                  >
+                    Reset password
+                  </Link>
+                </Typography>
               </Grid>
             </Grid>
 

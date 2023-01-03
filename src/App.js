@@ -20,6 +20,7 @@ import Overview from "./pages/Overview";
 import Users from "./pages/Users";
 import SearchResults from "./pages/SearchResults";
 import User from "./pages/User";
+import ResetPassword from "./pages/ResetPassword";
 
 const ProtectedRoute = ({ children }) => {
   return localStorage.getItem("token") ? (
@@ -210,6 +211,15 @@ function App() {
           element={
             <UnProtectedRoute>
               <Signup />
+            </UnProtectedRoute>
+          }
+        />
+
+        <Route
+          path="reset-password"
+          element={
+            <UnProtectedRoute>
+              <ResetPassword />
             </UnProtectedRoute>
           }
         />
