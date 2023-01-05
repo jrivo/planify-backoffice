@@ -1,0 +1,30 @@
+---
+- hosts: dev_server
+  tasks:
+    - name: install pip3
+      apt: name=python3-pip state=present 
+      
+    - name: Install Docker  Module for Python
+      pip:
+        name:
+          - docker
+          - docker-compose
+
+    - name: Pull code from github
+      ansible.builtin.git:
+        repo: "git@github.com:aminwastaken/planify-backoffice.git"
+        dest: ~/planify-backoffice
+        version: "{{ BRANCH }}"
+        clone: true
+        update: true
+
+    - name: Pull and run new image
+      become: true
+      community.docker.docker_compose:
+        project_src: ~/planify-backoffice
+        state: present
+        pull: true
+      environment:
+        REACT_APP_SERVER_URL: "{{ REACT_APP_SERVER_URL }}"
+        REACT_APP_GOOGLE_MAPS_KEY: "{{ REACT_APP_GOOGLE_MAPS_KEY }}"
+
