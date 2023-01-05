@@ -12,7 +12,7 @@
 
     - name: Pull code from github
       ansible.builtin.git:
-        repo: "git@github.com:aminwastaken/planify-backoffice.git"
+        repo: "git@github.com:jrivo/planify-backoffice.git"
         dest: ~/planify-backoffice
         version: "{{ BRANCH }}"
         clone: true
