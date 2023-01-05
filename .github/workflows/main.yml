@@ -51,6 +51,7 @@ jobs:
             [dev_server:vars]
             REACT_APP_SERVER_URL=${{secrets.REACT_APP_DEV_SERVER_URL}}
             REACT_APP_GOOGLE_MAPS_KEY=${{secrets.REACT_APP_GOOGLE_MAPS_KEY}}
+            BRANCH=${{ steps.extract_branch.outputs.branch }}
 
           options: |
             --inventory .hosts
