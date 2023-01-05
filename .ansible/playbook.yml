@@ -27,4 +27,5 @@
       environment:
         REACT_APP_SERVER_URL: "{{ REACT_APP_SERVER_URL }}"
         REACT_APP_GOOGLE_MAPS_KEY: "{{ REACT_APP_GOOGLE_MAPS_KEY }}"
+        VERSION: "{{ NEW_VERSION }}"
 
