@@ -36,17 +36,21 @@ const Login = () => {
       });
       const data = await response.json();
       console.log(data);
-      if (data.statusCode === 401) {
+      console.log(data.statusCode);
+      if (data.statusCode === 401 || data.statusCode === 400) {
         setError("Invalid email or password");
         return;
+      } else if (data.statusCode === 500) {
+        setError("Server error");
+        return;
+      } else {
+        localStorage.setItem("token", data.access_token);
+        localStorage.setItem("email", data.email);
+        localStorage.setItem("id", data.id);
+        localStorage.setItem("role", data.role);
+        console.log("role", data.role);
+        navigate("/");
       }
-
-      localStorage.setItem("token", data.access_token);
-      localStorage.setItem("email", data.email);
-      localStorage.setItem("id", data.id);
-      localStorage.setItem("role", data.role);
-      console.log("role", data.role);
-      navigate("/");
     } catch (error) {
       console.log(error);
     }

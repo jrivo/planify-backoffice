@@ -67,7 +67,9 @@ export default function AccountProfileDetails({
     formData.append("lastName", lastName);
     formData.append("email", email);
     formData.append("role", role);
-    formData.append("phoneNumber", phone);
+    if (phone && phone.length > 0) {
+      formData.append("phoneNumber", phone);
+    }
     await updateUserInfo(data.id, formData);
 
     // change value of message for one second then set it back to empty string
@@ -145,6 +147,7 @@ export default function AccountProfileDetails({
                     onChange={(e) => setRole(e.target.value)}
                     InputLabelProps={{ shrink: true }}
                     variant="outlined"
+                    disabled={true}
                   >
                     {roles.map((role) => (
                       <MenuItem key={role.id} value={role.value}>
