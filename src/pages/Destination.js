@@ -52,6 +52,7 @@ const Destination = ({ destination, onClick }) => {
     const placeTypes = await getPlaceTypes();
     const destination = await getDestination(params.id);
     const user = await getUser(destination.ownerId);
+    console.log("this is the owner");
     setCreator(user.firstName + " " + user.lastName);
 
     console.log("destination", destination);
@@ -211,18 +212,21 @@ const Destination = ({ destination, onClick }) => {
             >
               {placeType?.name}
             </Typography>
+            {localStorage.getItem("role") === "ADMIN" ||
+              (localStorage.getItem("role") === "MODERATOR" && (
+                <Typography variant="body2">
+                  <span style={{ fontWeight: "bold" }}>Created by: </span>
 
-            <Typography variant="body2">
-              <span style={{ fontWeight: "bold" }}>Created by: </span>
-              <span
-                style={{
-                  color: "#1976d2",
-                  // cursor: "pointer"
-                }}
-              >
-                {creator}
-              </span>
-            </Typography>
+                  <span
+                    style={{
+                      color: "#1976d2",
+                      // cursor: "pointer"
+                    }}
+                  >
+                    {creator}
+                  </span>
+                </Typography>
+              ))}
           </Box>
           <Typography
             variant="h5"

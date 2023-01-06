@@ -198,7 +198,7 @@ function Map({ data }) {
         <GoogleMap
           onLoad={handleOnLoad}
           onClick={() => setActiveMarker(null)}
-          mapContainerStyle={{ width: "50vw", height: "92%" }}
+          mapContainerStyle={{ width: "45vw", height: "92%" }}
           // border radius
           options={{
             styles: mapStyles,

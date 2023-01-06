@@ -98,6 +98,8 @@ const Destinations = () => {
             flexDirection: "column",
             alignItems: destinations?.length >= 3 ? "center" : "flex-start",
             height: "100%",
+            width: "100%",
+            // backgroundColor: "red",
             // backgroundColor: "blue",
             display: "flex",
             justifyContent: "center",
@@ -108,6 +110,7 @@ const Destinations = () => {
               maxWidth: "900px",
               width: "100%",
               minHeight: "574.062px",
+              // backgroundColor: "yellow",
             }}
           >
             <Grid container spacing={3}>
@@ -142,25 +145,28 @@ const Destinations = () => {
                 </Grid>
               ))}
             </Grid>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                marginTop: "40px",
-              }}
-            >
-              <Stack spacing={2}>
-                <Pagination
-                  count={totalPages}
-                  onChange={(e, page) => {
-                    navigate("/destinations?page=" + page);
-                  }}
-                  // selected={currentPage}
-                  page={currentPage}
-                />
-              </Stack>
-            </Box>
+
+            {totalPages > 1 && (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: "40px",
+                }}
+              >
+                <Stack spacing={2}>
+                  <Pagination
+                    count={totalPages}
+                    onChange={(e, page) => {
+                      navigate("/destinations?page=" + page);
+                    }}
+                    // selected={currentPage}
+                    page={currentPage}
+                  />
+                </Stack>
+              </Box>
+            )}
           </Box>
         </Box>
       )}

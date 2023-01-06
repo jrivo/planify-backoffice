@@ -35,7 +35,7 @@ const DashboardWrapper = ({ children, ...rest }) => {
   const [profileData, setProfileData] = React.useState({});
   const isSmallScreen = useMediaQuery("(max-width:1200px)");
 
-  const navBarItems = ["Overview", "Activities", "Destinations", "Account"];
+  const navBarItems = ["Overview", "Destinations", "Activities", "Account"];
 
   if (localStorage.getItem("role") === "ADMIN") {
     navBarItems.push("Users");

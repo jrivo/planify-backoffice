@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 import StarRating from "../components/StarRating";
 import { useState, useEffect } from "react";
@@ -32,8 +32,10 @@ const Activity = ({ destination, onClick }) => {
   const [image, setImage] = useState("");
   const [alertOpen, setAlertOpen] = useState(false);
   const [subscribers, setSubscribers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const loadData = async () => {
+    setLoading(true);
     const activity = await getActivity(params.id);
     const subscribers = await getActivitySubscribers(params.id);
 
@@ -71,12 +73,26 @@ const Activity = ({ destination, onClick }) => {
         ? activity.medias[0].url
         : "https://blog.redbubble.com/wp-content/uploads/2017/10/placeholder_image_square.jpg"
     );
+    setLoading(false);
   };
 
   useEffect(() => {
     loadData();
   }, []);
-  console.log("params are", params);
+
+  if (loading)
+    return (
+      <CircularProgress
+        sx={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+        }}
+        size={100}
+      />
+    );
+
   return (
     <Box
       sx={{

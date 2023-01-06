@@ -9,7 +9,7 @@ import { capitalize } from "../utils.js/format";
 const Overview = () => {
   const [destinations, setDestinations] = useState([]);
   const [activities, setActivities] = useState([]);
-  const isMediumScreen = useMediaQuery("(max-width:1600px)");
+  const isMediumScreen = useMediaQuery("(max-width:1500px)");
   const [events, setEvents] = useState([]);
 
   const loadData = async () => {
@@ -81,7 +81,7 @@ const Overview = () => {
     <Box
       sx={{
         padding: "20px",
-        marginLeft: "30px",
+        marginLeft: "20px",
         height: "100%",
         display: "flex",
         flexDirection: "column",
@@ -135,7 +135,7 @@ const Overview = () => {
           <Card
             sx={{
               maxHeight: "92%",
-              width: "22vw",
+              width: "23vw",
               marginRight: "18px",
               marginLeft: "30px",
               display: "flex",
