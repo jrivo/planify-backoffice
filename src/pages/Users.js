@@ -27,6 +27,7 @@ const Users = () => {
           name: user.firstName + " " + user.lastName,
           email: user.email,
           role: user.role,
+          status: user.status,
           imageUrl: user?.profilePicture?.url && user.profilePicture.url,
         };
       })

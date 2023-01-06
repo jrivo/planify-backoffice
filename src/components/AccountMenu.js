@@ -23,6 +23,7 @@ const AccountMenu = ({ data }) => {
 
   React.useEffect(() => {
     console.log("user data", data);
+    localStorage.setItem("status", data.status);
   }, [data]);
 
   const handleClose = () => {
