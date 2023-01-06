@@ -388,6 +388,25 @@ const resetPassword = async (data) => {
   }
 };
 
+const updatePassword = async (id, data) => {
+  try {
+    const response = await fetch(
+      process.env.REACT_APP_SERVER_URL + "users/" + id + "/password",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.token,
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    return response;
+  } catch (error) {
+    console.log("error: ", error);
+  }
+};
+
 const getEvents = async (params) => {
   try {
     const response = await fetch(
@@ -432,5 +451,6 @@ export {
   search,
   signup,
   resetPassword,
+  updatePassword,
   getEvents,
 };

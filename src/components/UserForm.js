@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import AccountProfile from "./AccountProfile";
 import AccountProfileDetails from "./AccountProfileDetails";
 import { getCurrentUser, getUser } from "../utils.js/apicalls";
+import PasswordForm from "./PaawordForm.js";
 
 const UserForm = ({ id }) => {
   const [profileData, setProfileData] = useState({});
@@ -80,12 +81,21 @@ const UserForm = ({ id }) => {
               <AccountProfile data={profileData} />
             </Grid>
             <Grid item lg={8} md={6} xs={12}>
-              <AccountProfileDetails
-                id={id}
-                data={profileData}
-                profileDetailsChanged={profileDetailsChanged}
-                setProfileDetailsChanged={setProfileDetailsChanged}
-              />
+              <Box>
+                <AccountProfileDetails
+                  id={id}
+                  data={profileData}
+                  profileDetailsChanged={profileDetailsChanged}
+                  setProfileDetailsChanged={setProfileDetailsChanged}
+                />
+                <PasswordForm
+                  id={id}
+                  data={profileData}
+                  profileDetailsChanged={profileDetailsChanged}
+                  setProfileDetailsChanged={setProfileDetailsChanged}
+                  style={{ marginTop: "40px" }}
+                />
+              </Box>
             </Grid>
           </Grid>
         </Container>
