@@ -48,12 +48,23 @@ const Login = () => {
         setError("Server error");
         return;
       } else {
-        localStorage.setItem("token", data.access_token);
-        localStorage.setItem("email", data.email);
-        localStorage.setItem("id", data.id);
-        localStorage.setItem("role", data.role);
-        console.log("role", data.role);
-        navigate("/");
+        console.log("in else");
+        if (
+          data?.role?.toUpperCase() !== "ADMIN" &&
+          data?.role?.toUpperCase() !== "MODERATOR" &&
+          data?.role?.toUpperCase() !== "MERCHANT"
+        ) {
+          console.log("shouldn't log in");
+
+          setError("You can't access the dashboard with this account");
+        } else {
+          localStorage.setItem("token", data.access_token);
+          localStorage.setItem("email", data.email);
+          localStorage.setItem("id", data.id);
+          localStorage.setItem("role", data.role);
+          console.log("role", data.role);
+          navigate("/");
+        }
       }
     } catch (error) {
       console.log(error);
