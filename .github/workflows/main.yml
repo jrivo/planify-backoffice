@@ -52,7 +52,10 @@ jobs:
             REACT_APP_SERVER_URL=${{secrets.REACT_APP_DEV_SERVER_URL}}
             REACT_APP_GOOGLE_MAPS_KEY=${{secrets.REACT_APP_GOOGLE_MAPS_KEY}}
             REACT_APP_PRIMARY_COLOR=${{secrets.REACT_APP_PRIMARY_COLOR}}
+            REACT_APP_USER_AVATAR_PLACEHOLDER=${{secrets.REACT_APP_USER_AVATAR_PLACEHOLDER}}
             REACT_APP_PRIMARY_LIGHTER_COLOR=${{secrets.REACT_APP_PRIMARY_LIGHTER_COLOR}}
+            REACT_APP_IMAGE_PLACEHOLDER=${{secrets.REACT_APP_IMAGE_PLACEHOLDER}}
+
             BRANCH=${{ steps.extract_branch.outputs.branch }}
             NEW_VERSION=${{ steps.lastTag.outputs.tag }}
 
