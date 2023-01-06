@@ -3,9 +3,40 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import BlockIcon from "@mui/icons-material/Block";
 import { useNavigate } from "react-router-dom";
+import { capitalize } from "../utils.js/format";
+import { changeUserStatus, deleteUser } from "../utils.js/apicalls";
+import { useLocation } from "react-router-dom";
+import AlertDialog from "./general/AlertDialog";
+import { useState } from "react";
 
-const UsersCard = ({ imageUrl, id, name, email, role }) => {
+const UsersCard = ({ imageUrl, id, name, email, role, status }) => {
+  const location = useLocation();
   const navigate = useNavigate();
+  // get current page number
+  const currentPage = location.search.split("=")[1] || 1;
+  const [alertOpen, setAlertOpen] = useState(false);
+
+  const banUnbanUser = async (id) => {
+    const response = await changeUserStatus(
+      id,
+      status === "BANNED" ? "VERIFIED" : "BANNED"
+    );
+    if (response.status === 200) {
+      // reload the page
+      navigate("/users?page=" + currentPage);
+    }
+  };
+
+  const removeUser = async (id) => {
+    const response = await deleteUser(id);
+    const data = await response.json();
+    console.log(data);
+    if (response.status === 200) {
+      setAlertOpen(false);
+      navigate("/users?page=" + currentPage);
+    }
+  };
+
   return (
     <Box
       display="flex"
@@ -16,6 +47,15 @@ const UsersCard = ({ imageUrl, id, name, email, role }) => {
         position: "relative",
       }}
     >
+      <AlertDialog
+        message="Do you really want to delete this user?"
+        open={alertOpen}
+        setOpen={setAlertOpen}
+        action={() => {
+          removeUser(id);
+        }}
+      />
+
       <Avatar
         src={imageUrl}
         style={{
@@ -36,12 +76,21 @@ const UsersCard = ({ imageUrl, id, name, email, role }) => {
 
         <Box>
           <Typography variant="caption">
-            Name:
+            Status:
             <Typography
               variant="caption"
-              sx={{ marginLeft: "10px", fontWeight: "bold" }}
+              sx={{
+                marginLeft: "10px",
+                fontWeight: "bold",
+                color:
+                  status === "BANNED"
+                    ? "red"
+                    : status === "VERIFIED"
+                    ? "green"
+                    : "orange",
+              }}
             >
-              {name}
+              {capitalize(status)}
             </Typography>
           </Typography>
         </Box>
@@ -92,6 +141,7 @@ const UsersCard = ({ imageUrl, id, name, email, role }) => {
                 display: "flex",
                 justifyContent: "flex-start",
               }}
+              onClick={() => setAlertOpen(true)}
             >
               <DeleteIcon sx={{ fontSize: 16 }} />
               <span style={{ marginLeft: "5px" }}>Delete</span>
@@ -119,21 +169,6 @@ const UsersCard = ({ imageUrl, id, name, email, role }) => {
             display: "flex",
           }}
         >
-          {/* <Box>
-            <Button
-              variant="text"
-              sx={{
-                width: "100px",
-                display: "flex",
-                justifyContent: "flex-start",
-                color: "#000",
-                textTransform: "none",
-              }}
-            >
-              <MessageIcon sx={{ fontSize: 16 }} />
-              <span style={{ marginLeft: "5px" }}>Message</span>
-            </Button>
-          </Box> */}
           <Box>
             <Button
               variant="text"
@@ -144,9 +179,12 @@ const UsersCard = ({ imageUrl, id, name, email, role }) => {
                 color: "#000",
                 textTransform: "none",
               }}
+              onClick={() => banUnbanUser(id)}
             >
               <BlockIcon sx={{ fontSize: 16 }} />
-              <span style={{ marginLeft: "5px" }}>Block</span>
+              <span style={{ marginLeft: "5px" }}>
+                {status === "BANNED" ? "Unban" : "ban"}
+              </span>
             </Button>
           </Box>
         </Box>

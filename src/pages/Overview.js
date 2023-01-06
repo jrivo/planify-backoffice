@@ -135,7 +135,7 @@ const Overview = () => {
           <Card
             sx={{
               maxHeight: "92%",
-              width: "23vw",
+              width: "22vw",
               marginRight: "18px",
               marginLeft: "30px",
               display: "flex",

@@ -388,6 +388,62 @@ const resetPassword = async (data) => {
   }
 };
 
+const updatePassword = async (id, data) => {
+  try {
+    const response = await fetch(
+      process.env.REACT_APP_SERVER_URL + "users/" + id + "/password",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.token,
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    return response;
+  } catch (error) {
+    console.log("error: ", error);
+  }
+};
+
+const changeUserStatus = async (id, status) => {
+  try {
+    const response = await fetch(
+      process.env.REACT_APP_SERVER_URL + "users/" + id + "/status",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.token,
+        },
+        body: JSON.stringify({ status }),
+      }
+    );
+    return response;
+  } catch (error) {
+    console.log("error: ", error);
+  }
+};
+
+const deleteUser = async (id) => {
+  try {
+    const response = await fetch(
+      process.env.REACT_APP_SERVER_URL + "users/" + id,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.token,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    console.log("error: ", error);
+  }
+};
+
 const getEvents = async (params) => {
   try {
     const response = await fetch(
@@ -432,5 +488,8 @@ export {
   search,
   signup,
   resetPassword,
+  updatePassword,
   getEvents,
+  changeUserStatus,
+  deleteUser,
 };
