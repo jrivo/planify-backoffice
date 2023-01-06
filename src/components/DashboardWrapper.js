@@ -24,6 +24,7 @@ import SearchBar from "./general/SearchBar";
 import PersonIcon from "@mui/icons-material/Person";
 import { getCurrentUser, getUser } from "../utils.js/apicalls";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { capitalize } from "../utils.js/format";
 
 const drawerWidth = 300;
 
@@ -49,19 +50,10 @@ const DashboardWrapper = ({ children, ...rest }) => {
     color: "#fff",
   };
 
-  // React.useEffect(() => {
-  //   const handleResize = () => {
-  //     if (window.innerWidth < 1000) {
-  //       setMobileOpen(false);
-  //     }
-  //   };
-  //   window.addEventListener("resize", handleResize);
-  //   return () => window.removeEventListener("resize", handleResize);
-  // }, [window]);
-
   const loadCurrentUser = async () => {
     const currentUser = await getCurrentUser();
-    console.log("current user", currentUser);
+    currentUser.firstName = capitalize(currentUser.firstName);
+    currentUser.lastName = capitalize(currentUser.lastName);
 
     setProfileData(currentUser);
   };
@@ -75,11 +67,8 @@ const DashboardWrapper = ({ children, ...rest }) => {
       style={{
         width: drawerWidth,
         height: "100%",
-        // backgroundColor: "#1A1C1E",
         backgroundColor: "#2D3E50",
-
         paddingTop: "20px",
-        // backgroundColor: "red",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

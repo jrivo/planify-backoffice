@@ -4,7 +4,7 @@ import ActivityCard from "../components/general/ActivityCard";
 import Map from "../components/Map";
 import { getDestinations, getEvents } from "../utils.js/apicalls";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { Capitalize } from "../utils.js/format";
+import { capitalize } from "../utils.js/format";
 
 const Overview = () => {
   const [destinations, setDestinations] = useState([]);
@@ -32,9 +32,9 @@ const Overview = () => {
       eventData.events.map((event) => ({
         id: event.id,
         user:
-          Capitalize(event?.user?.firstName) +
+          capitalize(event?.user?.firstName) +
           " " +
-          Capitalize(event?.user?.lastName),
+          capitalize(event?.user?.lastName),
         userPicture: event?.user?.profilePicture?.url,
         action:
           event?.type === "ACTIVITY_SUBSCRIBED"

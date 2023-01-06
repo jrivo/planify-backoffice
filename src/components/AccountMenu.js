@@ -20,6 +20,11 @@ const AccountMenu = ({ data }) => {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
+  React.useEffect(() => {
+    console.log("user data", data);
+  }, [data]);
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -36,7 +41,7 @@ const AccountMenu = ({ data }) => {
             aria-expanded={open ? "true" : undefined}
           >
             <BackgroundLetterAvatars
-              name="John Doe"
+              name={data?.firstName + " " + data?.lastName}
               image={data?.profilePicture?.url}
             />
           </IconButton>
@@ -82,7 +87,11 @@ const AccountMenu = ({ data }) => {
             navigate("/account");
           }}
         >
-          <Avatar src={data?.profilePicture?.url} /> Profile
+          <BackgroundLetterAvatars
+            name={data?.firstName + " " + data?.lastName}
+            image={data?.profilePicture?.url}
+          />
+          Profile
         </MenuItem>
         <Divider />
         {/* <MenuItem>
