@@ -37,14 +37,16 @@ const Signup = () => {
       role: "MERCHANT",
     });
 
-    // localStorage.setItem("token", data.access_token);
-    // localStorage.setItem("email", data.email);
-    // localStorage.setItem("id", data.id);
-    // localStorage.setItem("role", data.role);
-
-    setSubmitted(true);
-
-    // navigate("/");
+    console.log("signup data", data);
+    if (data.status === 401) {
+      setError("A user with this email already address exists");
+      return;
+    } else if (data.status === 200 || data.status === 201) {
+      setSubmitted(true);
+    } else {
+      setError("Server error");
+      return;
+    }
   };
 
   return (
@@ -215,23 +217,22 @@ const Signup = () => {
                   Sign in
                 </Link>
               </Typography>
+              {error && (
+                <Stack sx={{ width: "100% ", marginTop: "20px" }} spacing={2}>
+                  <Alert
+                    severity="error"
+                    onClose={() => {
+                      setError(false);
+                    }}
+                  >
+                    {error}
+                  </Alert>
+                </Stack>
+              )}
             </form>
           )}
         </Container>
       </Box>
-
-      {error && (
-        <Stack sx={{ width: "100% ", marginTop: "20px" }} spacing={2}>
-          <Alert
-            severity="error"
-            onClose={() => {
-              setError(false);
-            }}
-          >
-            {error}
-          </Alert>
-        </Stack>
-      )}
     </>
   );
 };

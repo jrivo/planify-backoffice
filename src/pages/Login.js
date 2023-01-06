@@ -38,7 +38,11 @@ const Login = () => {
       console.log(data);
       console.log(data.statusCode);
       if (data.statusCode === 401 || data.statusCode === 400) {
-        setError("Invalid email or password");
+        setError(
+          data.message && typeof data.message === "string"
+            ? data.message
+            : "Invalid email or password"
+        );
         return;
       } else if (data.statusCode === 500) {
         setError("Server error");

@@ -36,8 +36,7 @@ const signup = async (body) => {
         body: JSON.stringify(body),
       }
     );
-    const data = await response.json();
-    return data;
+    return response;
   } catch (error) {
     console.log("error: ", error);
   }
