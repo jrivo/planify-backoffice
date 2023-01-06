@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import Avatar from "../Avatar";
 import { getFormattedDate, getFormattedTime } from "../../utils.js/format";
 
-const ActivityCard = ({ person, action, date, image, style, sx }) => {
+const ActivityCard = ({ person, action, thing, date, image, style, sx }) => {
   const textStyle = {
     // dark grey
     color: "#4F4F4F",
@@ -43,6 +43,15 @@ const ActivityCard = ({ person, action, date, image, style, sx }) => {
             {person}
           </Typography>{" "}
           <Typography sx={textStyle}>{action}</Typography>
+        </Box>
+        <Box>
+          <Typography
+            sx={{
+              ...textStyle,
+            }}
+          >
+            « {thing} »
+          </Typography>
         </Box>
         <Box>
           <Typography sx={textStyle}>

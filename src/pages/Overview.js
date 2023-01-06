@@ -2,23 +2,58 @@ import { Box, Card, CardContent, Divider, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import ActivityCard from "../components/general/ActivityCard";
 import Map from "../components/Map";
-import { getDestinations } from "../utils.js/apicalls";
+import { getDestinations, getEvents } from "../utils.js/apicalls";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { Capitalize } from "../utils.js/format";
 
 const Overview = () => {
   const [destinations, setDestinations] = useState([]);
+  const [activities, setActivities] = useState([]);
   const isMediumScreen = useMediaQuery("(max-width:1600px)");
+  const [events, setEvents] = useState([]);
 
   const loadData = async () => {
-    const data = await getDestinations({
+    const destinationData = await getDestinations({
       limit: 6,
       merchant:
         localStorage.getItem("role").toUpperCase() === "MERCHANT"
           ? localStorage.getItem("id")
           : undefined,
     });
+
+    const eventData = await getEvents({
+      merchant:
+        localStorage.getItem("role").toUpperCase() === "MERCHANT"
+          ? localStorage.getItem("id")
+          : undefined,
+    });
+
+    setEvents(
+      eventData.events.map((event) => ({
+        id: event.id,
+        user:
+          Capitalize(event?.user?.firstName) +
+          " " +
+          Capitalize(event?.user?.lastName),
+        userPicture: event?.user?.profilePicture?.url,
+        action:
+          event?.type === "ACTIVITY_SUBSCRIBED"
+            ? "Subscribed to "
+            : event?.type === "ACTIVITY_UNSUBSCRIBED"
+            ? "Unsubscribed from "
+            : event?.type === "REVIEW_POSTED"
+            ? "Posted a review for"
+            : event?.type === "REVIEW_UPDATED" && "Updated a review",
+        thing: event?.activity
+          ? event?.activity?.name
+          : event?.place
+          ? event?.place?.name
+          : "",
+        date: event?.createdAt,
+      }))
+    );
     setDestinations(
-      data.places.map((destination) => ({
+      destinationData.places.map((destination) => ({
         id: destination.id,
         position: {
           lat: parseFloat(destination.address?.latitude),
@@ -71,7 +106,20 @@ const Overview = () => {
           Overview
         </Typography>
       </Box>
-
+      <Box>
+        <Typography
+          variant="h5"
+          component="div"
+          sx={{
+            color: "#2D3E50",
+            marginLeft: isMediumScreen ? "12vw" : "35px",
+          }}
+          fontSize="20px"
+          marginBottom="20px"
+        >
+          All destinations
+        </Typography>
+      </Box>
       <Box
         sx={{
           display: "flex",
@@ -86,42 +134,72 @@ const Overview = () => {
         {!isMediumScreen && (
           <Card
             sx={{
-              maxHeight: "95%",
-              width: "21vw",
+              maxHeight: "92%",
+              width: "22vw",
               marginRight: "18px",
               marginLeft: "30px",
               display: "flex",
               flexDirection: "column",
               paddingTop: "30px",
               paddingBottom: "30px",
-              // justifyContent: "center",
               alignItems: "center",
-              // overflowY: "scroll",
-              // don't show scroll bar if not needed
-              // "&::-webkit-scrollbar": {
-              //   display: "none",
-              // },
-              // "-ms-overflow-style": "none",
-              // scrollbarWidth: "none",
             }}
           >
-            <CardContent>
-              {
-                // map over a list of 10 elements
+            <CardContent
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                height: "100%",
+                width: "100%",
+              }}
+            >
+              <Typography
+                variant="h5"
+                component="div"
+                // sx={{ textAlign: "center" }}
 
-                [...Array(5)].map((_, index) => (
+                sx={{
+                  fontSize: "22px",
+                  color: "#2D3E50",
+                  marginBottom: "10px",
+                  marginLeft: "20px",
+                }}
+              >
+                Recent activity{" "}
+              </Typography>
+
+              {events && events.length ? (
+                events.map((event, index) => (
                   <>
                     <ActivityCard
-                      person="John Doe"
-                      action="Subscribed to you event"
-                      date="2021-07-30T19:00:00.000Z"
-                      image="https://cdn.hswstatic.com/gif/play/0b7f4e9b-f59c-4024-9f06-b3dc12850ab7-1920-1080.jpg"
-                      style={{ marginBottom: "25px", marginTop: "25px" }}
+                      person={event.user}
+                      action={event.action}
+                      thing={event.thing}
+                      date={event.date}
+                      image={event.userPicture}
+                      style={{
+                        marginBottom: "25px",
+                        marginTop: "25px",
+                        marginLeft: "30px",
+                      }}
                     />
                     {index !== 4 && <Divider />}
                   </>
                 ))
-              }
+              ) : (
+                <Box
+                  sx={{
+                    height: "100%",
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "grey.500",
+                  }}
+                >
+                  No recent activity
+                </Box>
+              )}
 
               {/* <Typography variant="h5" component="div" sx={{ color: "grey.500" }}>
               Coming soon

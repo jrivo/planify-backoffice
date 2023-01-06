@@ -198,7 +198,7 @@ function Map({ data }) {
         <GoogleMap
           onLoad={handleOnLoad}
           onClick={() => setActiveMarker(null)}
-          mapContainerStyle={{ width: "50vw", height: "95%" }}
+          mapContainerStyle={{ width: "50vw", height: "92%" }}
           // border radius
           options={{
             styles: mapStyles,
@@ -209,6 +209,11 @@ function Map({ data }) {
               key={id}
               position={position}
               onClick={() => handleActiveMarker(id)}
+              // change marker icon
+              // icon={{
+              //   url: "https://www.iconpacks.net/icons/2/free-location-icon-2955-thumb.png",
+              //   scaledSize: new window.google.maps.Size(50, 50),
+              // }}
             >
               {activeMarker === id ? (
                 <InfoWindow onCloseClick={() => setActiveMarker(null)}>

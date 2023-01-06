@@ -388,6 +388,30 @@ const resetPassword = async (data) => {
   }
 };
 
+const getEvents = async (params) => {
+  try {
+    const response = await fetch(
+      process.env.REACT_APP_SERVER_URL +
+        "events?page=" +
+        (params.page ? params.page : 1) +
+        "&limit=" +
+        (params.limit ? params.limit : 5) +
+        (params.merchant ? "&merchant=" + params.merchant : ""),
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.token,
+        },
+      }
+    );
+    const events = await response.json();
+    return events;
+  } catch (error) {
+    console.log("error: ", error);
+  }
+};
+
 export {
   getDestinations,
   getDestination,
@@ -408,4 +432,5 @@ export {
   search,
   signup,
   resetPassword,
+  getEvents,
 };

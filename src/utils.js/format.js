@@ -43,6 +43,12 @@ const formatPhone = (phone) => {
   }
 };
 
+const Capitalize = (str) => {
+  if (typeof str === "string")
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  return "";
+};
+
 // when the text is too long, it will be cut off and add "..." at the end
 const shortenText = (text, length) => {
   if (text.length > length) {
@@ -51,4 +57,10 @@ const shortenText = (text, length) => {
   return text;
 };
 
-export { getFormattedDate, getFormattedTime, formatPhone, shortenText };
+export {
+  getFormattedDate,
+  getFormattedTime,
+  formatPhone,
+  shortenText,
+  Capitalize,
+};
