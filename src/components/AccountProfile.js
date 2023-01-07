@@ -12,7 +12,7 @@ import { styled } from "@mui/material/styles";
 import Button from "./general/Button";
 import { updateUserInfo } from "../utils.js/apicalls";
 
-export default function AccountProfile({ data, ...rest }) {
+export default function AccountProfile({ data, id, ...rest }) {
   const Input = styled("input")({
     display: "none",
   });
@@ -61,25 +61,28 @@ export default function AccountProfile({ data, ...rest }) {
         </Box>
       </CardContent>
       <Divider />
-      <CardActions sx={{ justifyContent: "center" }}>
-        <label htmlFor="contained-button-file">
-          <Input
-            accept="image/*"
-            id="contained-button-file"
-            multiple
-            type="file"
-            onChange={handleImageChange}
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            fullWidth
-            component="span"
-          >
-            Charger une photo
-          </Button>
-        </label>
-      </CardActions>
+
+      {(localStorage.getItem("role") === "ADMIN" || !id) && (
+        <CardActions sx={{ justifyContent: "center" }}>
+          <label htmlFor="contained-button-file">
+            <Input
+              accept="image/*"
+              id="contained-button-file"
+              multiple
+              type="file"
+              onChange={handleImageChange}
+            />
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              component="span"
+            >
+              Charger une photo
+            </Button>
+          </label>
+        </CardActions>
+      )}
     </Card>
   );
 }

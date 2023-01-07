@@ -109,6 +109,11 @@ export default function AccountProfileDetails({
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   variant="outlined"
+                  disabled={
+                    localStorage.getItem("role") !== "ADMIN" && id
+                      ? true
+                      : false
+                  }
                 />
               </Grid>
               <Grid item md={6} xs={12}>
@@ -120,6 +125,11 @@ export default function AccountProfileDetails({
                   onChange={(e) => setLastName(e.target.value)}
                   InputLabelProps={{ shrink: true }}
                   variant="outlined"
+                  disabled={
+                    localStorage.getItem("role") !== "ADMIN" && id
+                      ? true
+                      : false
+                  }
                 />
               </Grid>
               <Grid item md={6} xs={12}>
@@ -131,6 +141,11 @@ export default function AccountProfileDetails({
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   variant="outlined"
+                  disabled={
+                    localStorage.getItem("role") !== "ADMIN" && id
+                      ? true
+                      : false
+                  }
                 />
               </Grid>
               <Grid item md={6} xs={12}>
@@ -142,6 +157,11 @@ export default function AccountProfileDetails({
                   onChange={(e) => setPhone(e.target.value)}
                   variant="outlined"
                   InputLabelProps={{ shrink: true }}
+                  disabled={
+                    localStorage.getItem("role") !== "ADMIN" && id
+                      ? true
+                      : false
+                  }
                 />
               </Grid>
               <Grid item md={12} xs={12}>
@@ -154,6 +174,11 @@ export default function AccountProfileDetails({
                     onChange={(e) => setRole(e.target.value)}
                     InputLabelProps={{ shrink: true }}
                     variant="outlined"
+                    disabled={
+                      localStorage.getItem("role") !== "ADMIN" && id
+                        ? true
+                        : false
+                    }
                     // disabled={true}
                   >
                     {roles.map((role) => (
@@ -169,17 +194,19 @@ export default function AccountProfileDetails({
         </CardContent>
         <Divider />
 
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "flex-end",
-            p: 2,
-          }}
-        >
-          <Button color="primary" variant="contained" type="submit">
-            Update profile
-          </Button>
-        </Box>
+        {(localStorage.getItem("role") === "ADMIN" || !id) && (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              p: 2,
+            }}
+          >
+            <Button color="primary" variant="contained" type="submit">
+              Update profile
+            </Button>
+          </Box>
+        )}
       </Card>
       {message}
     </form>

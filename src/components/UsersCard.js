@@ -10,7 +10,7 @@ import AlertDialog from "./general/AlertDialog";
 import { useState } from "react";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckIcon from "@mui/icons-material/Check";
-
+import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 const UsersCard = ({ imageUrl, id, name, email, role, status }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -128,91 +128,107 @@ const UsersCard = ({ imageUrl, id, name, email, role, status }) => {
         </Box>
       </Box>
       {/* buttons container */}
-      <Box
-        sx={{
-          position: "absolute",
-          right: "0",
-          top: "50%",
-          transform: "translateY(-50%)",
-        }}
-      >
-        <Box
-          alignItems="center"
-          sx={{
-            display: "flex",
-          }}
-        >
-          <Box>
-            <Button
-              sx={{
-                color: "red",
-                textTransform: "none",
-                width: "100px",
-                display: "flex",
-                justifyContent: "flex-start",
-              }}
-              onClick={() => setAlertOpen(true)}
-            >
-              <DeleteIcon sx={{ fontSize: 16 }} />
-              <span style={{ marginLeft: "5px" }}>Delete</span>
-            </Button>
-          </Box>
-          <Button
-            variant="text"
-            sx={{
-              width: "100px",
-              display: "flex",
-              justifyContent: "flex-start",
-              color: "#000",
-              textTransform: "none",
-            }}
-            onClick={() => {
-              navigate(`/users/${id}`);
-            }}
-          >
-            <EditIcon sx={{ fontSize: 16 }} />
-            <span style={{ marginLeft: "5px" }}>Edit</span>
-          </Button>
-        </Box>
+
+      {(localStorage.getItem("role") === "ADMIN" ||
+        (localStorage.getItem("role") === "MODERATOR" && role !== "ADMIN")) && (
         <Box
           sx={{
-            display: "flex",
+            position: "absolute",
+            right: "0",
+            top: "50%",
+            transform: "translateY(-50%)",
           }}
         >
-          <Button
-            variant="text"
+          {console.log("should show")}
+          <Box
+            alignItems="center"
             sx={{
-              width: "100px",
               display: "flex",
-              justifyContent: "flex-start",
-              color: "#000",
-              textTransform: "none",
             }}
-            onClick={() => banUnbanUser(id)}
           >
-            <BlockIcon sx={{ fontSize: 16 }} />
-            <span style={{ marginLeft: "5px" }}>
-              {status === "BANNED" ? "Unban" : "ban"}
-            </span>
-          </Button>
-          {status !== "VERIFIED" && status !== "BANNED" && (
             <Button
               variant="text"
               sx={{
-                width: "100px",
+                width: "90px",
                 display: "flex",
                 justifyContent: "flex-start",
                 color: "#000",
                 textTransform: "none",
               }}
-              onClick={() => verifyUser(id)}
+              onClick={() => {
+                navigate(`/users/${id}`);
+              }}
             >
-              <CheckIcon sx={{ fontSize: 16 }} />
-              <span style={{ marginLeft: "5px" }}>Verify</span>
+              {localStorage.getItem("role") === "ADMIN" ? (
+                <>
+                  <EditIcon sx={{ fontSize: 16 }} />
+                  <span style={{ marginLeft: "5px" }}>Edit</span>
+                </>
+              ) : (
+                <>
+                  <PersonSearchIcon sx={{ fontSize: 16 }} />
+                  <span style={{ marginLeft: "5px" }}>Details</span>
+                </>
+              )}
             </Button>
-          )}
+            {localStorage.getItem("role") === "ADMIN" && (
+              <Button
+                sx={{
+                  color: "red",
+                  textTransform: "none",
+                  width: "100px",
+                  display: "flex",
+                  justifyContent: "flex-start",
+                }}
+                onClick={() => setAlertOpen(true)}
+              >
+                <DeleteIcon sx={{ fontSize: 16 }} />
+                <span style={{ marginLeft: "5px" }}>Delete</span>
+              </Button>
+            )}
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection:
+                localStorage.getItem("role") === "ADMIN" ? "row" : "column",
+            }}
+          >
+            <Button
+              variant="text"
+              sx={{
+                width: "90px",
+                display: "flex",
+                justifyContent: "flex-start",
+                color: "#000",
+                textTransform: "none",
+              }}
+              onClick={() => banUnbanUser(id)}
+            >
+              <BlockIcon sx={{ fontSize: 16 }} />
+              <span style={{ marginLeft: "5px" }}>
+                {status === "BANNED" ? "Unban" : "ban"}
+              </span>
+            </Button>
+            {status !== "VERIFIED" && status !== "BANNED" && (
+              <Button
+                variant="text"
+                sx={{
+                  width: "100px",
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  color: "#000",
+                  textTransform: "none",
+                }}
+                onClick={() => verifyUser(id)}
+              >
+                <CheckIcon sx={{ fontSize: 16 }} />
+                <span style={{ marginLeft: "5px" }}>Verify</span>
+              </Button>
+            )}
+          </Box>
         </Box>
-      </Box>
+      )}
     </Box>
   );
 };
