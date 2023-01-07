@@ -76,6 +76,7 @@ const ActivityForm = ({ route, style, ...rest }) => {
   };
 
   useEffect(() => {
+    console.log("update activity form #001");
     const date = new Date();
     setDate(date);
     loadDestinations();
@@ -84,32 +85,36 @@ const ActivityForm = ({ route, style, ...rest }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    if (name) formData.append("name", name);
-    if (description) formData.append("description", description);
-    console.log("unformatted date", date);
-    console.log("formatted date", new Date(date).toISOString());
-    if (date) formData.append("date", new Date(date).toISOString());
-    if (price) formData.append("price", price.toString());
 
-    for (let i = 0; i < images.length; i++) {
-      formData.append("images", images[i]);
+    try {
+      const formData = new FormData();
+      if (name) formData.append("name", name);
+      if (description) formData.append("description", description);
+      if (date) formData.append("date", new Date(date).toISOString());
+      if (price) formData.append("price", price.toString());
+
+      for (let i = 0; i < images.length; i++) {
+        formData.append("images", images[i]);
+      }
+
+      let response = null;
+      let redirectRoute = "/";
+      if (params.id) {
+        response = await updateActivity(params.id, formData);
+        redirectRoute = "/activities/" + params.id;
+      } else {
+        response = await saveActivity(destiantionId, formData);
+        redirectRoute = "/activities/";
+      }
+      if (response.error) setErrors(response.message);
+      if (response.statusCode === 403)
+        setErrors(["You are not authorized to perform this action"]);
+      else navigate(redirectRoute);
+      setLoading(false);
+    } catch (error) {
+      console.log("error: ", error);
+      setLoading(false);
     }
-
-    let response = null;
-    let redirectRoute = "/";
-    if (params.id) {
-      response = await updateActivity(params.id, formData);
-      redirectRoute = "/activities/" + params.id;
-    } else {
-      response = await saveActivity(destiantionId, formData);
-      redirectRoute = "/activities/";
-    }
-
-    console.log("response: ", response);
-    if (response.error) setErrors(response.message);
-    else navigate(redirectRoute);
-    setLoading(false);
   };
 
   const handleImageChange = async (e) => {
@@ -165,6 +170,7 @@ const ActivityForm = ({ route, style, ...rest }) => {
                   label="Price"
                   name="price"
                   type="number"
+                  min={0}
                   InputLabelProps={{ shrink: true }}
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
@@ -272,11 +278,13 @@ const ActivityForm = ({ route, style, ...rest }) => {
           </Grid>
           {errors && (
             <Box mt={3}>
-              {errors.map((error) => (
-                <Alert severity="error" key={error} sx={{ marginTop: "5px" }}>
-                  {error}
-                </Alert>
-              ))}
+              {errors &&
+                Array.isArray(errors) &&
+                errors?.map((error) => (
+                  <Alert severity="error" key={error} sx={{ marginTop: "5px" }}>
+                    {error}
+                  </Alert>
+                ))}
             </Box>
           )}
         </CardContent>

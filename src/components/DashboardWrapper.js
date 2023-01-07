@@ -83,6 +83,9 @@ const DashboardWrapper = ({ children, ...rest }) => {
       >
         Planify
       </Typography>
+      <Typography style={{ color: "#fff", fontSize: "14px" }}>
+        {capitalize()}
+      </Typography>
       <Divider
         style={{
           marginBottom: "100px",
