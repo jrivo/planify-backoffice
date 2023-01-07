@@ -8,6 +8,8 @@ import { changeUserStatus, deleteUser } from "../utils.js/apicalls";
 import { useLocation } from "react-router-dom";
 import AlertDialog from "./general/AlertDialog";
 import { useState } from "react";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import CheckIcon from "@mui/icons-material/Check";
 
 const UsersCard = ({ imageUrl, id, name, email, role, status }) => {
   const location = useLocation();
@@ -22,7 +24,16 @@ const UsersCard = ({ imageUrl, id, name, email, role, status }) => {
       status === "BANNED" ? "VERIFIED" : "BANNED"
     );
     if (response.status === 200) {
-      // reload the page
+      navigate("/users?page=" + currentPage);
+    }
+  };
+
+  const verifyUser = async (id) => {
+    const response = await changeUserStatus(
+      id,
+      status === "VERIFIED" ? "UNVERIFIED" : "VERIFIED"
+    );
+    if (response.status === 200) {
       navigate("/users?page=" + currentPage);
     }
   };
@@ -30,7 +41,6 @@ const UsersCard = ({ imageUrl, id, name, email, role, status }) => {
   const removeUser = async (id) => {
     const response = await deleteUser(id);
     const data = await response.json();
-    console.log(data);
     if (response.status === 200) {
       setAlertOpen(false);
       navigate("/users?page=" + currentPage);
@@ -169,7 +179,23 @@ const UsersCard = ({ imageUrl, id, name, email, role, status }) => {
             display: "flex",
           }}
         >
-          <Box>
+          <Button
+            variant="text"
+            sx={{
+              width: "100px",
+              display: "flex",
+              justifyContent: "flex-start",
+              color: "#000",
+              textTransform: "none",
+            }}
+            onClick={() => banUnbanUser(id)}
+          >
+            <BlockIcon sx={{ fontSize: 16 }} />
+            <span style={{ marginLeft: "5px" }}>
+              {status === "BANNED" ? "Unban" : "ban"}
+            </span>
+          </Button>
+          {status !== "VERIFIED" && status !== "BANNED" && (
             <Button
               variant="text"
               sx={{
@@ -179,14 +205,12 @@ const UsersCard = ({ imageUrl, id, name, email, role, status }) => {
                 color: "#000",
                 textTransform: "none",
               }}
-              onClick={() => banUnbanUser(id)}
+              onClick={() => verifyUser(id)}
             >
-              <BlockIcon sx={{ fontSize: 16 }} />
-              <span style={{ marginLeft: "5px" }}>
-                {status === "BANNED" ? "Unban" : "ban"}
-              </span>
+              <CheckIcon sx={{ fontSize: 16 }} />
+              <span style={{ marginLeft: "5px" }}>Verify</span>
             </Button>
-          </Box>
+          )}
         </Box>
       </Box>
     </Box>

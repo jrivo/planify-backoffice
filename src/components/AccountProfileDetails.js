@@ -12,7 +12,7 @@ import {
   TextField,
 } from "@mui/material";
 import Button from "./general/Button";
-import { updateUserInfo } from "../utils.js/apicalls";
+import { changeUserRole, updateUserInfo } from "../utils.js/apicalls";
 
 export default function AccountProfileDetails({
   id,
@@ -21,6 +21,7 @@ export default function AccountProfileDetails({
   setProfileDetailsChanged,
   ...rest
 }) {
+  const [userId, setUserId] = useState(id);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -28,6 +29,7 @@ export default function AccountProfileDetails({
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [intitialRole, setInitialRole] = useState("");
   const [role, setRole] = useState("");
   const [roles, setRoles] = useState([
     {
@@ -53,26 +55,31 @@ export default function AccountProfileDetails({
   ]);
 
   useEffect(() => {
+    setUserId(data?.id);
     setFirstName(data?.firstName);
     setLastName(data?.lastName);
     setEmail(data?.email);
     setPhone(data?.phone);
     setRole(data?.role);
+    setInitialRole(data?.role);
   }, [data]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (intitialRole !== role) {
+      const roleResponse = await changeUserRole(userId, role.toUpperCase());
+      console.log("role response: ", roleResponse);
+    }
     const formData = new FormData();
     formData.append("firstName", firstName);
     formData.append("lastName", lastName);
     formData.append("email", email);
-    formData.append("role", role);
     if (phone && phone.length > 0) {
       formData.append("phoneNumber", phone);
     }
     await updateUserInfo(data.id, formData);
 
-    // change value of message for one second then set it back to empty string
     setProfileDetailsChanged(profileDetailsChanged + 1);
     setMessage(
       <Alert severity="success" sx={{ marginTop: "20px" }}>
@@ -147,7 +154,7 @@ export default function AccountProfileDetails({
                     onChange={(e) => setRole(e.target.value)}
                     InputLabelProps={{ shrink: true }}
                     variant="outlined"
-                    disabled={true}
+                    // disabled={true}
                   >
                     {roles.map((role) => (
                       <MenuItem key={role.id} value={role.value}>

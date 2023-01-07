@@ -88,13 +88,15 @@ const UserForm = ({ id }) => {
                   profileDetailsChanged={profileDetailsChanged}
                   setProfileDetailsChanged={setProfileDetailsChanged}
                 />
-                <PasswordForm
-                  id={id}
-                  data={profileData}
-                  profileDetailsChanged={profileDetailsChanged}
-                  setProfileDetailsChanged={setProfileDetailsChanged}
-                  style={{ marginTop: "40px" }}
-                />
+                {!id && (
+                  <PasswordForm
+                    id={id}
+                    data={profileData}
+                    profileDetailsChanged={profileDetailsChanged}
+                    setProfileDetailsChanged={setProfileDetailsChanged}
+                    style={{ marginTop: "40px" }}
+                  />
+                )}
               </Box>
             </Grid>
           </Grid>

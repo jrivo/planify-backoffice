@@ -18,7 +18,6 @@ const Users = () => {
       limit: 3,
       page: currentPage && currentPage,
     });
-    console.log("users", users);
     setTotalPages(users.totalPages);
     setUsers(
       users.users.map((user) => {
@@ -100,12 +99,12 @@ const Users = () => {
       </Box>
       <Stack spacing={2}>
         <Pagination
-          count={totalPages}
+          count={parseInt(totalPages)}
           onChange={(e, page) => {
             navigate("/users?page=" + page);
           }}
           // selected={currentPage}
-          page={currentPage}
+          page={parseInt(currentPage)}
         />
       </Stack>
     </Box>

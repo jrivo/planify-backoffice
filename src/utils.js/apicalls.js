@@ -427,6 +427,7 @@ const changeUserStatus = async (id, status) => {
 };
 
 const deleteUser = async (id) => {
+  console.log("delete user id", id);
   try {
     const response = await fetch(
       process.env.REACT_APP_SERVER_URL + "users/" + id,
@@ -438,8 +439,11 @@ const deleteUser = async (id) => {
         },
       }
     );
+    console.log("after delete user");
+    console.log("delete user response", response);
     return response;
   } catch (error) {
+    console.log("error happened ");
     console.log("error: ", error);
   }
 };
@@ -463,6 +467,25 @@ const getEvents = async (params) => {
     );
     const events = await response.json();
     return events;
+  } catch (error) {
+    console.log("error: ", error);
+  }
+};
+
+const changeUserRole = async (id, role) => {
+  try {
+    const response = await fetch(
+      process.env.REACT_APP_SERVER_URL + "users/" + id + "/role",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.token,
+        },
+        body: JSON.stringify({ role }),
+      }
+    );
+    return response;
   } catch (error) {
     console.log("error: ", error);
   }
@@ -492,4 +515,5 @@ export {
   getEvents,
   changeUserStatus,
   deleteUser,
+  changeUserRole,
 };
