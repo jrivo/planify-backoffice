@@ -101,43 +101,52 @@ const DestinationForm = ({ style, ...rest }) => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    for (let i = 0; i < images.length; i++) {
-      formData.append("images", images[i]);
-      console.log("added image");
+    try {
+      e.preventDefault();
+      const formData = new FormData();
+      for (let i = 0; i < images.length; i++) {
+        formData.append("images", images[i]);
+        console.log("added image");
+      }
+
+      console.log("palce type id", placeTypeId);
+      formData.append("name", name);
+      formData.append("placeType", placeType);
+      formData.append("placeTypeId", parseInt(placeTypeId));
+      if (email) formData.append("email", email);
+      formData.append("phone", phone);
+      formData.append("website", website);
+      formData.append("description", description);
+      formData.append("street", street);
+      formData.append("streetNumber", streetNumber);
+      formData.append("city", city);
+      formData.append("postalCode", postalCode);
+      formData.append("region", region);
+      formData.append("country", country);
+      formData.append("latitude", latitude);
+      formData.append("longitude", longitude);
+      formData.append("googleAddressId", googleAddressId);
+
+      const submit = params.id
+        ? (data) => updateDestination(params.id, data)
+        : saveDestination;
+      const response = await submit(formData);
+      console.log("status code: ", response.statusCode);
+      if (response.statusCode === 400) {
+        setErrors(response.message);
+      } else if (response.statusCode === 403) {
+        setErrors(["You are not authorized to perform this action"]);
+      } else if (response.statusCode >= 400) {
+        setErrors(["Something went wrong"]);
+      } else {
+        navigate("/destinations");
+      }
+
+      setLoading(false);
+    } catch (error) {
+      console.log("error", error);
+      setLoading(false);
     }
-
-    console.log("palce type id", placeTypeId);
-    formData.append("name", name);
-    formData.append("placeType", placeType);
-    formData.append("placeTypeId", parseInt(placeTypeId));
-    if (email) formData.append("email", email);
-    formData.append("phone", phone);
-    formData.append("website", website);
-    formData.append("description", description);
-    formData.append("street", street);
-    formData.append("streetNumber", streetNumber);
-    formData.append("city", city);
-    formData.append("postalCode", postalCode);
-    formData.append("region", region);
-    formData.append("country", country);
-    formData.append("latitude", latitude);
-    formData.append("longitude", longitude);
-    formData.append("googleAddressId", googleAddressId);
-
-    const submit = params.id
-      ? (data) => updateDestination(params.id, data)
-      : saveDestination;
-    const response = await submit(formData);
-    if (response.statusCode === 400) {
-      setErrors(response.message);
-    } else {
-      navigate("/destinations");
-    }
-
-    console.log("response", response);
-    setLoading(false);
   };
 
   const handleImageChange = async (e) => {
