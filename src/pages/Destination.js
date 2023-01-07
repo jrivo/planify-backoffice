@@ -18,7 +18,9 @@ import {
   getFormattedDate,
   getFormattedTime,
   formatPhone,
+  shortenText,
 } from "../utils.js/format";
+import Carousel from "../components/general/Carousel";
 
 const Destination = ({ destination, onClick }) => {
   const navigate = useNavigate();
@@ -86,8 +88,13 @@ const Destination = ({ destination, onClick }) => {
             activity.medias && activity.medias.length > 0
               ? activity.medias[0].url
               : process.env.REACT_APP_IMAGE_PLACEHOLDER,
-          title: activity.name,
-          description: activity.price,
+          title: shortenText(activity.name, 18),
+          subtitle1: getFormattedDate(activity.date),
+          subtitle2: activity.address?.city,
+          footerText: activity.price ? activity.price + " €" : "Free",
+          action: () => {
+            navigate(`/activities/${activity.id}`);
+          },
         };
       })
     );
@@ -212,21 +219,21 @@ const Destination = ({ destination, onClick }) => {
             >
               {placeType?.name}
             </Typography>
-            {localStorage.getItem("role") === "ADMIN" ||
-              (localStorage.getItem("role") === "MODERATOR" && (
-                <Typography variant="body2">
-                  <span style={{ fontWeight: "bold" }}>Created by: </span>
+            {(localStorage.getItem("role") === "ADMIN" ||
+              localStorage.getItem("role") === "MODERATOR") && (
+              <Typography variant="body2">
+                <span style={{ fontWeight: "bold" }}>Created by: </span>
 
-                  <span
-                    style={{
-                      color: "#1976d2",
-                      // cursor: "pointer"
-                    }}
-                  >
-                    {creator}
-                  </span>
-                </Typography>
-              ))}
+                <span
+                  style={{
+                    color: "#1976d2",
+                    // cursor: "pointer"
+                  }}
+                >
+                  {creator}
+                </span>
+              </Typography>
+            )}
           </Box>
           <Typography
             variant="h5"
@@ -370,12 +377,9 @@ const Destination = ({ destination, onClick }) => {
           <Box
             sx={{
               display: "flex",
-              alignItems: "center",
-              justifyContent: "center ",
             }}
           >
-            <ReactCardSlider slides={activities} />
-            {/* <Slider slides={activities} /> */}
+            <Carousel items={activities} />
           </Box>
         </Box>
       </Box>

@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+    planify-backoffice:
+      build: .
+      ports:
+          - 3000:3000
+      restart: always
+      environment:
+          - REACT_APP_SERVER_URL=${REACT_APP_SERVER_URL}
+          - REACT_APP_GOOGLE_MAPS_KEY= ${REACT_APP_GOOGLE_MAPS_KEY}
+          - REACT_APP_IMAGE_PLACEHOLDER= "https://blog.redbubble.com/wp-content/uploads/2017/10/placeholder_image_square.jpg"
+          - REACT_APP_USER_AVATAR_PLACEHOLDER= "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
+          - REACT_APP_PRIMARY_COLOR= "#2D3E50"
+          - REACT_APP_PRIMARY_LIGHTER_COLOR= "#2D3E50"

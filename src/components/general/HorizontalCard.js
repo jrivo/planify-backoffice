@@ -12,6 +12,7 @@ const HorizontalCard = ({
   subtitle2,
   footerText,
   style,
+  action,
   sx,
   ...rest
 }) => {
@@ -23,6 +24,11 @@ const HorizontalCard = ({
         borderRadius: "15px",
         ...style,
         ...sx,
+      }}
+      onClick={() => {
+        if (action) {
+          action();
+        }
       }}
       {...rest}
     >

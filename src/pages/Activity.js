@@ -33,6 +33,7 @@ const Activity = ({ destination, onClick }) => {
   const [alertOpen, setAlertOpen] = useState(false);
   const [subscribers, setSubscribers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [ownerId, setOwnerId] = useState("");
 
   const loadData = async () => {
     setLoading(true);
@@ -68,6 +69,7 @@ const Activity = ({ destination, onClick }) => {
     );
     setPrice(activity.price);
     setCreator(activity.ownerFirstName + " " + activity.ownerLastName);
+    setOwnerId(activity.ownerId);
     setImage(
       activity.medias !== undefined && activity.medias.length > 0
         ? activity.medias[0].url
@@ -209,12 +211,20 @@ const Activity = ({ destination, onClick }) => {
             </Box>
           </Box>
           <Box sx={{ marginBottom: "10px", paddingTop: "20px" }}>
-            <Typography variant="body2">
-              <span style={{ fontWeight: "bold" }}>Created by: </span>
-              <span style={{ color: "#1976d2", cursor: "pointer" }}>
-                {creator}
-              </span>
-            </Typography>
+            {(localStorage.getItem("role") === "ADMIN" ||
+              localStorage.getItem("role") === "MODERATOR") && (
+              <Typography variant="body2">
+                <span style={{ fontWeight: "bold" }}>Created by: </span>
+                <span
+                  style={{ color: "#1976d2", cursor: "pointer" }}
+                  onClick={() => {
+                    navigate("/users/" + ownerId);
+                  }}
+                >
+                  {creator}
+                </span>
+              </Typography>
+            )}
 
             {subscribers.length > 0 && (
               <Typography

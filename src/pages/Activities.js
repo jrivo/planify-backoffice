@@ -35,7 +35,7 @@ const Activities = () => {
 
   useEffect(() => {
     loadActivitivities();
-  }, [location.state]);
+  }, [location]);
 
   if (loading)
     return (

@@ -2,9 +2,9 @@ name: Docker Image CI
 
 on:
   push:
-    branches: ["main"]
+    branches: ["dev"]
   pull_request:
-    branches: ["main"]
+    branches: ["dev"]
 
 jobs:
   deploy:
@@ -46,10 +46,10 @@ jobs:
           key: ${{secrets.SSH_PRIVATE_KEY}}
           inventory: |
             [server]
-            ${{secrets.PROD_URL}}
+            ${{secrets.DEV_URL}}
 
             [server:vars]
-            REACT_APP_SERVER_URL=${{secrets.REACT_APP_PROD_SERVER_URL}}
+            REACT_APP_SERVER_URL=${{secrets.REACT_APP_DEV_SERVER_URL}}
             REACT_APP_GOOGLE_MAPS_KEY=${{secrets.REACT_APP_GOOGLE_MAPS_KEY}}
             REACT_APP_PRIMARY_COLOR=${{secrets.REACT_APP_PRIMARY_COLOR}}
             REACT_APP_USER_AVATAR_PLACEHOLDER=${{secrets.REACT_APP_USER_AVATAR_PLACEHOLDER}}

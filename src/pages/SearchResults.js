@@ -1,13 +1,14 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams, useNavigate } from "react-router-dom";
 import Button from "../components/general/Button";
 import HorizontalCard from "../components/general/HorizontalCard";
 import { search } from "../utils.js/apicalls";
 import { getFormattedDate, shortenText } from "../utils.js/format";
 const SearchResults = () => {
   // get search params from url
+  const navigate = useNavigate();
   const location = useLocation();
   const [destinations, setDestinations] = useState([]);
   const [activities, setActivities] = useState([]);
@@ -49,6 +50,7 @@ const SearchResults = () => {
       setActivities(
         activitiesList
           ? activitiesList?.activities?.map((activity) => ({
+              id: activity.id,
               subtitle1: getFormattedDate(activity.date),
               title: shortenText(activity.name, 18),
               image:
@@ -171,7 +173,13 @@ const SearchResults = () => {
           )}
 
           {destinations.map((destination) => (
-            <HorizontalCard style={{ marginBottom: "30px" }} {...destination} />
+            <HorizontalCard
+              style={{ marginBottom: "30px" }}
+              {...destination}
+              action={() => {
+                navigate(`/destinations/${destination.id}`);
+              }}
+            />
           ))}
 
           {activities && activities.length > 0 && (
@@ -188,8 +196,14 @@ const SearchResults = () => {
             </Box>
           )}
 
-          {activities.map((destination) => (
-            <HorizontalCard style={{ marginBottom: "30px" }} {...destination} />
+          {activities.map((activity) => (
+            <HorizontalCard
+              style={{ marginBottom: "30px" }}
+              {...activity}
+              action={() => {
+                navigate(`/activities/${activity.id}`);
+              }}
+            />
           ))}
         </Box>
       </Box>

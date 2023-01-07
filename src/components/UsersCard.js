@@ -8,7 +8,9 @@ import { changeUserStatus, deleteUser } from "../utils.js/apicalls";
 import { useLocation } from "react-router-dom";
 import AlertDialog from "./general/AlertDialog";
 import { useState } from "react";
-
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import CheckIcon from "@mui/icons-material/Check";
+import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 const UsersCard = ({ imageUrl, id, name, email, role, status }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -22,7 +24,16 @@ const UsersCard = ({ imageUrl, id, name, email, role, status }) => {
       status === "BANNED" ? "VERIFIED" : "BANNED"
     );
     if (response.status === 200) {
-      // reload the page
+      navigate("/users?page=" + currentPage);
+    }
+  };
+
+  const verifyUser = async (id) => {
+    const response = await changeUserStatus(
+      id,
+      status === "VERIFIED" ? "UNVERIFIED" : "VERIFIED"
+    );
+    if (response.status === 200) {
       navigate("/users?page=" + currentPage);
     }
   };
@@ -30,7 +41,6 @@ const UsersCard = ({ imageUrl, id, name, email, role, status }) => {
   const removeUser = async (id) => {
     const response = await deleteUser(id);
     const data = await response.json();
-    console.log(data);
     if (response.status === 200) {
       setAlertOpen(false);
       navigate("/users?page=" + currentPage);
@@ -118,62 +128,76 @@ const UsersCard = ({ imageUrl, id, name, email, role, status }) => {
         </Box>
       </Box>
       {/* buttons container */}
-      <Box
-        sx={{
-          position: "absolute",
-          right: "0",
-          top: "50%",
-          transform: "translateY(-50%)",
-        }}
-      >
+
+      {(localStorage.getItem("role") === "ADMIN" ||
+        (localStorage.getItem("role") === "MODERATOR" && role !== "ADMIN")) && (
         <Box
-          alignItems="center"
           sx={{
-            display: "flex",
+            position: "absolute",
+            right: "0",
+            top: "50%",
+            transform: "translateY(-50%)",
           }}
         >
-          <Box>
-            <Button
-              sx={{
-                color: "red",
-                textTransform: "none",
-                width: "100px",
-                display: "flex",
-                justifyContent: "flex-start",
-              }}
-              onClick={() => setAlertOpen(true)}
-            >
-              <DeleteIcon sx={{ fontSize: 16 }} />
-              <span style={{ marginLeft: "5px" }}>Delete</span>
-            </Button>
-          </Box>
-          <Button
-            variant="text"
+          {console.log("should show")}
+          <Box
+            alignItems="center"
             sx={{
-              width: "100px",
               display: "flex",
-              justifyContent: "flex-start",
-              color: "#000",
-              textTransform: "none",
-            }}
-            onClick={() => {
-              navigate(`/users/${id}`);
             }}
           >
-            <EditIcon sx={{ fontSize: 16 }} />
-            <span style={{ marginLeft: "5px" }}>Edit</span>
-          </Button>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-          }}
-        >
-          <Box>
             <Button
               variant="text"
               sx={{
-                width: "100px",
+                width: "90px",
+                display: "flex",
+                justifyContent: "flex-start",
+                color: "#000",
+                textTransform: "none",
+              }}
+              onClick={() => {
+                navigate(`/users/${id}`);
+              }}
+            >
+              {localStorage.getItem("role") === "ADMIN" ? (
+                <>
+                  <EditIcon sx={{ fontSize: 16 }} />
+                  <span style={{ marginLeft: "5px" }}>Edit</span>
+                </>
+              ) : (
+                <>
+                  <PersonSearchIcon sx={{ fontSize: 16 }} />
+                  <span style={{ marginLeft: "5px" }}>Details</span>
+                </>
+              )}
+            </Button>
+            {localStorage.getItem("role") === "ADMIN" && (
+              <Button
+                sx={{
+                  color: "red",
+                  textTransform: "none",
+                  width: "100px",
+                  display: "flex",
+                  justifyContent: "flex-start",
+                }}
+                onClick={() => setAlertOpen(true)}
+              >
+                <DeleteIcon sx={{ fontSize: 16 }} />
+                <span style={{ marginLeft: "5px" }}>Delete</span>
+              </Button>
+            )}
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection:
+                localStorage.getItem("role") === "ADMIN" ? "row" : "column",
+            }}
+          >
+            <Button
+              variant="text"
+              sx={{
+                width: "90px",
                 display: "flex",
                 justifyContent: "flex-start",
                 color: "#000",
@@ -186,9 +210,25 @@ const UsersCard = ({ imageUrl, id, name, email, role, status }) => {
                 {status === "BANNED" ? "Unban" : "ban"}
               </span>
             </Button>
+            {status !== "VERIFIED" && status !== "BANNED" && (
+              <Button
+                variant="text"
+                sx={{
+                  width: "100px",
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  color: "#000",
+                  textTransform: "none",
+                }}
+                onClick={() => verifyUser(id)}
+              >
+                <CheckIcon sx={{ fontSize: 16 }} />
+                <span style={{ marginLeft: "5px" }}>Verify</span>
+              </Button>
+            )}
           </Box>
         </Box>
-      </Box>
+      )}
     </Box>
   );
 };

@@ -37,7 +37,10 @@ const DashboardWrapper = ({ children, ...rest }) => {
 
   const navBarItems = ["Overview", "Destinations", "Activities", "Account"];
 
-  if (localStorage.getItem("role") === "ADMIN") {
+  if (
+    localStorage.getItem("role") === "ADMIN" ||
+    localStorage.getItem("role") === "MODERATOR"
+  ) {
     navBarItems.push("Users");
   }
 
@@ -46,7 +49,6 @@ const DashboardWrapper = ({ children, ...rest }) => {
   };
 
   const iconStyles = {
-    // color: process.env.REACT_APP_PRIMARY_COLOR,
     color: "#fff",
   };
 
@@ -98,8 +100,6 @@ const DashboardWrapper = ({ children, ...rest }) => {
           >
             <ListItemButton
               onClick={() => {
-                //redirect to the page
-                // const page = index === 0 ? "/" : "/" + text.toLowerCase();
                 const page = "/" + text.toLowerCase();
                 navigate(page);
               }}
@@ -158,7 +158,6 @@ const DashboardWrapper = ({ children, ...rest }) => {
               justifyContent: "center",
               marginTop: "15px",
               paddingBottom: "15px",
-              // marginLeft: "180px",
               alignItems: "center",
               position: "relative",
             }}
@@ -177,7 +176,6 @@ const DashboardWrapper = ({ children, ...rest }) => {
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
         aria-label="mailbox folders"
       >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
           container={container}
           variant="temporary"
