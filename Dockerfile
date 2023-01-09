@@ -8,11 +8,11 @@ WORKDIR /app
 COPY package.json ./
 COPY package-lock.json ./
 RUN npm install --silent
-RUN npm test
 
 # add app
 COPY . ./
 
+RUN npm test
 
 
 # start app
