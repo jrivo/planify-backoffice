@@ -109,23 +109,44 @@ const DestinationForm = ({ style, ...rest }) => {
         console.log("added image");
       }
 
-      console.log("palce type id", placeTypeId);
-      formData.append("name", name);
-      formData.append("placeType", placeType);
-      formData.append("placeTypeId", parseInt(placeTypeId));
-      if (email) formData.append("email", email);
-      formData.append("phone", phone);
-      formData.append("website", website);
-      formData.append("description", description);
-      formData.append("street", street);
-      formData.append("streetNumber", streetNumber);
-      formData.append("city", city);
-      formData.append("postalCode", postalCode);
-      formData.append("region", region);
-      formData.append("country", country);
-      formData.append("latitude", latitude);
-      formData.append("longitude", longitude);
-      formData.append("googleAddressId", googleAddressId);
+      if (name && name !== "") formData.append("name", name);
+
+      if (placeType && placeType !== "")
+        formData.append("placeType", placeType);
+
+      if (placeTypeId && placeTypeId !== "")
+        formData.append("placeTypeId", parseInt(placeTypeId));
+
+      if (email && email !== "") formData.append("email", email);
+
+      // if (phone && phone !== "") formData.append("phone", phone);
+
+      if (website && website !== "") formData.append("website", website);
+
+      if (description && description !== "")
+        formData.append("description", description);
+
+      if (street && street !== "") formData.append("street", street);
+
+      if (streetNumber && streetNumber !== "")
+        formData.append("streetNumber", streetNumber);
+
+      if (city && city !== "") formData.append("city", city);
+
+      if (postalCode && postalCode !== "")
+        formData.append("postalCode", postalCode);
+
+      if (region && region !== "") formData.append("region", region);
+
+      if (country && country !== "") formData.append("country", country);
+
+      if (latitude && latitude !== "") formData.append("latitude", latitude);
+
+      if (longitude && longitude !== "")
+        formData.append("longitude", longitude);
+
+      if (googleAddressId && googleAddressId !== "")
+        formData.append("googleAddressId", googleAddressId);
 
       const submit = params.id
         ? (data) => updateDestination(params.id, data)
@@ -269,13 +290,15 @@ const DestinationForm = ({ style, ...rest }) => {
                   required={true}
                   defaultValue={
                     params.id
-                      ? streetNumber +
-                        " " +
-                        street +
-                        ", " +
-                        city +
-                        ", " +
-                        country
+                      ? streetNumber
+                        ? streetNumber
+                        : "" + " " + street
+                        ? street
+                        : "" + ", " + city
+                        ? city
+                        : "" + ", " + country
+                        ? country
+                        : ""
                       : ""
                   }
                 />
@@ -284,7 +307,19 @@ const DestinationForm = ({ style, ...rest }) => {
               <Grid item md={12} xs={12}>
                 <TextField
                   fullWidth
-                  label="Description"
+                  label={
+                    <span>
+                      Description
+                      <span
+                        style={{
+                          color: "red",
+                          fontSize: "18px",
+                        }}
+                      >
+                        *
+                      </span>
+                    </span>
+                  }
                   name="description"
                   multiline
                   rows={3}

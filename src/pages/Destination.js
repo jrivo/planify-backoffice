@@ -359,8 +359,12 @@ const Destination = ({ destination, onClick }) => {
             <span>{email}</span>
           </Typography>
           <Typography variant="body2">
-            {phone && <span style={{ fontWeight: "bold" }}>Phone: </span>}
-            <span>{formatPhone(phone)}</span>
+            {phone && (
+              <>
+                <span style={{ fontWeight: "bold" }}>Phone: </span>
+                <span>{formatPhone(phone)}</span>{" "}
+              </>
+            )}
           </Typography>
 
           <Typography
