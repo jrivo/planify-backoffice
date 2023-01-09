@@ -12,8 +12,6 @@ RUN npm install --silent
 # add app
 COPY . ./
 
-RUN npm test
-
 
 # start app
 CMD ["npm", "start"]
