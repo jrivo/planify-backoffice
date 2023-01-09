@@ -109,6 +109,26 @@ const DestinationForm = ({ style, ...rest }) => {
         console.log("added image");
       }
 
+      // if address is not valid show error
+      if (
+        street == "" ||
+        street == undefined ||
+        city == "" ||
+        city == undefined ||
+        postalCode == "" ||
+        postalCode == undefined ||
+        country == "" ||
+        country == undefined
+      ) {
+        setErrors(["Please enter a valid address"]);
+        console.log("street", street);
+        console.log("city", city);
+        console.log("postalCode", postalCode);
+        console.log("country", country);
+
+        return;
+      }
+
       if (name && name !== "") formData.append("name", name);
 
       if (placeType && placeType !== "")
@@ -153,6 +173,7 @@ const DestinationForm = ({ style, ...rest }) => {
         : saveDestination;
       const response = await submit(formData);
       console.log("status code: ", response.statusCode);
+      console.log("destination response: ", response);
       if (response.statusCode === 400) {
         setErrors(response.message);
       } else if (response.statusCode === 403) {
@@ -290,15 +311,11 @@ const DestinationForm = ({ style, ...rest }) => {
                   required={true}
                   defaultValue={
                     params.id
-                      ? streetNumber
-                        ? streetNumber
-                        : "" + " " + street
-                        ? street
-                        : "" + ", " + city
-                        ? city
-                        : "" + ", " + country
-                        ? country
-                        : ""
+                      ? (streetNumber ? streetNumber : "") +
+                        " " +
+                        (street ? street + ", " : " ") +
+                        (city ? city + ", " : " ") +
+                        (country ? country : "")
                       : ""
                   }
                 />
