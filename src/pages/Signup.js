@@ -42,6 +42,7 @@ const Signup = () => {
       setError("A user with this email already address exists");
       return;
     } else if (data.status === 200 || data.status === 201) {
+      cosole.log("status: ", data.status);
       setSubmitted(true);
     } else {
       setError("Server error");
