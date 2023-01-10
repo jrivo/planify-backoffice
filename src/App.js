@@ -21,6 +21,7 @@ import Users from "./pages/Users";
 import SearchResults from "./pages/SearchResults";
 import User from "./pages/User";
 import ResetPassword from "./pages/ResetPassword";
+import NotFound from "./pages/NotFound";
 
 const ProtectedRoute = ({ children }) => {
   return localStorage.getItem("token") ? (
@@ -223,6 +224,7 @@ function App() {
             </UnProtectedRoute>
           }
         />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );

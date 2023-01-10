@@ -359,28 +359,36 @@ const Destination = ({ destination, onClick }) => {
             <span>{email}</span>
           </Typography>
           <Typography variant="body2">
-            {phone && <span style={{ fontWeight: "bold" }}>Phone: </span>}
-            <span>{formatPhone(phone)}</span>
+            {phone && (
+              <>
+                <span style={{ fontWeight: "bold" }}>Phone: </span>
+                <span>{formatPhone(phone)}</span>{" "}
+              </>
+            )}
           </Typography>
 
-          <Typography
-            variant="h5"
-            style={{
-              fontSize: "25px",
-              fontWeight: "700",
-              marginBottom: "30px",
-              marginTop: "20px",
-            }}
-          >
-            Activities
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-            }}
-          >
-            <Carousel items={activities} />
-          </Box>
+          {activities && activities?.length > 0 && (
+            <>
+              <Typography
+                variant="h5"
+                style={{
+                  fontSize: "25px",
+                  fontWeight: "700",
+                  marginBottom: "30px",
+                  marginTop: "20px",
+                }}
+              >
+                Activities
+              </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                }}
+              >
+                <Carousel items={activities} />
+              </Box>
+            </>
+          )}
         </Box>
       </Box>
     </Box>
