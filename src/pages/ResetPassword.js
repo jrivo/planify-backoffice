@@ -68,7 +68,7 @@ const ResetPassword = () => {
             borderRadius: "10px",
           }}
         >
-          {true ? (
+          {emailSent ? (
             <SuccessBox
               message="Email sent successfully"
               link={{
