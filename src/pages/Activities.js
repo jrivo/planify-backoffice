@@ -145,23 +145,26 @@ const Activities = () => {
                 </Grid>
               ))}
             </Grid>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                marginTop: "40px",
-              }}
-            >
-              <Stack spacing={2}>
-                <Pagination
-                  count={totalPages}
-                  onChange={(e, page) => {
-                    navigate("/activities?page=" + page);
-                  }}
-                />
-              </Stack>
-            </Box>
+
+            {totalPages > 1 && (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: "40px",
+                }}
+              >
+                <Stack spacing={2}>
+                  <Pagination
+                    count={totalPages}
+                    onChange={(e, page) => {
+                      navigate("/activities?page=" + page);
+                    }}
+                  />
+                </Stack>
+              </Box>
+            )}
           </Box>
         </Box>
       )}
