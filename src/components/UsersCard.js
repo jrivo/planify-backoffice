@@ -11,7 +11,8 @@ import { useState } from "react";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckIcon from "@mui/icons-material/Check";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
-const UsersCard = ({ imageUrl, id, name, email, role, status }) => {
+
+const UsersCard = ({ imageUrl, id, name, email, role, status, setIndex }) => {
   const location = useLocation();
   const navigate = useNavigate();
   // get current page number
@@ -39,12 +40,10 @@ const UsersCard = ({ imageUrl, id, name, email, role, status }) => {
   };
 
   const removeUser = async (id) => {
-    const response = await deleteUser(id);
-    const data = await response.json();
-    if (response.status === 200) {
-      setAlertOpen(false);
-      navigate("/users?page=" + currentPage);
-    }
+    console.log("remove user -*------------------");
+    setAlertOpen(false);
+    setIndex((prev) => prev + 1);
+    deleteUser(id);
   };
 
   return (
@@ -61,9 +60,7 @@ const UsersCard = ({ imageUrl, id, name, email, role, status }) => {
         message="Do you really want to delete this user?"
         open={alertOpen}
         setOpen={setAlertOpen}
-        action={() => {
-          removeUser(id);
-        }}
+        action={() => removeUser(id)}
       />
 
       <Avatar
