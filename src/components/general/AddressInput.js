@@ -24,7 +24,15 @@ const AddressInput = ({ onChange, required, defaultValue }) => {
   const getCoordinates = async (placeId) => {
     console.log("api key", process.env.GOOGLE_MAPS_KEY);
     const response = await fetch(
-      `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=geometry&key=${process.env.REACT_APP_GOOGLE_MAPS_KEY}`
+      // `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=geometry&key=${process.env.REACT_APP_GOOGLE_MAPS_KEY}`
+      process.env.REACT_APP_SERVER_URL + "address-details?placeId=" + placeId,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.token,
+        },
+      }
     );
     const data = await response.json();
     return data?.result?.geometry?.location;

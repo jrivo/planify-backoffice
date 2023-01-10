@@ -324,19 +324,7 @@ const DestinationForm = ({ style, ...rest }) => {
               <Grid item md={12} xs={12}>
                 <TextField
                   fullWidth
-                  label={
-                    <span>
-                      Description
-                      <span
-                        style={{
-                          color: "red",
-                          fontSize: "18px",
-                        }}
-                      >
-                        *
-                      </span>
-                    </span>
-                  }
+                  label="Description"
                   name="description"
                   multiline
                   rows={3}

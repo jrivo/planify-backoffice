@@ -86,6 +86,11 @@ const ActivityForm = ({ route, style, ...rest }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (price && parseFloat(price) < 0) {
+      setErrors(["Price cannot be negative"]);
+      return;
+    }
+
     try {
       const formData = new FormData();
       if (name) formData.append("name", name);
