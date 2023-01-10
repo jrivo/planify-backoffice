@@ -12,6 +12,7 @@ const Users = () => {
   const [users, setUsers] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const currentPage = location.search.split("=")[1] || 1;
+  const [index, setIndex] = useState(0);
 
   const loadData = async () => {
     const users = await getAllUsers({
@@ -35,7 +36,7 @@ const Users = () => {
 
   useEffect(() => {
     loadData();
-  }, [location]);
+  }, [location, index]);
 
   return (
     <Box
@@ -92,7 +93,7 @@ const Users = () => {
                   boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.1)",
                 }}
               >
-                <UsersCard {...user} />
+                <UsersCard {...user} setIndex={setIndex} />
               </Box>
             ))}
           </Box>

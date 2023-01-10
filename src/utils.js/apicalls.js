@@ -439,8 +439,7 @@ const deleteUser = async (id) => {
         },
       }
     );
-    console.log("after delete user");
-    console.log("delete user response", response);
+
     return response;
   } catch (error) {
     console.log("error happened ");
